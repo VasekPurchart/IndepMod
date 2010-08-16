@@ -9,6 +9,10 @@ import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.Notation;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.factory.DiagramModelFactory;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
+import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
+import cz.cvut.promod.services.menuService.MenuService;
+import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
+import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 
 import javax.swing.*;
 import java.util.List;
@@ -78,8 +82,13 @@ public class ClassModelNotation implements Notation {
         return ioController;
     }
 
-    public JPopupMenu getPopupMenu() {
-        return null;
+    /**
+     * Class model notation does NOT support popup menu functionality.
+     *
+     * {@inheritDoc}
+     */
+    public InsertMenuItemResult addPopupMenuItem(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, boolean checkable){
+        return InsertMenuItemResult.POPUP_NOT_SUPPORTED;
     }
 
     public Set<DockableFrameData> getDockableFrames() {

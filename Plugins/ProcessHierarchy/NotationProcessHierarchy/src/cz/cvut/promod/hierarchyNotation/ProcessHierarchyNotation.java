@@ -14,6 +14,9 @@ import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceDa
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.factory.DiagramModelFactory;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
 import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
+import cz.cvut.promod.services.menuService.MenuService;
+import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 
 import javax.swing.*;
@@ -136,8 +139,8 @@ public class ProcessHierarchyNotation implements cz.cvut.promod.plugin.notationS
      *
      * {@inheritDoc}
      */
-    public JPopupMenu getPopupMenu() {
-        return null;
+     public InsertMenuItemResult addPopupMenuItem(ProModAction proModAction, MenuItemPosition menuItemPosition, MenuService.MenuSeparator menuSeparator, boolean checkable){
+        return InsertMenuItemResult.POPUP_NOT_SUPPORTED;
     }
 
     /** {@inheritDoc} */

@@ -10,8 +10,13 @@ import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
+import cz.cvut.promod.services.menuService.MenuControlService;
+import cz.cvut.promod.services.menuService.MenuControlServiceImpl;
+import cz.cvut.promod.services.menuService.MenuService;
+import cz.cvut.promod.services.menuService.utils.*;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
 import org.apache.log4j.Logger;
+
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -188,6 +193,10 @@ public class EPCNotationModel {
         final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
         popupMenu.add(deleteAction);
+    }
+
+    public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable)  {
+        return ModelerSession.getMenuService().insertAction(null, popupMenu, proModAction, menuSeparator, menuItemPosition, checkable);
     }
 
     private void checkProperties() throws InstantiationException{

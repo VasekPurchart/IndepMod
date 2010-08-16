@@ -5,6 +5,10 @@ import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
 
+
+import javax.swing.*;
+
+
 /**
  * ProMod, master thesis project
  * User: Petr Zverina, petr.zverina@gmail.com
@@ -221,4 +225,31 @@ public interface MenuService extends Service{
     public InsertMenuItemResult insertPopupMenuItem(final String notationIdentifier,
                                                     final ProModAction proModAction,
                                                     final MenuItemPosition menuItemPosition);
+    /*
+     * Inserts a new action into given popup menu. This function can be used by notation using JIDE to handle their
+     *  popup menus.
+     *
+     * @param parentMenu  is the parent menu item of added action
+     *
+     * @param parentPopupMenu the popup menu to be extended by defined action
+     *
+     * @param proModAction that will be triggered when by the menu item, the action has to be registered by the
+     * ActionService before, promod action cannot have an empty string as it's name (text).
+     *
+     * @param menuItemPosition is an instance of MenuItemPosition specifying hierarchical, absolute or relative position
+     * of the menu item in menu. An empty string in hierarchical position means that the menu item will be inserted
+     * into the root of the popup menu (menu item that are immediately visible when the popup menu is shown).
+     *
+     * @param checkable  determines whether the menu item will be checkable or not
+     *
+     * @return an information about inserting success
+     */
+    public InsertMenuItemResult insertAction(final JMenu parentMenu,
+                                               final JPopupMenu parentPopupMenu,
+                                               final ProModAction proModAction,
+                                               final MenuSeparator menuSeparator,
+                                               final MenuItemPosition menuItemPosition,
+                                               final boolean checkable);
+
+
 }

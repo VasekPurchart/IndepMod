@@ -13,8 +13,11 @@ import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceDa
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.factory.DiagramModelFactory;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
 import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.menuService.MenuService;
+import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import org.apache.log4j.Logger;
+import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 
 import javax.swing.*;
 import java.io.File;
@@ -140,6 +143,10 @@ public class EPCNotation implements cz.cvut.promod.plugin.notationSpecificPlugIn
     /** {@inheritDoc}*/
     public JPopupMenu getPopupMenu() {
         return model.getPopupMenu();
+    }
+
+    public InsertMenuItemResult addPopupMenuItem(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable){
+       return model.addPopupMenuAction(proModAction, menuItemPosition, menuSeparator, checkable);
     }
 
     /** {@inheritDoc} */

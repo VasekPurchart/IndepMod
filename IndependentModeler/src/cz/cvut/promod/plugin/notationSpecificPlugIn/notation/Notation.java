@@ -3,6 +3,10 @@ package cz.cvut.promod.plugin.notationSpecificPlugIn.notation;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.NotationSpecificPlugin;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.factory.DiagramModelFactory;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
+import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
+import cz.cvut.promod.services.menuService.MenuService.MenuSeparator;
+import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
+import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 
 import javax.swing.*;
 
@@ -82,11 +86,13 @@ public interface Notation extends NotationSpecificPlugin {
     public NotationLocalIOController getLocalIOController();
 
     /**
-     * Returns the notation's popup menu. This method is not supposed to be used directly. When one intends  to insert
-     * anything to this popup menu, it is highly recommended to use MenuService.
+     * Adds an item into notation's workspace popup menu. Not all notations have popup menus.
      *
-     * @return an instance of notation's popup menu, or null, if the notation doesn't support the popup menu
+     * @return a status message
      */
-    public JPopupMenu getPopupMenu();
+     public InsertMenuItemResult addPopupMenuItem(ProModAction proModAction,
+                                                 MenuItemPosition menuItemPosition,
+                                                 MenuSeparator menuSeparator,
+                                                 boolean checkable);
 
 }

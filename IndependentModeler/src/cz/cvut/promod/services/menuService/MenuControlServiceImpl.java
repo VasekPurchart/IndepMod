@@ -117,9 +117,13 @@ public class MenuControlServiceImpl implements MenuControlService {
 
         // check whether all notations identifiers in includedInNotations set are valid identifiers of loaded notations
 
-        final JPopupMenu popupMenu = getRequiredPopupMenu(notationIdentifier);
+        //final JPopupMenu popupMenu = getRequiredPopupMenu(notationIdentifier);
 
-        // if notation doesn't support popup menu
+        JPopupMenu popupMenu;
+
+         if(ModelerModel.MODELER_IDENTIFIER.equals(notationIdentifier)){
+            popupMenu = projectTreePopupMenu;
+             // if notation doesn't support popup menu
         if(popupMenu == null){
             LOG.error("Notation (" + notationIdentifier +") doesn't support popup menu.");
             return InsertMenuItemResult.POPUP_NOT_SUPPORTED;
@@ -156,6 +160,16 @@ public class MenuControlServiceImpl implements MenuControlService {
                 menuItemPosition,
                 false
         );
+        }
+
+        if(ModelerSession.getNotationService().existNotation(notationIdentifier)){
+           return ModelerSession.getNotationService().getNotation(notationIdentifier).addPopupMenuItem(proModAction, menuItemPosition, menuSeparator, false);
+        } else {
+            LOG.error("No existing notation cannot provide it's popup menu.");
+            return null;
+        }
+
+         
     }
 
     /** {@inheritDoc} */
@@ -273,7 +287,7 @@ public class MenuControlServiceImpl implements MenuControlService {
      * @param checkable true if the menu item is supposed to be checkable
      * @return true if no error occurs, false otherwise
      */
-    private InsertMenuItemResult insertAction(final JMenu parentMenu,
+    public InsertMenuItemResult insertAction(final JMenu parentMenu,
                                                final JPopupMenu parentPopupMenu,
                                                final ProModAction proModAction,
                                                final MenuSeparator menuSeparator,
@@ -729,25 +743,4 @@ public class MenuControlServiceImpl implements MenuControlService {
         }
     }
 
-    /**
-     * Returns required JPopupMenu instance.
-     *
-     * @param notationIdentifier of a notation
-     * @return notation's popup menu, or null if there is no such a notation with notation identifier,
-     * or the notation doesn't support popup menu
-     */
-    private JPopupMenu getRequiredPopupMenu(final String notationIdentifier){
-        if(ModelerModel.MODELER_IDENTIFIER.equals(notationIdentifier)){
-            return projectTreePopupMenu;
-        }
-
-        if(ModelerSession.getNotationService().existNotation(notationIdentifier)){
-            return ModelerSession.getNotationService().getNotation(notationIdentifier).getPopupMenu();
-
-        } else {
-            LOG.error("No existing notation cannot provide it's popup menu.");
-            return null;
-        }
-    }
-
-}
+   }
