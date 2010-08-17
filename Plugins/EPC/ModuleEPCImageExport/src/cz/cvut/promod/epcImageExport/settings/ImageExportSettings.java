@@ -23,7 +23,7 @@ import cz.cvut.promod.epcImageExport.frames.imageExport.ImageExportModel;
  *
  * The common dialog setting page of the EPCImageExportModule plugin. 
  */
-public class ImageExportSettings extends AbstractDialogPage{
+public class ImageExportSettings extends AbstractDialogPage {
 
     private static final String INSET_LABEL = Resources.getResources().getString("epc.imageexport.settings.inset");
 
@@ -42,7 +42,7 @@ public class ImageExportSettings extends AbstractDialogPage{
     private final CancelAction cancelAction = new CancelAction();
 
 
-    public ImageExportSettings(final PresentationModel<ImageExportModel> presentation){
+    public ImageExportSettings(final PresentationModel<ImageExportModel> presentation) {
         super(INSET_LABEL);
 
         this.presentation = presentation;
@@ -66,25 +66,25 @@ public class ImageExportSettings extends AbstractDialogPage{
     }
 
     private void initEventHandling() {
-        addButtonListener(new ButtonListener(){
+        addButtonListener(new ButtonListener() {
             public void buttonEventFired(ButtonEvent e) {
-                if(e.getID() == 0){ // the button was clicked
-                    if(ButtonNames.OK.equals(e.getButtonName()) || ButtonNames.APPLY.equals(e.getButtonName())){
+                if (e.getID() == 0) { // the button was clicked
+                    if (ButtonNames.OK.equals(e.getButtonName()) || ButtonNames.APPLY.equals(e.getButtonName())) {
                         applyAction.actionPerformed(null);
                     }
                 }
             }
         });
 
-        addButtonListener(new ButtonListener(){
+        addButtonListener(new ButtonListener() {
             public void buttonEventFired(ButtonEvent e) {
-                if(ButtonNames.CANCEL.equals(e.getButtonName())){
+                if(ButtonNames.CANCEL.equals(e.getButtonName())) {
                     cancelAction.actionPerformed(null);
                 }
             }
         });
 
-        insetSpinner.addChangeListener(new ChangeListener(){
+        insetSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);
             }
