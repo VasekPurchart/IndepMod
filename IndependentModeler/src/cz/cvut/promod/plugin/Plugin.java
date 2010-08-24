@@ -1,6 +1,6 @@
 package cz.cvut.promod.plugin;
 
-import com.jidesoft.dialog.AbstractDialogPage;
+import cz.cvut.promod.gui.settings.SettingPageData;
 
 import java.util.List;
 
@@ -79,6 +79,6 @@ public interface Plugin {
      *
      * @return list of all pages that are supposed to be inserted into the Modeler's Settings dialog
      */
-    public List<AbstractDialogPage> getSettingPages();
+    public SettingPageData getSettingPages();
 
 }

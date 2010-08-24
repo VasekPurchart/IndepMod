@@ -12,8 +12,10 @@ import cz.cvut.promod.gui.dialogs.pluginsOverview.PluginsOverviewDialogDialog;
 import cz.cvut.promod.gui.listeners.ButtonPopupAdapter;
 import cz.cvut.promod.gui.listeners.DockFrameListener;
 import cz.cvut.promod.gui.listeners.SideButtonListener;
-import cz.cvut.promod.gui.settings.BasicSettingPage;
+import cz.cvut.promod.gui.settings.utils.BasicSettingPage;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.gui.settings.SettingsDialog;
+import cz.cvut.promod.gui.settings.utils.SettingPage;
 import cz.cvut.promod.gui.support.utils.DockableFrameWrapper;
 import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
 import cz.cvut.promod.plugin.extension.Extension;
@@ -889,13 +891,13 @@ public class Modeler extends ModelerView{
                     ModelerSession.getNotationService().getNotationSpecificPlugins(notation.getIdentifier());
 
             // init notation's settings screens
-            List<AbstractDialogPage> pages = notationSpecificPlugins.getNotation().getSettingPages();
+            SettingPageData settingInfo = notationSpecificPlugins.getNotation().getSettingPages();
+            List<AbstractDialogPage> pages = new LinkedList<AbstractDialogPage>();
+            this.createPages(pages, settingInfo);
 
-            if(pages == null){
+            if(pages.size() == 0){
                 LOG.info("Notation " + notation.getIdentifier() + " provides nullary setting pages list.");
-                pages = new LinkedList<AbstractDialogPage>();
             }
-
 
             pages.add(0, new BasicSettingPage(notation.getFullName()));
 
@@ -907,7 +909,9 @@ public class Modeler extends ModelerView{
 
             // init module's settings screens
             for(final Module module : notationSpecificPlugins.getModules()){
-                pages = module.getSettingPages();
+                settingInfo = module.getSettingPages();
+                pages.clear();
+                this.createPages(pages, settingInfo);
 
                 if(pages != null){
                     installPagesParent(pages, parentPage);
@@ -922,7 +926,9 @@ public class Modeler extends ModelerView{
 
         // init extension's settings screens
         for(final Extension extension : ModelerSession.getExtensionService().getExtensions()){
-            List<AbstractDialogPage> pages = extension.getSettingPages();
+            SettingPageData settingInfo = extension.getSettingPages();
+            List<AbstractDialogPage> pages = new LinkedList<AbstractDialogPage>();
+            this.createPages(pages, settingInfo);
 
             if(pages == null){
                 LOG.info("Extension " + extension.getIdentifier() + " provides nullary setting pages list.");
@@ -939,6 +945,15 @@ public class Modeler extends ModelerView{
             model.addSettingPages(pages);
         }
     }
+
+    private void createPages(List<AbstractDialogPage> pageList, SettingPageData settingInfo) {
+        SettingPage page = new SettingPage(settingInfo);
+        List<SettingPageData> children = settingInfo.getChildren();
+        for (SettingPageData child : children) {
+            this.createPages(pageList, child);
+        }
+    }
+
 
     /**
      * Sets the proper parent to all settings pages. If the parent of the page is already set then nothing is changed. 
