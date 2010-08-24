@@ -79,6 +79,6 @@ public interface Plugin {
      *
      * @return list of all pages that are supposed to be inserted into the Modeler's Settings dialog
      */
-    public SettingPageData getSettingPages();
+    public List<SettingPageData> getSettingPages();
 
 }

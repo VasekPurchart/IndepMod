@@ -1,21 +1,20 @@
 package cz.cvut.promod.memory;
 
+import com.jidesoft.status.EmptyStatusBarItem;
+import com.jidesoft.status.MemoryStatusBarItem;
+import com.jidesoft.status.ResizeStatusBarItem;
+import com.jidesoft.swing.JideBoxLayout;
+import cz.cvut.promod.gui.ModelerModel;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.plugin.extension.Extension;
 import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.gui.ModelerModel;
+import org.apache.log4j.Logger;
 
-import java.util.List;
-import java.util.Properties;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import com.jidesoft.dialog.AbstractDialogPage;
-import com.jidesoft.status.MemoryStatusBarItem;
-import com.jidesoft.status.ResizeStatusBarItem;
-import com.jidesoft.status.EmptyStatusBarItem;
-import com.jidesoft.swing.JideBoxLayout;
-import org.apache.log4j.Logger;
+import java.util.List;
+import java.util.Properties;
 
 
 /**
@@ -80,7 +79,7 @@ public class MemoryIndicatorExtension implements Extension {
 
     }
 
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return null;
     }
 }

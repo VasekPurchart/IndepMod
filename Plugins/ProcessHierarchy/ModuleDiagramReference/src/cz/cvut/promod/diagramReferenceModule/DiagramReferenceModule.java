@@ -1,20 +1,19 @@
 package cz.cvut.promod.diagramReferenceModule;
 
+import cz.cvut.promod.gui.settings.SettingPageData;
+import cz.cvut.promod.hierarchyNotation.workspace.ProcessHierarchyWorkspaceData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.Notation;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.hierarchyNotation.workspace.ProcessHierarchyWorkspaceData;
+import org.apache.log4j.Logger;
 
-import java.util.Set;
-import java.util.List;
-import java.util.Properties;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import com.jidesoft.dialog.AbstractDialogPage;
-import org.apache.log4j.Logger;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * ProMod, master thesis project
@@ -90,7 +89,7 @@ public class DiagramReferenceModule implements cz.cvut.promod.plugin.notationSpe
         LOG.info("Diagram Reference Module is performing the finish sequence.");
     }
 
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return null;
     }
 

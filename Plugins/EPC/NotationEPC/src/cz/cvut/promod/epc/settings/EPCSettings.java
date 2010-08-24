@@ -1,26 +1,23 @@
 package cz.cvut.promod.epc.settings;
 
-import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
-import cz.cvut.promod.services.projectService.treeProjectNode.ProjectContainer;
-import cz.cvut.promod.epc.modelFactory.diagramModel.EPCDiagramModel;
-import cz.cvut.promod.epc.settings.settingPages.GeneralPage;
-
-import javax.swing.tree.TreePath;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.*;
-import java.util.Properties;
-import java.util.List;
-import java.util.LinkedList;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-
-import org.apache.log4j.Logger;
-import com.jgoodies.binding.value.ValueModel;
-import com.jgoodies.binding.value.BufferedValueModel;
 import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
-import com.jidesoft.dialog.AbstractDialogPage;
+import com.jgoodies.binding.value.BufferedValueModel;
+import cz.cvut.promod.epc.modelFactory.diagramModel.EPCDiagramModel;
+import cz.cvut.promod.epc.resources.Resources;
+import cz.cvut.promod.epc.settings.settingPages.GeneralPage;
+import cz.cvut.promod.gui.settings.SettingPageData;
+import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectContainer;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
+import org.apache.log4j.Logger;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * ProMod, master thesis project
@@ -35,13 +32,13 @@ public class EPCSettings {
 
     private static EPCSettings instance;
 
-    private final List<AbstractDialogPage> settingPages;
+    private final List<SettingPageData> settingPages;
 
     private final EPCSettingsModel model;
     private final PresentationModel<EPCSettingsModel> presentation;
     private final BufferedValueModel undoLimitModel;
 
-    private GeneralPage gereralPage;
+    private static final String SETTINGS_LABEL = Resources.getResources().getString("epc.settings");
 
 
     public EPCSettings(final Properties properties){
@@ -50,7 +47,7 @@ public class EPCSettings {
 
         undoLimitModel = presentation.getBufferedModel(EPCSettingsModel.UNDO_LIMIT_PROPERTY);
 
-        settingPages = new LinkedList<AbstractDialogPage>();
+        settingPages = new LinkedList<SettingPageData>();
 
         initPages();
 
@@ -70,9 +67,8 @@ public class EPCSettings {
     }
 
     private void initPages() {
-        gereralPage = new GeneralPage(presentation, undoLimitModel);
-
-        settingPages.add(gereralPage);
+        GeneralPage generalPage = new GeneralPage(presentation, undoLimitModel);
+        settingPages.add(new SettingPageData(SETTINGS_LABEL, null, generalPage));
     }
 
     public int getUndoLimit(){
@@ -119,7 +115,7 @@ public class EPCSettings {
         EPCSettings.instance = instance;
     }
 
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return settingPages;
     }
 }

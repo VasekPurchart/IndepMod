@@ -1,17 +1,16 @@
 package cz.cvut.promod.ph.treeLayout;
 
-import cz.cvut.promod.plugin.notationSpecificPlugIn.module.Module;
-import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
-import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
-import cz.cvut.promod.services.menuService.MenuService;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.ph.treeLayout.settings.TreeLayoutSettings;
-
-import java.util.Set;
-import java.util.List;
-
-import com.jidesoft.dialog.AbstractDialogPage;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.module.Module;
+import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.menuService.MenuService;
+import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import org.apache.log4j.Logger;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * ProMod, master thesis project
@@ -104,7 +103,7 @@ public class ProcessHierarchyTreeLayout implements Module {
     }
 
     /** {@inheritDoc} */
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return TreeLayoutSettings.getInstance().getSettingPages();
     }
 }

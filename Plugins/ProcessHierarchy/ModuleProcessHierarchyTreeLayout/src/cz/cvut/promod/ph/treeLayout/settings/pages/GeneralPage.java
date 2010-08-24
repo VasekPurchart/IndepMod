@@ -1,22 +1,19 @@
 package cz.cvut.promod.ph.treeLayout.settings.pages;
 
-import com.jidesoft.dialog.AbstractDialogPage;
-import com.jidesoft.dialog.ButtonListener;
-import com.jidesoft.dialog.ButtonEvent;
-import com.jidesoft.dialog.ButtonNames;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.builder.PanelBuilder;
-import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
+import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import cz.cvut.promod.gui.settings.SettingPagePanel;
 import cz.cvut.promod.ph.treeLayout.settings.TreeLayoutSettings;
 import cz.cvut.promod.ph.treeLayout.settings.TreeLayoutSettingsModel;
+import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * ProMod, master thesis project
@@ -25,15 +22,17 @@ import java.awt.event.ActionEvent;
  *
  * GeneralPage represents the common settings dialog page defined by ProcessHierarchyTreeLayout plugin. 
  */
-public class GeneralPage extends AbstractDialogPage{
+public class GeneralPage extends SettingPagePanel{
 
     private final JRadioButton topButton = ModelerSession.getComponentFactoryService().createRadioButton("top");
     private final JRadioButton centerButton = ModelerSession.getComponentFactoryService().createRadioButton("center");
     private final JRadioButton bottomButton = ModelerSession.getComponentFactoryService().createRadioButton("bottom");
 
-    public GeneralPage(){
-        super("Process Hierarchy Tree Layout");
+    private AbstractAction applyAction;
+    private AbstractAction cancelAction;
 
+    public GeneralPage(){
+        //super("Process Hierarchy Tree Layout");
         initEventHandling();
     }
 
@@ -43,47 +42,41 @@ public class GeneralPage extends AbstractDialogPage{
         buttonGroup.add(centerButton);
         buttonGroup.add(bottomButton);
 
-        addButtonListener(new ButtonListener(){
-            public void buttonEventFired(ButtonEvent e) {
-                if(e.getID() == 0){ // the button was clicked
-                    if(ButtonNames.OK.equals(e.getButtonName()) || ButtonNames.APPLY.equals(e.getButtonName())){
-                        if(topButton.isSelected()){
-                            TreeLayoutSettings.getInstance().setVerticalLayout(TreeLayoutSettingsModel.VerticalLayout.TOP);
+        this.applyAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                if(topButton.isSelected()){
+                    TreeLayoutSettings.getInstance().setVerticalLayout(TreeLayoutSettingsModel.VerticalLayout.TOP);
 
-                        } else if(centerButton.isSelected()) {
-                            TreeLayoutSettings.getInstance().setVerticalLayout(TreeLayoutSettingsModel.VerticalLayout.CENTER);
+                } else if(centerButton.isSelected()) {
+                    TreeLayoutSettings.getInstance().setVerticalLayout(TreeLayoutSettingsModel.VerticalLayout.CENTER);
 
-                        } else if(bottomButton.isSelected()){
-                            TreeLayoutSettings.getInstance().setVerticalLayout(TreeLayoutSettingsModel.VerticalLayout.BOTTOM);
-                        }
-                    }
+                } else if(bottomButton.isSelected()){
+                    TreeLayoutSettings.getInstance().setVerticalLayout(TreeLayoutSettingsModel.VerticalLayout.BOTTOM);
                 }
             }
-        });
+        };
+
+        this.cancelAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                init();
+            }
+        };
 
         topButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);     
+                fireApplyActionEnable();
             }
         });
 
         centerButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);
+                fireApplyActionEnable();
             }
         });
 
         bottomButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);
-            }
-        });
-
-        addButtonListener(new ButtonListener(){
-            public void buttonEventFired(ButtonEvent e) {
-                if(ButtonNames.CANCEL.equals(e.getButtonName())){
-                    init();
-                }
+                fireApplyActionEnable();
             }
         });
     }
@@ -100,13 +93,26 @@ public class GeneralPage extends AbstractDialogPage{
                 centerButton.doClick();
                 break;
         }
-
-        fireButtonEvent(ButtonEvent.DISABLE_BUTTON, ButtonNames.APPLY);
     }
 
     public void lazyInitialize() {
         initLayout();
         init();
+    }
+
+    @Override
+    public AbstractAction getApplyAction() {
+        return this.applyAction;
+    }
+
+    @Override
+    public AbstractAction getCancelAction() {
+        return this.cancelAction;
+    }
+
+    @Override
+    public AbstractAction getOkAction() {
+        return this.applyAction;
     }
 
     private void initLayout() {

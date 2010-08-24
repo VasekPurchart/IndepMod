@@ -6,15 +6,15 @@ import com.jidesoft.swing.JideButton;
 import cz.cvut.promod.actions.LoadDialogAction;
 import cz.cvut.promod.gui.dialogs.loadErrors.LoadErrorsDialog;
 import cz.cvut.promod.gui.dialogs.newProject.NewProjectDialog;
+import cz.cvut.promod.gui.dialogs.pluginsOverview.PluginsOverviewDialogDialog;
 import cz.cvut.promod.gui.dialogs.simpleTextFieldDialog.SimpleTextFieldDialog;
 import cz.cvut.promod.gui.dialogs.simpleTextFieldDialog.SimpleTextFieldDialogExecutor;
-import cz.cvut.promod.gui.dialogs.pluginsOverview.PluginsOverviewDialogDialog;
 import cz.cvut.promod.gui.listeners.ButtonPopupAdapter;
 import cz.cvut.promod.gui.listeners.DockFrameListener;
 import cz.cvut.promod.gui.listeners.SideButtonListener;
-import cz.cvut.promod.gui.settings.utils.BasicSettingPage;
 import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.gui.settings.SettingsDialog;
+import cz.cvut.promod.gui.settings.utils.BasicSettingPage;
 import cz.cvut.promod.gui.settings.utils.SettingPage;
 import cz.cvut.promod.gui.support.utils.DockableFrameWrapper;
 import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
@@ -25,15 +25,15 @@ import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.Notation;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.utils.NotationWorkspaceDataDefault;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.workspace.UpdatableWorkspaceComponent;
+import cz.cvut.promod.resources.Resources;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.MenuControlService;
 import cz.cvut.promod.services.menuService.MenuService;
-import cz.cvut.promod.services.menuService.utils.ModelerMenuItem;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
+import cz.cvut.promod.services.menuService.utils.ModelerMenuItem;
 import cz.cvut.promod.services.pluginLoaderService.utils.NotationSpecificPlugins;
 import cz.cvut.promod.services.pluginLoaderService.utils.PluginLoadErrors;
-import cz.cvut.promod.resources.Resources;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -891,33 +891,28 @@ public class Modeler extends ModelerView{
                     ModelerSession.getNotationService().getNotationSpecificPlugins(notation.getIdentifier());
 
             // init notation's settings screens
-            SettingPageData settingInfo = notationSpecificPlugins.getNotation().getSettingPages();
+            List<SettingPageData> settingInfo = notationSpecificPlugins.getNotation().getSettingPages();
             List<AbstractDialogPage> pages = new LinkedList<AbstractDialogPage>();
-            this.createPages(pages, settingInfo);
-
-            if(pages.size() == 0){
-                LOG.info("Notation " + notation.getIdentifier() + " provides nullary setting pages list.");
-            }
-
             pages.add(0, new BasicSettingPage(notation.getFullName()));
-
             final AbstractDialogPage parentPage = pages.get(0);
 
-            installPagesParent(pages, parentPage);
+            if(settingInfo == null){
+                LOG.info("Notation " + notation.getIdentifier() + " provides nullary setting pages list.");
+                settingInfo = new LinkedList<SettingPageData>();
+            }
+
+            this.createPages(pages, settingInfo, parentPage);
 
             model.addSettingPages(pages);
 
             // init module's settings screens
             for(final Module module : notationSpecificPlugins.getModules()){
                 settingInfo = module.getSettingPages();
-                pages.clear();
-                this.createPages(pages, settingInfo);
+                pages = new LinkedList<AbstractDialogPage>();
 
-                if(pages != null){
-                    installPagesParent(pages, parentPage);
-
+                if(settingInfo != null){
+                    this.createPages(pages, settingInfo, parentPage);
                     model.addSettingPages(pages);
-
                 } else {
                     LOG.info("Module " + module.getIdentifier() + " provides nullary setting pages list.");
                 }
@@ -926,31 +921,37 @@ public class Modeler extends ModelerView{
 
         // init extension's settings screens
         for(final Extension extension : ModelerSession.getExtensionService().getExtensions()){
-            SettingPageData settingInfo = extension.getSettingPages();
+            List<SettingPageData> settingInfo = extension.getSettingPages();
             List<AbstractDialogPage> pages = new LinkedList<AbstractDialogPage>();
-            this.createPages(pages, settingInfo);
-
-            if(pages == null){
-                LOG.info("Extension " + extension.getIdentifier() + " provides nullary setting pages list.");
-                pages = new LinkedList<AbstractDialogPage>();
-            }
-
 
             pages.add(0, new BasicSettingPage(extension.getName()));
-
             final AbstractDialogPage parentPage = pages.get(0);
 
-            installPagesParent(pages, parentPage);
+            if(settingInfo == null){
+                LOG.info("Extension " + extension.getIdentifier() + " provides nullary setting pages list.");
+                settingInfo = new LinkedList<SettingPageData>();
+            }
+            this.createPages(pages, settingInfo, parentPage);
 
             model.addSettingPages(pages);
         }
     }
 
-    private void createPages(List<AbstractDialogPage> pageList, SettingPageData settingInfo) {
-        SettingPage page = new SettingPage(settingInfo);
-        List<SettingPageData> children = settingInfo.getChildren();
+    private void createPages(List<AbstractDialogPage> destination, List<SettingPageData> settingData, AbstractDialogPage parent) {
+        for (SettingPageData pageData : settingData) {
+            this.createPages(destination, pageData, parent);
+        }
+    }
+
+    private void createPages(List<AbstractDialogPage> destination, SettingPageData settingData, AbstractDialogPage parent) {
+        SettingPage page = new SettingPage(settingData);
+        if (parent != null) {
+            page.setParentPage(parent);
+        }
+        destination.add(page);
+        List<SettingPageData> children = settingData.getChildren();
         for (SettingPageData child : children) {
-            this.createPages(pageList, child);
+            this.createPages(destination, child, page);
         }
     }
 

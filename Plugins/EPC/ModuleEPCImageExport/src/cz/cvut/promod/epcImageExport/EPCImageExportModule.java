@@ -1,20 +1,19 @@
 package cz.cvut.promod.epcImageExport;
 
+import cz.cvut.promod.epcImageExport.resources.Resources;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.module.Module;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.MenuService;
-import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
-import cz.cvut.promod.epcImageExport.resources.Resources;
-
-import java.util.Set;
-import java.util.List;
-import java.io.File;
-
+import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import org.apache.log4j.Logger;
-import com.jidesoft.dialog.AbstractDialogPage;
+
+import java.io.File;
+import java.util.List;
+import java.util.Set;
 
 /**
  * ProMod, master thesis project
@@ -101,9 +100,10 @@ public class EPCImageExportModule implements Module {
     }
 
     /** {@inheritDoc} */
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return model.getSettingPages();
     }
+    
 
     /** {@inheritDoc} */
     public void finish() {  }
