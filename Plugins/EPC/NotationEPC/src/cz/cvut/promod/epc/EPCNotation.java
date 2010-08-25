@@ -1,6 +1,5 @@
 package cz.cvut.promod.epc;
 
-import com.jidesoft.dialog.AbstractDialogPage;
 import com.jidesoft.status.LabelStatusBarItem;
 import com.jidesoft.swing.JideBoxLayout;
 import cz.cvut.promod.epc.ioController.EPCNotationIOController;
@@ -8,16 +7,17 @@ import cz.cvut.promod.epc.modelFactory.EPCNotationModelFactory;
 import cz.cvut.promod.epc.resources.Resources;
 import cz.cvut.promod.epc.settings.EPCSettings;
 import cz.cvut.promod.gui.Modeler;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.factory.DiagramModelFactory;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
 import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.MenuService;
 import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import org.apache.log4j.Logger;
-import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 
 import javax.swing.*;
 import java.io.File;
@@ -241,7 +241,7 @@ public class EPCNotation implements cz.cvut.promod.plugin.notationSpecificPlugIn
     }
 
     /** {@inheritDoc} */
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return EPCSettings.getInstance().getSettingPages();
     }
 }

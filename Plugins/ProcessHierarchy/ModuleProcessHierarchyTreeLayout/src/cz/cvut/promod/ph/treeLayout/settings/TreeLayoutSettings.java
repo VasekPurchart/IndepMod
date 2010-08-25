@@ -1,11 +1,10 @@
 package cz.cvut.promod.ph.treeLayout.settings;
 
-import com.jidesoft.dialog.AbstractDialogPage;
-
-import java.util.List;
-import java.util.LinkedList;
-
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.ph.treeLayout.settings.pages.GeneralPage;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * ProMod, master thesis project
@@ -16,14 +15,14 @@ import cz.cvut.promod.ph.treeLayout.settings.pages.GeneralPage;
  */
 public class TreeLayoutSettings {
 
-    private final List<AbstractDialogPage> settingPages;
+    private final List<SettingPageData> settingPages;
 
     private static TreeLayoutSettings instance;
 
     private final TreeLayoutSettingsModel model;
 
     public TreeLayoutSettings(){
-        settingPages = new LinkedList<AbstractDialogPage>();
+        settingPages = new LinkedList<SettingPageData>();
 
         model = new TreeLayoutSettingsModel();
 
@@ -31,10 +30,10 @@ public class TreeLayoutSettings {
     }
 
     private void initPages() {
-        settingPages.add(new GeneralPage());
+        settingPages.add(new SettingPageData("Process Hierarchy Tree Layout", null, new GeneralPage()));
     }
 
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return settingPages;
     }
 

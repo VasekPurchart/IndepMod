@@ -11,11 +11,11 @@
   
   <notation alias="hierarchy notation" class="cz.cvut.promod.hierarchyNotation.ProcessHierarchyNotation">
     <module alias="ProcessHierarchyTreeLayout" class="cz.cvut.promod.ph.treeLayout.ProcessHierarchyTreeLayout" />
-    <module alias="DiagramReferenceModule" class="cz.cvut.promod.diagramReferenceModule.DiagramReferenceModule" config="phDiagramReference.properties" />        
+    <module alias="DiagramReferenceModule" class="cz.cvut.promod.diagramReferenceModule.DiagramReferenceModule" config="phDiagramReference.properties" />
   </notation>
 
-  <notation alias="classmodels" class="cz.cvut.indepmod.classmodel.ClassModelNotation">
-  </notation>
+  <!--<notation alias="classmodels" class="cz.cvut.indepmod.classmodel.ClassModelNotation">
+  </notation>-->
 
   
   <extension alias="MemoryIndicatorExtension" class="cz.cvut.promod.memory.MemoryIndicatorExtension" config="memoryIndicator.properties" />

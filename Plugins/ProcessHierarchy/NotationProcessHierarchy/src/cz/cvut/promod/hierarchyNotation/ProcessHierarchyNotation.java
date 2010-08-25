@@ -2,10 +2,10 @@ package cz.cvut.promod.hierarchyNotation;
 
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.value.ValueModel;
-import com.jidesoft.dialog.AbstractDialogPage;
 import com.jidesoft.status.LabelStatusBarItem;
 import com.jidesoft.swing.JideBoxLayout;
 import cz.cvut.promod.gui.Modeler;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.hierarchyNotation.ioController.ProcessHierarchyIOController;
 import cz.cvut.promod.hierarchyNotation.modelFactory.ProcessHierarchyModelFactory;
 import cz.cvut.promod.hierarchyNotation.resources.Resources;
@@ -144,7 +144,7 @@ public class ProcessHierarchyNotation implements cz.cvut.promod.plugin.notationS
     }
 
     /** {@inheritDoc} */
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return null;
     }
 

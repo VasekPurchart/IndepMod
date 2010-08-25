@@ -1,30 +1,25 @@
 package cz.cvut.promod.epc.settings.settingPages;
 
-import com.jidesoft.dialog.AbstractDialogPage;
-import com.jidesoft.dialog.ButtonListener;
-import com.jidesoft.dialog.ButtonEvent;
-import com.jidesoft.dialog.ButtonNames;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.builder.PanelBuilder;
-import com.jgoodies.binding.value.BufferedValueModel;
 import com.jgoodies.binding.PresentationModel;
 import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
-
-import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
-import cz.cvut.promod.services.ModelerSession;
+import com.jgoodies.binding.value.BufferedValueModel;
+import com.jgoodies.forms.builder.PanelBuilder;
+import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import cz.cvut.promod.epc.resources.Resources;
 import cz.cvut.promod.epc.settings.EPCSettings;
 import cz.cvut.promod.epc.settings.EPCSettingsModel;
+import cz.cvut.promod.gui.settings.SettingPagePanel;
+import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
-import org.apache.log4j.Logger;
 
 /**
  * ProMod, master thesis project
@@ -33,13 +28,12 @@ import org.apache.log4j.Logger;
  *
  * General Page for Setting Dialog of the EPCNotation plugin.
  */
-public class GeneralPage extends AbstractDialogPage{
+public class GeneralPage extends SettingPagePanel{
 
     private static Logger LOG = Logger.getLogger(GeneralPage.class);
 
     private static final int UNDO_SPINNER_COLUMNS = 3;
-
-    private static final String SETTINGS_LABEL = Resources.getResources().getString("epc.settings");
+    
     private static final String GENERALS_LABEL = Resources.getResources().getString("epc.settings.generals");
 
     private final JLabel undoLimitLabel = ModelerSession.getComponentFactoryService().createLabel(
@@ -56,7 +50,7 @@ public class GeneralPage extends AbstractDialogPage{
 
 
     public GeneralPage(final PresentationModel<EPCSettingsModel> presentation, final BufferedValueModel undoLimitModel){
-        super(SETTINGS_LABEL);
+        //super(SETTINGS_LABEL);
 
         this.presentation = presentation;
         this.undoLimitModel = undoLimitModel;
@@ -72,29 +66,26 @@ public class GeneralPage extends AbstractDialogPage{
         initEventHandling();
     }
 
+    @Override
+    public AbstractAction getApplyAction() {
+        return this.applyAction;
+    }
+
+    @Override
+    public AbstractAction getCancelAction() {
+        return this.cancelAction;
+    }
+
+    @Override
+    public AbstractAction getOkAction() {
+        return this.applyAction;
+    }
+
     private void initValues() {
         undoLimitSpinner.setValue(EPCSettings.getInstance().getUndoLimit());
     }
 
     private void initEventHandling() {
-        addButtonListener(new ButtonListener(){
-            public void buttonEventFired(ButtonEvent e) {
-                if(e.getID() == 0){ // the button was clicked
-                    if(ButtonNames.OK.equals(e.getButtonName()) || ButtonNames.APPLY.equals(e.getButtonName())){
-                         applyAction.actionPerformed(null);
-                    }
-                }
-            }
-        });
-
-        addButtonListener(new ButtonListener(){
-            public void buttonEventFired(ButtonEvent e) {
-                if(ButtonNames.CANCEL.equals(e.getButtonName())){
-                    cancelAction.actionPerformed(null);
-                }
-            }
-        });
-
        final int initUndoLimitValue = (Integer) undoLimitModel.getValue();
        final SpinnerNumberModel scaleSpinnerModel = SpinnerAdapterFactory.createNumberAdapter(
                 undoLimitModel,
@@ -108,7 +99,8 @@ public class GeneralPage extends AbstractDialogPage{
 
         undoLimitSpinner.addChangeListener(new ChangeListener(){
             public void stateChanged(ChangeEvent e) {
-                fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);
+                //fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);
+                fireApplyActionEnable();
             }
         });
     }

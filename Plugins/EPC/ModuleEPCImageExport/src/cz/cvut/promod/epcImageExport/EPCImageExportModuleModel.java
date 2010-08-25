@@ -1,22 +1,20 @@
 package cz.cvut.promod.epcImageExport;
 
+import cz.cvut.promod.epc.workspace.EPCWorkspaceData;
+import cz.cvut.promod.epcImageExport.frames.imageExport.ImageExport;
+import cz.cvut.promod.epcImageExport.resources.Resources;
+import cz.cvut.promod.epcImageExport.settings.ImageExportSettings;
+import cz.cvut.promod.gui.settings.SettingPageData;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
+import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
-
-import cz.cvut.promod.epcImageExport.frames.imageExport.ImageExport;
-import cz.cvut.promod.epcImageExport.resources.Resources;
-import cz.cvut.promod.epcImageExport.settings.ImageExportSettings;
-import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
-import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
-import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
-import cz.cvut.promod.epc.workspace.EPCWorkspaceData;
-import com.jidesoft.dialog.AbstractDialogPage;
 
 /**
  * ProMod, master thesis project
@@ -36,13 +34,15 @@ public class EPCImageExportModuleModel {
 
     public static final String PNG_EXPORT_ACTION = "epc.imageexport.png.export.action";
 
+    private static final String INSET_LABEL = Resources.getResources().getString("epc.imageexport.settings.inset");
+
     private Set<DockableFrameData> dockableFrames;
 
     private final Properties properties = new Properties();
 
     private final Map<String, ProModAction> actions;
 
-    private List<AbstractDialogPage> settingPages;
+    private List<SettingPageData> settingPages;
 
 
     public EPCImageExportModuleModel(final File propertiesFile) throws InstantiationException {
@@ -63,7 +63,7 @@ public class EPCImageExportModuleModel {
         //init dockable frames
         dockableFrames = new HashSet<DockableFrameData>();
 
-        settingPages = new LinkedList<AbstractDialogPage>();
+        settingPages = new LinkedList<SettingPageData>();
     }
 
     /**
@@ -86,7 +86,7 @@ public class EPCImageExportModuleModel {
         dockableFrames.add(imageExport);
 
         // init setting pages
-        settingPages.add(new ImageExportSettings(imageExport.getPresentationModel()));
+        settingPages.add(new SettingPageData(INSET_LABEL, null, new ImageExportSettings(imageExport.getPresentationModel())));
     }
 
     /**
@@ -120,7 +120,7 @@ public class EPCImageExportModuleModel {
     /**
      * @return common settings dialog pages
      */
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return settingPages;
     }
 
