@@ -84,13 +84,13 @@ public class GeneralPage extends SettingPagePanel{
     private void init() {
         switch (TreeLayoutSettings.getInstance().getVerticalLayout()){
             case TOP:
-                topButton.doClick();
+                topButton.setSelected(true);
                 break;
             case BOTTOM:
-                bottomButton.doClick();
+                bottomButton.setSelected(true);
                 break;
             case CENTER:
-                centerButton.doClick();
+                centerButton.setSelected(true);
                 break;
         }
     }
