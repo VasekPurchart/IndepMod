@@ -1,24 +1,25 @@
 package cz.cvut.promod.gui.projectNavigation;
 
+import com.jidesoft.dialog.JideOptionPane;
 import cz.cvut.promod.gui.Modeler;
 import cz.cvut.promod.gui.ModelerModel;
 import cz.cvut.promod.gui.dialogs.addNewDiagramDialog.AddNewDiagramDialog;
 import cz.cvut.promod.gui.dialogs.simpleTextFieldDialog.SimpleTextFieldDialog;
 import cz.cvut.promod.gui.dialogs.simpleTextFieldDialog.executors.AddProjectSubFolderExecutor;
+import cz.cvut.promod.gui.projectNavigation.actions.executors.RenameExecutor;
 import cz.cvut.promod.gui.projectNavigation.events.ProjectTreeExpandEvent;
 import cz.cvut.promod.gui.projectNavigation.listeners.MousePopup;
 import cz.cvut.promod.gui.projectNavigation.renderer.ProjectNavigationCellRenderer;
-import cz.cvut.promod.gui.projectNavigation.actions.executors.RenameExecutor;
+import cz.cvut.promod.resources.Resources;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.MenuControlService;
 import cz.cvut.promod.services.menuService.MenuService;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
-import cz.cvut.promod.services.projectService.utils.ProjectServiceUtils;
-import cz.cvut.promod.services.projectService.treeProjectNode.ProjectRoot;
-import cz.cvut.promod.services.projectService.treeProjectNode.ProjectItem;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
-import cz.cvut.promod.resources.Resources;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectItem;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectRoot;
+import cz.cvut.promod.services.projectService.utils.ProjectServiceUtils;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -32,8 +33,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.Enumeration;
-
-import com.jidesoft.dialog.JideOptionPane;
 
 /**
  * ProMod, master thesis project

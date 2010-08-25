@@ -20,6 +20,7 @@
     <orderEntry type="module" module-name="ModuleProcessHierarchyTreeLayout" />
     <orderEntry type="module" module-name="ModuleDiagramReference" />
     <orderEntry type="module" module-name="ExtensionMemoryIndicator" />
+    <orderEntry type="module" module-name="NotationClassModel" />
   </component>
 </module>
 

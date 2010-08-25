@@ -1,9 +1,9 @@
 package cz.cvut.indepmod.classmodel;
 
-import com.jidesoft.dialog.AbstractDialogPage;
 import cz.cvut.indepmod.classmodel.ioController.ClassModelNotationIOController;
 import cz.cvut.indepmod.classmodel.modelFactory.ClassModelNotationModelFactory;
 import cz.cvut.indepmod.classmodel.resources.Resources;
+import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.Notation;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
@@ -101,7 +101,7 @@ public class ClassModelNotation implements Notation {
     public void finish() {
     }
 
-    public List<AbstractDialogPage> getSettingPages() {
+    public List<SettingPageData> getSettingPages() {
         return null;
     }
 

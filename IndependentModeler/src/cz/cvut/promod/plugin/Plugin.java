@@ -64,18 +64,12 @@ public interface Plugin {
     public void finish();
 
     /**
-     * Returns a list of pages that are supposed to be inserted into the Settings Dialog of ProMod. Because the Option
-     * Dialog works in a tree style all pages are supposed to have a parent.
+     * Returns a list of pages (data about pages - SettingPageData) that are supposed to be inserted into the Settings
+     * Dialog of IndependentModeler. Because the Dialog works in a tree style all pages are able to have its children
      *
-     * The parent of the first item in the list will be set automatically. Parents of all other items are supposed to
-     * be defined by the developer. If not, Modeler will set the same parent as the first page to all pages that do
-     * not have a parent. If the tree structure is defined by the developer, it's his/her responsibility to defined
-     * the correct tree structure whether the root has event no parent of the parent is the first page of the list.
-     *
-     * Important note: If a page has a parent, then the parent is not supposed to hold any actual view. This parent
-     * page serves only as a container a when this parent is selected in the Settings dialog navigation, the view of
-     * it's first child is shown. 
-     *
+     * Important note: If a page A has a child B, then the parent (node A) is not supposed to hold any actual view. This
+     * parent page serves only as a container and when this parent is selected in the Settings dialog navigation,
+     * the view of it's first child is shown.
      *
      * @return list of all pages that are supposed to be inserted into the Modeler's Settings dialog
      */

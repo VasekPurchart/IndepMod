@@ -86,7 +86,9 @@ public class EPCImageExportModuleModel {
         dockableFrames.add(imageExport);
 
         // init setting pages
-        settingPages.add(new SettingPageData(INSET_LABEL, null, new ImageExportSettings(imageExport.getPresentationModel())));
+        ImageExportSettings imageExportSettings = new ImageExportSettings(imageExport.getPresentationModel());
+        SettingPageData settingPageData = new SettingPageData(INSET_LABEL, null, imageExportSettings);
+        settingPages.add(settingPageData);
     }
 
     /**

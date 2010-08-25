@@ -14,8 +14,7 @@
     <module alias="DiagramReferenceModule" class="cz.cvut.promod.diagramReferenceModule.DiagramReferenceModule" config="phDiagramReference.properties" />
   </notation>
 
-  <!--<notation alias="classmodels" class="cz.cvut.indepmod.classmodel.ClassModelNotation">
-  </notation>-->
+  <notation alias="classmodels" class="cz.cvut.indepmod.classmodel.ClassModelNotation" />
 
   
   <extension alias="MemoryIndicatorExtension" class="cz.cvut.promod.memory.MemoryIndicatorExtension" config="memoryIndicator.properties" />

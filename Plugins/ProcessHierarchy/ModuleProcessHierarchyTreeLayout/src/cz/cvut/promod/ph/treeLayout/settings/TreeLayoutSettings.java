@@ -30,7 +30,9 @@ public class TreeLayoutSettings {
     }
 
     private void initPages() {
-        settingPages.add(new SettingPageData("Process Hierarchy Tree Layout", null, new GeneralPage()));
+        GeneralPage genPage = new GeneralPage();
+        SettingPageData setPageData = new SettingPageData("Process Hierarchy Tree Layout", null, genPage);
+        settingPages.add(setPageData);
     }
 
     public List<SettingPageData> getSettingPages() {

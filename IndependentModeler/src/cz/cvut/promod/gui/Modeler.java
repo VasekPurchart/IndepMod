@@ -886,11 +886,11 @@ public class Modeler extends ModelerView{
     public void initSettingsDialog() {
         LOG.info("Initializing settings dialog.");
 
+        // init notation's settings screens
         for(final Notation notation : ModelerSession.getNotationService().getNotations()){
             final NotationSpecificPlugins notationSpecificPlugins =
                     ModelerSession.getNotationService().getNotationSpecificPlugins(notation.getIdentifier());
 
-            // init notation's settings screens
             List<SettingPageData> settingInfo = notationSpecificPlugins.getNotation().getSettingPages();
             List<AbstractDialogPage> pages = new LinkedList<AbstractDialogPage>();
             pages.add(0, new BasicSettingPage(notation.getFullName()));
@@ -898,7 +898,6 @@ public class Modeler extends ModelerView{
 
             if(settingInfo == null){
                 LOG.info("Notation " + notation.getIdentifier() + " provides nullary setting pages list.");
-                settingInfo = new LinkedList<SettingPageData>();
             }
 
             this.createPages(pages, settingInfo, parentPage);
@@ -929,7 +928,6 @@ public class Modeler extends ModelerView{
 
             if(settingInfo == null){
                 LOG.info("Extension " + extension.getIdentifier() + " provides nullary setting pages list.");
-                settingInfo = new LinkedList<SettingPageData>();
             }
             this.createPages(pages, settingInfo, parentPage);
 
@@ -937,12 +935,28 @@ public class Modeler extends ModelerView{
         }
     }
 
+    /**
+     * This method creates AbstractDialogPage instances based on SettingPageData instances
+     * @param destination Output list where will be new AbstractDialogPage instances inserted
+     * @param settingData SettingPageData instances
+     * @param parent Parent of SettingPageData instances - can be set to null
+     */
     private void createPages(List<AbstractDialogPage> destination, List<SettingPageData> settingData, AbstractDialogPage parent) {
+        if (settingData == null) {
+            return;
+        }
+
         for (SettingPageData pageData : settingData) {
             this.createPages(destination, pageData, parent);
         }
     }
 
+    /**
+     * This method creates AbstractDialogPage instances based on SettingPageData instance
+     * @param destination Output list where will be new AbstractDialogPage instance inserted
+     * @param settingData SettingPageData instance
+     * @param parent parent of the settingData
+     */
     private void createPages(List<AbstractDialogPage> destination, SettingPageData settingData, AbstractDialogPage parent) {
         SettingPage page = new SettingPage(settingData);
         if (parent != null) {
@@ -952,25 +966,6 @@ public class Modeler extends ModelerView{
         List<SettingPageData> children = settingData.getChildren();
         for (SettingPageData child : children) {
             this.createPages(destination, child, page);
-        }
-    }
-
-
-    /**
-     * Sets the proper parent to all settings pages. If the parent of the page is already set then nothing is changed. 
-     *
-     * @param pages is the page
-     * @param parentDialogPage is the parent of the page
-     */
-    private void installPagesParent(final List<AbstractDialogPage> pages, final AbstractDialogPage parentDialogPage) {
-        if(pages.size() > 1){
-            pages.get(1).setParentPage(parentDialogPage);            
-        }
-
-        for(final AbstractDialogPage page : pages){
-            if(page.getParent() == null && page != parentDialogPage){
-                page.setParentPage(parentDialogPage);
-            }
         }
     }
 
