@@ -140,11 +140,6 @@ public class EPCNotation implements cz.cvut.promod.plugin.notationSpecificPlugIn
         return model.getIdentifier();
     }
 
-    /** {@inheritDoc}*/
-    public JPopupMenu getPopupMenu() {
-        return model.getPopupMenu();
-    }
-
     public InsertMenuItemResult addPopupMenuItem(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable){
        return model.addPopupMenuAction(proModAction, menuItemPosition, menuSeparator, checkable);
     }

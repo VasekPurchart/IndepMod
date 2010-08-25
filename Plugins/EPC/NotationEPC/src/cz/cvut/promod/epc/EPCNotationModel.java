@@ -309,12 +309,6 @@ public class EPCNotationModel {
         return null;
     }
 
-    /**
-     * @return the notation's popup menu
-     */
-    public JPopupMenu getPopupMenu() {
-        return popupMenu;
-    }
 
     /**
      * @return the plugin's name

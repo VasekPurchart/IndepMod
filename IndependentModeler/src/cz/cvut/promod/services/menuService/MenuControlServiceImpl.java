@@ -28,10 +28,12 @@ public class MenuControlServiceImpl implements MenuControlService {
 
     private final JPopupMenu projectTreePopupMenu;
     private final JMenuBar menuBar;
+    private final MenuValidator menuValidator;
 
     public MenuControlServiceImpl(){
         projectTreePopupMenu = ModelerSession.getComponentFactoryService().createPopupMenu();
         menuBar = ModelerSession.getComponentFactoryService().createMenuBar();
+        menuValidator = new MenuValidator();
     }
 
     /** {@inheritDoc} */
@@ -115,24 +117,14 @@ public class MenuControlServiceImpl implements MenuControlService {
                                                         final MenuSeparator menuSeparator) {
 
 
-        // check whether all notations identifiers in includedInNotations set are valid identifiers of loaded notations
-
-        //final JPopupMenu popupMenu = getRequiredPopupMenu(notationIdentifier);
-
         JPopupMenu popupMenu;
 
-         if(ModelerModel.MODELER_IDENTIFIER.equals(notationIdentifier)){
+        if(ModelerModel.MODELER_IDENTIFIER.equals(notationIdentifier)){
             popupMenu = projectTreePopupMenu;
-             // if notation doesn't support popup menu
-        if(popupMenu == null){
-            LOG.error("Notation (" + notationIdentifier +") doesn't support popup menu.");
-            return InsertMenuItemResult.POPUP_NOT_SUPPORTED;
-        }
 
-        if(menuItemPosition == null || menuItemPosition.getHierarchicalPlacement() == null){
-            LOG.error("Nullary MenuItemPosition info.");
-            return InsertMenuItemResult.WRONG_PLACEMENT;
-        }
+        if (menuValidator.isPopupSupported(notationIdentifier, popupMenu)) return InsertMenuItemResult.POPUP_NOT_SUPPORTED;
+
+        if (menuValidator.isMenuItemPositionSet(menuItemPosition)) return InsertMenuItemResult.WRONG_PLACEMENT;
 
         final String hierarchicalPlacement = menuItemPosition.getHierarchicalPlacement();
         final String[] placementParts;
@@ -172,6 +164,9 @@ public class MenuControlServiceImpl implements MenuControlService {
          
     }
 
+
+
+
     /** {@inheritDoc} */
     public InsertMenuItemResult insertMainMenuItem(final ProModAction proModAction,
                                                       final MenuItemPosition menuItemPosition,
@@ -186,21 +181,13 @@ public class MenuControlServiceImpl implements MenuControlService {
                                                       final MenuSeparator menuSeparator,
                                                       final boolean checkable){
 
-        if(menuItemPosition == null || menuItemPosition.getHierarchicalPlacement() == null){
-            LOG.error("Nullary MenuItemPosition info.");
-            return InsertMenuItemResult.WRONG_PLACEMENT;
-        }
+        if(!menuValidator.isMenuItemPositionSet(menuItemPosition)) {return InsertMenuItemResult.WRONG_PLACEMENT;}
 
         final String[] placementParts = menuItemPosition.getHierarchicalPlacement().split(PLACEMENT_DELIMITER);
-        if(!areValidPlacementParts(placementParts)){
-            LOG.error("Invalid any/all part(s) of MenuItemPosition info.");
-            return InsertMenuItemResult.WRONG_PLACEMENT;
-        }
 
-        if(placementParts.length < 1){
-            LOG.error("Illegal menu item location.");
-            return InsertMenuItemResult.WRONG_PLACEMENT;
-        }
+        if(!menuValidator.areValidPlacementParts(placementParts)) {return InsertMenuItemResult.WRONG_PLACEMENT;}
+
+        if (!menuValidator.isItemLocationValid(placementParts)) return InsertMenuItemResult.WRONG_PLACEMENT;
 
         // get all menus of menuBar
         final JMenuItem[] menuBarItems = new JMenuItem[menuBar.getMenuCount()];
@@ -221,21 +208,8 @@ public class MenuControlServiceImpl implements MenuControlService {
         );
     }
 
-    /**
-     * Checks the menu item placement parts not to be null or an empty strings.
-     *
-     * @param placementParts is an array representing hierarchical menu item placement
-     * @return true if all the placement parts are correct, false otherwise 
-     */
-    private boolean areValidPlacementParts(final String[] placementParts) {
-        for(final String placement : placementParts){
-            if(placement == null || placement.isEmpty()){
-                return false;
-            }
-        }
 
-        return true;
-    }
+
 
     /** {@inheritDoc} */
     public InsertMenuItemResult insertMainMenuItem(final ProModAction proModAction,
@@ -295,26 +269,19 @@ public class MenuControlServiceImpl implements MenuControlService {
                                                final boolean checkable){
         
         // just one parent can be used
-        if(parentMenu != null && parentPopupMenu != null){
-            LOG.error("There can be just one parent menu item for new menu item insertion.");
+        if(!menuValidator.itemHasOnlyOneParent(parentMenu, parentPopupMenu)){
             throw new IllegalArgumentException("Obscure parent menu item.");
         }
 
-        if(proModAction == null){
-            LOG.error("Nullary action cannot be inserted into the menu.");
-            return InsertMenuItemResult.UNDEFINED_ACTION;
-        }
-
-        if(proModAction.getValue(Action.NAME) == null || ((String)proModAction.getValue(Action.NAME)).isEmpty()){
-            return InsertMenuItemResult.UNDEFINED_ACTION;
-        }
+        if (!menuValidator.isActionDefined(proModAction)){ return InsertMenuItemResult.UNDEFINED_ACTION; }
 
         final JMenuItem menuItem = (JMenuItem) getMenuItem(checkable);
         menuItem.setAction(proModAction);
 
         // check whether the is no same menu item in the this menu structure level
         final List<ModelerMenuItem> relatives =
-                isUniqueMenuItemLabel(parentPopupMenu, parentMenu, (String) proModAction.getValue(Action.NAME));
+                getRelatedMenuItems(parentPopupMenu, parentMenu, (String) proModAction.getValue(Action.NAME));
+
         if(relatives != null){
             LOG.debug("Inserting a menu item to the menu hierarchy where a menu item with the same name (" +
                     proModAction.getValue(Action.NAME) + ") has already been inserted.");
@@ -327,8 +294,7 @@ public class MenuControlServiceImpl implements MenuControlService {
             }
         }
 
-        if(!isUniqueAction(parentMenu, parentPopupMenu, proModAction)){
-            LOG.error("Inserting the same action to the one menu more than once.");
+        if(!menuValidator.isUniqueAction(parentMenu, parentPopupMenu, proModAction)){
             return InsertMenuItemResult.DUPLICIT_ACTION;
         }
 
@@ -350,42 +316,8 @@ public class MenuControlServiceImpl implements MenuControlService {
         return InsertMenuItemResult.SUCCESS;
     }
 
-    /**
-     * Checks whether no the same action has been already inserted under the same menu parent.
-     *
-     * @param parentMenu is to menu parent
-     * @param parentPopupMenu is the popup menu parent
-     * @param proModAction is the action supposed to be inserted
-     * @return true if there is no the same action under the parent, false otherwise
-     */
-    private boolean isUniqueAction(final JMenu parentMenu,
-                                   final JPopupMenu parentPopupMenu,
-                                   final ProModAction proModAction) {
-
-        final Component[] menuComponets;
-        if(parentMenu != null){
-            menuComponets = parentMenu.getMenuComponents();
-        } else if(parentPopupMenu != null){
-            menuComponets = parentPopupMenu.getComponents();
-        } else {
-            LOG.error("Parent of menu item cannot be determined.");
-            return false;
-        }
-
-        for(final Component component : menuComponets){
-            if(component instanceof JMenuItem){
-                final JMenuItem menuItem = (JMenuItem) component;
-                final Action action = menuItem.getAction();
-
-                if(action != null && action == proModAction){
-                    return false;
-                }
-            }
-        }
 
 
-        return true;
-    }
 
     /**
      * Inserts a menu separator to the required position. Never inserts two separators next to each other.
@@ -412,7 +344,7 @@ public class MenuControlServiceImpl implements MenuControlService {
             return;
         }
 
-        if(!isAloneSeparator(components, insertionPosition, menuSeparator)){
+        if(menuValidator.isSeparatorAlreadyDefinedAtPosition(components, insertionPosition, menuSeparator)){
             LOG.info("Skipping insertion of menu separator.");
             return;
         }
@@ -436,57 +368,6 @@ public class MenuControlServiceImpl implements MenuControlService {
         }
     }
 
-    /**
-     *
-     * @param menuComponents menu items
-     * @param insertionPosition required menu item position
-     * @param menuSeparator menu separator info if one is supposed to be insert
-     * @return true if there could be the separator added
-     */
-    private boolean isAloneSeparator(final Component[] menuComponents,
-                                     final int insertionPosition,
-                                     final MenuSeparator menuSeparator) {
-        if(menuSeparator != null){
-            switch(menuSeparator){
-                case AFTER:
-                case BEFORE:
-                    if(isValidMenuPosition(insertionPosition, menuComponents.length)){
-                        if(menuComponents[insertionPosition] instanceof JPopupMenu.Separator){
-                            return false;
-                        }
-                    }
-            }
-
-            switch(menuSeparator){
-                case AFTER:
-                    if(isValidMenuPosition(insertionPosition + 1, menuComponents.length)){
-                        if(menuComponents[insertionPosition + 1] instanceof JPopupMenu.Separator){
-                            return false;
-                        }
-                    }
-                    break;
-                case BEFORE:
-                    if(isValidMenuPosition(insertionPosition - 1, menuComponents.length)){
-                        if(menuComponents[insertionPosition - 1] instanceof JPopupMenu.Separator){
-                            return false;
-                        }
-                    }
-                    break;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param position menu position
-     * @param menuItems menu items
-     * @return true if the given position is valid
-     */
-    private boolean isValidMenuPosition(final int position, final int menuItems){
-        return !(position < 0 || position > (menuItems - 1));
-
-    }
 
     /**
      * Performs the actual insertion of menu item.
@@ -507,16 +388,18 @@ public class MenuControlServiceImpl implements MenuControlService {
         //insert menuItem to the position specified (exact position, FIRST, LAST possibilities)
         if(MenuItemPosition.PlacementStyle.GROUPED.equals(menuItemPosition.getPlacementStyle())){
             final Component[] parentMenuItems;
+
+            if (!menuValidator.itemHasOnlyOneParent(parentMenu, parentPopupMenu)){
+                return -1;
+            }
+
             if(parentMenu != null && parentPopupMenu == null){
                 parentMenuItems = parentMenu.getMenuComponents();
             }
-            else if(parentMenu == null && parentPopupMenu != null){
+            else { //(parentMenu == null && parentPopupMenu != null)
                 parentMenuItems = parentPopupMenu.getComponents();
             }
-            else {
-                LOG.error("Obscurity in menu item's parent.");
-                return -1;
-            }
+
 
             final int position = groupMenuItem(menuItem, parentMenuItems);
             if(parentMenu != null){
@@ -605,11 +488,11 @@ public class MenuControlServiceImpl implements MenuControlService {
      * @return the set holding references to the relatives, null if there is no text duplicity
      * @throws IllegalArgumentException when an obscurity in parent occurs
      */
-    private List<ModelerMenuItem> isUniqueMenuItemLabel(
-            final JPopupMenu parentPopupMenu, final JMenu parentMenu, final String displayName) throws IllegalArgumentException{
+    private List<ModelerMenuItem> getRelatedMenuItems(final JPopupMenu parentPopupMenu,
+                                                       final JMenu parentMenu,
+                                                       final String displayName) throws IllegalArgumentException{
 
-        if(parentMenu != null && parentPopupMenu != null){
-            LOG.error("There can be just one parent menu item for new menu item insertion.");
+        if(!menuValidator.itemHasOnlyOneParent(parentMenu, parentPopupMenu)){
             throw new IllegalArgumentException("Obscure parent menu item.");
         }
 
@@ -671,18 +554,13 @@ public class MenuControlServiceImpl implements MenuControlService {
                                 final MenuSeparator menuSeparator,
                                 final MenuItemPosition menuItemPosition,
                                 final boolean checkable) {
+
         // parent has to be clear
-        if((parentMenu != null && parentMenuBar != null)
-                || (parentMenu != null && parentPopupMenu != null)
-                || (parentMenuBar != null && parentPopupMenu != null)){
-            LOG.error("Obscurity in parent of menu item");
+        if (!menuValidator.hasCorrectParentMenu(parentMenu, parentMenuBar, parentPopupMenu)) {
             throw new IllegalArgumentException("Obscure parent menu item.");
         }
 
-        if(proModAction == null){
-            LOG.error("Nullary action to be inserted.");
-            return InsertMenuItemResult.UNDEFINED_ACTION;
-        }
+        if (!menuValidator.isActionDefined(proModAction)) return InsertMenuItemResult.UNDEFINED_ACTION;
 
         if(!ModelerSession.getActionControlService().isRegisteredAction(proModAction)){
             LOG.error("Unregistered action, action identifier: " + proModAction.getActionIdentifier());
@@ -743,4 +621,4 @@ public class MenuControlServiceImpl implements MenuControlService {
         }
     }
 
-   }
+}

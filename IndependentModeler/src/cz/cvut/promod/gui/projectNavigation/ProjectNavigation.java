@@ -114,6 +114,8 @@ public class ProjectNavigation extends ProjectNavigationView implements TreeSele
      * Initialize the popup menu.
      */
     private void initPopupMenu() {
+        //TODO: refactor these two calls of insertProjectNavigationPopupMenuItem,
+        // so there will be only one insertProjectNavigationPopupMenuItem implementation
         ModelerSession.getMenuService().insertProjectNavigationPopupMenuItem(
                 ModelerSession.getActionService().getAction(ModelerModel.MODELER_IDENTIFIER, ACTION_ADD_SUBFOLDER),
                 new MenuItemPosition(ADD_LABEL)
