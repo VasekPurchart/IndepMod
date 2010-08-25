@@ -70,7 +70,6 @@ public class IndependentModelerMain {
     
     public static void main(String[] args) {
 
-        // TODO: read license from some external resource
         com.jidesoft.utils.Lm.verifyLicense("Lukáš Vyhlídka", "Independent Modeler", "xKOw7xYFtP:gTng2989VOaAhAJJnIoj1");
 
         initLog();
