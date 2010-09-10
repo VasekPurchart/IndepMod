@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
-
 /**
  * ProMod, master thesis project
  * User: Petr Zverina, petr.zverina@gmail.com

@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * EPCWorkspaceData represents the NotationWorkspaceData interface implementation for the EPCNotation plugin.  
  */
-public class EPCWorkspaceData implements NotationWorkspaceData{
+public class EPCWorkspaceData implements NotationWorkspaceData {
 
     private static JGraph graph;
     private static EPCWorkspace workspace;
@@ -61,25 +61,25 @@ public class EPCWorkspaceData implements NotationWorkspaceData{
     }
 
     private void initEventHandling() {
-        lockModel.addValueChangeListener(new PropertyChangeListener(){
+        lockModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setEditable((Boolean) propertyChangeEvent.getNewValue());
             }
         });
 
-        gridModel.addValueChangeListener(new PropertyChangeListener(){
+        gridModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setGridEnabled((Boolean) propertyChangeEvent.getNewValue());
             }
         });
 
-        viewGridModel.addValueChangeListener(new PropertyChangeListener(){
+        viewGridModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setGridVisible((Boolean) propertyChangeEvent.getNewValue());
             }
         });
 
-        cellSizeModel.addValueChangeListener(new PropertyChangeListener(){
+        cellSizeModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 final Integer gridCellSize = (Integer) propertyChangeEvent.getNewValue();
 
@@ -88,7 +88,7 @@ public class EPCWorkspaceData implements NotationWorkspaceData{
             }
         });        
 
-        selectedToolModel.addValueChangeListener(new PropertyChangeListener(){
+        selectedToolModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 final ToolChooserModel.Tool selectedTool = (ToolChooserModel.Tool) propertyChangeEvent.getNewValue();
 

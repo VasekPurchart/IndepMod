@@ -47,35 +47,45 @@ public class IndependentModelerMain {
 
     private static final Logger LOG = Logger.getLogger(IndependentModelerMain.class);
 
-    /** Path to the config directory */
-    private static final String CONFIG_DIR =
-            "." + System.getProperty("file.separator") + "config" + System.getProperty("file.separator");
+    /**
+     * Path to the config directory
+     */
+    private static final String CONFIG_DIR = "." + System.getProperty("file.separator") + "config"
+            + System.getProperty("file.separator");
 
-    /** Plugin configuration file */
+    /**
+     * Plugin configuration file
+     */
     private static final String LOG_INIT_FILE = CONFIG_DIR + "log4j.config";
 
-    /** Common Resource Bundle file */
+    /**
+     * Common Resource Bundle file
+     */
     public static final String COMMON_RESOURCES_FILE = CONFIG_DIR + "common.properties";
 
     public final static String PLUGINS_PROPERTY_FILE = "plugins.xml";
 
-    /** Defines constant for application fall, some service(s) not available */
+    /**
+     * Defines constant for application fall, some service(s) not available
+     */
     public static final int SERVICE_NULL_EXIT = 1;
 
-    /** Defines constant for application fall, some service(s) not valid */
+    /**
+     * Defines constant for application fall, some service(s) not valid
+     */
     public static final int SERVICE_CHECK_FAIL_EXIT = 2;
 
     private static PluginLoaderService pluginLoaderService;
 
-    
+
     public static void main(String[] args) {
 
-        com.jidesoft.utils.Lm.verifyLicense("Lukáš Vyhlídka", "Independent Modeler", "xKOw7xYFtP:gTng2989VOaAhAJJnIoj1");
+        verifyJidesoftLicense();
 
         initLog();
 
         LOG.info("ProMod application is starting.");
-        
+
         logPlatformInformation();
 
         initIndependentServices();
@@ -84,11 +94,11 @@ public class IndependentModelerMain {
 
         loadPlugIns();
 
-        initDependentServices(pluginLoaderService);        
+        initDependentServices(pluginLoaderService);
 
         checkServices();
 
-        //init modeler
+        // init modeler
         final Modeler modeler = new Modeler();
 
         initPlugins();
@@ -101,24 +111,54 @@ public class IndependentModelerMain {
     }
 
     /**
-     * Performs plugin initialization.
+     * Performs JideSoft license verification
      */
-    private static void initPlugins() {
-        // notations & modules initializations
-        for(final String notationIdentifier : ModelerSession.getNotationService().getNotationsIdentifiers()){
-            final NotationSpecificPlugins notationSpecificPlugins = ModelerSession.getNotationService().getNotationSpecificPlugins(notationIdentifier);
+    private static void verifyJidesoftLicense() {
 
-            notationSpecificPlugins.getNotation().init();
+        // TODO: read license from some external resource
+        com.jidesoft.utils.Lm.verifyLicense("Lukáš Vyhlídka", "Independent Modeler",
+                "xKOw7xYFtP:gTng2989VOaAhAJJnIoj1");
 
-            for(final Module module : notationSpecificPlugins.getModules()){
-                module.init();
-            }
-        }
+    }
 
-        // extensions initializations
-        for(final Extension extension : ModelerSession.getExtensionService().getExtensions()){
-            extension.init();
-        }        
+    /**
+     * Initialize logging mechanism.
+     */
+    private static void initLog() {
+        PropertyConfigurator.configure(LOG_INIT_FILE);
+    }
+
+    /**
+     * Logs basic platform information.
+     * <p/>
+     * Information logged includes:
+     * <ul>
+     * <li>user name of current system user</li>
+     * <li>operating system name and version</li>
+     * <li>java language version</li>
+     * <li>java implementation vendor</li>
+     * <li>java home variable</li>
+     * <li>system default locale settings</li>
+     * </ul>
+     */
+    private static void logPlatformInformation() {
+        LOG.info("user name: " + System.getProperty("user.name"));
+        LOG.info("os name, version: " + System.getProperty("os.name") + ", " + System.getProperty("os.version"));
+        LOG.info("java version: " + System.getProperty("java.version"));
+        LOG.info("java vendor: " + System.getProperty("java.vendor") + ", " + System.getProperty("java.vendor.url"));
+        LOG.info("java home: " + System.getProperty("java.home"));
+        LOG.info("default locale: " + System.getProperty("user.language"));
+    }
+
+    /**
+     * Independent services are all services that can any plugin use during it's instantiation time. Usage of such a
+     * service during plugin's instantiation time does NOT affect any run of application.
+     */
+    private static void initIndependentServices() {
+
+        // init ComponentFactoryService
+        final ComponentFactoryService componentFactoryService = new ComponentFactoryServiceImpl();
+        ModelerSession.setComponentFactoryService(componentFactoryService);
     }
 
     /**
@@ -127,25 +167,96 @@ public class IndependentModelerMain {
     private static void initResources() {
 
         try {
-            final ResourceBundle commonResources = new PropertyResourceBundle(new FileReader(new File(COMMON_RESOURCES_FILE)));
+            final ResourceBundle commonResources = new PropertyResourceBundle(
+                    new FileReader(new File(COMMON_RESOURCES_FILE)));
+            
             ModelerSession.setCommonResourceBundle(commonResources);
         } catch (IOException e) {
             LOG.error("Common resource bundle have NOT been found.", e);
             System.exit(-1);
         }
 
-        if(!TranslationCheck.validateTranslations()){
-            System.exit(-2);            
+        if (!TranslationCheck.validateTranslations()) {
+            System.exit(-2);
         }
     }
 
     /**
-     *  Check all provided services before initialization of plugins is invoked.
+     * Loads plugins.
+     */
+    private static void loadPlugIns() {
+        try {
+            pluginLoaderService = new PluginLoaderServiceImpl();
+
+            if (pluginLoaderService.loadPlugInsDefinition(PLUGINS_PROPERTY_FILE)) {
+                pluginLoaderService.instantiatePlugins();
+            }
+
+        } catch (ClassNotFoundException exception) {
+            LOG.error("Plugin interface(-s) couldn't be properly loaded.", exception);
+            System.exit(2);
+        }
+    }
+
+    /**
+     * Depending services are instantiated after all plugins have been loaded. This is done so, because no plugin can
+     * use dependent service in it's constructor (generally during the whole instantiation time). ProMod asks the
+     * plugin for it's identification after this plugin has been instantiated (there is no way to do this before),
+     * and then, when the plugin is instantiated, can ProMod determines about the plugin's identification
+     * uniqueness.
+     * <p/>
+     * So all dependent services are nullary before and during plugin's instantiation time to prevent this kind of
+     * plugin's instantiation programming style.
+     * <p/>
+     * Plugin's are supposed to use services in it's init method.
+     *
+     * @param pluginLoaderService is loading services
+     * @see cz.cvut.promod.plugin.Plugin
+     */
+    private static void initDependentServices(final PluginLoaderService pluginLoaderService) {
+
+        // init UserService
+        final UserService userService = new UserServiceImpl();
+        ModelerSession.setUserService(userService);
+
+        // init ActionControlService
+        final ActionControlService actionControlService = new ActionControlServiceImpl();
+        ModelerSession.setActionControlService(actionControlService);
+
+        // init MenuService
+        final MenuService menuService = new MenuControlServiceImpl();
+        ModelerSession.setMainMenuService(menuService);
+
+        // init NotationService
+        final NotationService notationService = new NotationServiceImpl(
+                pluginLoaderService.getNotationSpecificPlugins(),
+                pluginLoaderService.getErrors());
+        ModelerSession.setNotationService(notationService);
+
+        // init ExtensionService
+        final ExtensionService extensionService = new ExtensionServiceImpl(pluginLoaderService.getExtensions());
+        ModelerSession.setExtensionService(extensionService);
+
+        // init ProjectControlService
+        final ProjectControlService projectControlService = new ProjectControlServiceImpl();
+        ModelerSession.setProjectControlService(projectControlService);
+
+        // init ToolBarService
+        final ToolBarControlService toolBaControlService = new ToolBarControlServiceImpl();
+        ModelerSession.setToolBarControlService(toolBaControlService);
+
+        // init StatusBarService
+        final StatusBarControlService statusBarControlService = new StatusBarControlServiceImpl();
+        ModelerSession.setStatusBarControlService(statusBarControlService);
+    }
+
+    /**
+     * Check all provided services before initialization of plugins is invoked.
      */
     private static void checkServices() {
         boolean result = true;
 
-        try{
+        try {
             result &= ModelerSession.getActionService().check();
             result &= ModelerSession.getActionControlService().check();
 
@@ -165,114 +276,39 @@ public class IndependentModelerMain {
             result &= ModelerSession.getToolBarService().check();
             result &= ModelerSession.getToolBarControlService().check();
 
-        } catch(NullPointerException exception){
+        } catch (NullPointerException exception) {
             LOG.error("Shutting down. Some service(s) is/are not available.", exception);
-            System.exit(SERVICE_NULL_EXIT);  
+            System.exit(SERVICE_NULL_EXIT);
         }
 
-        if(!result){
+        if (!result) {
             LOG.error("Shutting down. Check() method in some service(s) has failed.");
             System.exit(SERVICE_CHECK_FAIL_EXIT);
         }
     }
 
     /**
-     * Loads plugins.
+     * Performs plugin initialization.
      */
-    private static void loadPlugIns() {
-        try{
-            pluginLoaderService = new PluginLoaderServiceImpl();
+    private static void initPlugins() {
 
-            if(pluginLoaderService.loadPlugInsDefinition(PLUGINS_PROPERTY_FILE)){                
-                pluginLoaderService.instantiatePlugins();
+        // notations & modules initializations
+        for (final String notationIdentifier : ModelerSession.getNotationService().getNotationsIdentifiers()) {
+
+            final NotationSpecificPlugins notationSpecificPlugins = ModelerSession.getNotationService()
+                    .getNotationSpecificPlugins(notationIdentifier);
+
+            notationSpecificPlugins.getNotation().init();
+
+            for (final Module module : notationSpecificPlugins.getModules()) {
+                module.init();
             }
-
-        } catch (ClassNotFoundException exception) {
-            LOG.error("Plugin interface(-s) couldn't be properly loaded.", exception);
-            System.exit(2);
         }
-    }
 
-    /**
-     * Independent services are all services that can any plugin use during it's instantiation time. Usage of such a
-     * service during plugin's instantiation time does NOT affect any run of application.  
-     *
-     */
-    private static void initIndependentServices(){
-        //init ComponentFactoryService
-        final ComponentFactoryService componentFactoryService = new ComponentFactoryServiceImpl();
-        ModelerSession.setComponentFactoryService(componentFactoryService);
-    }
-
-
-    /**
-     * Depending services are instantiated after all plugins have been loaded. This is done so, because no plugin can
-     * use dependent service in it's constructor (generally during the whole instantiation time). ProMod asks the
-     * plugin for it's identification after this plugin has been instantiated (there is no way to do this before),
-     * and then, when the plugin is instantiated, can ProMod determines about the plugin's identification
-     * uniqueness.
-     *
-     * So all dependent services are nullary before and during plugin's instantiation time to prevent this kind of
-     * plugin's instantiation programming style.
-     *
-     * Plugin's are supposed to use services in it's init method.
-     * @see cz.cvut.promod.plugin.Plugin
-     *
-     * @param pluginLoaderService is loading services
-     */
-    private static void initDependentServices(final PluginLoaderService pluginLoaderService) {
-        //init UserService
-        final UserService userService = new UserServiceImpl();
-        ModelerSession.setUserService(userService);
-
-        //init ActionControlService
-        final ActionControlService actionControlService = new ActionControlServiceImpl();
-        ModelerSession.setActionControlService(actionControlService);
-
-        //init MenuService
-        final MenuService menuService = new MenuControlServiceImpl();
-        ModelerSession.setMainMenuService(menuService);
-
-        //init NotationService
-        final NotationService notationService = new NotationServiceImpl(
-                pluginLoaderService.getNotationSpecificPlugins(),
-                pluginLoaderService.getErrors());
-        ModelerSession.setNotationService(notationService);
-
-        // init ExtensionService
-        final ExtensionService extensionService = new ExtensionServiceImpl(pluginLoaderService.getExtensions());
-        ModelerSession.setExtensionService(extensionService);
-
-        //init ProjectControlService
-        final ProjectControlService projectControlService = new ProjectControlServiceImpl();
-        ModelerSession.setProjectControlService(projectControlService);
-
-        //init ToolBarService
-        final ToolBarControlService toolBaControlService = new ToolBarControlServiceImpl();
-        ModelerSession.setToolBarControlService(toolBaControlService);
-
-        //init StatusBarService
-        final StatusBarControlService statusBarControlService = new StatusBarControlServiceImpl();
-        ModelerSession.setStatusBarControlService(statusBarControlService);
-    }
-
-    /**
-     * Logs basic platform information.
-     */
-    private static void logPlatformInformation() {
-        LOG.info("user name: " + System.getProperty("user.name"));
-        LOG.info("os name, version: "+ System.getProperty("os.name") + ", " + System.getProperty("os.version"));
-        LOG.info("java version: " + System.getProperty("java.version"));
-        LOG.info("java vendor: " + System.getProperty("java.vendor") + ", " + System.getProperty("java.vendor.url"));
-        LOG.info("java home: " + System.getProperty("java.home"));
-        LOG.info("default locale: " + System.getProperty("user.language"));
-    }
-
-    /**
-     * Initialize logging mechanism.
-     */
-    private static void initLog() {
-        PropertyConfigurator.configure(LOG_INIT_FILE);
+        // extensions initializations
+        for (final Extension extension : ModelerSession.getExtensionService().getExtensions()) {
+            extension.init();
+        }
     }
 
 }

@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
  *
  * The common dialog setting page of the EPCImageExportModule plugin. 
  */
-public class ImageExportSettings extends SettingPagePanel{
+public class ImageExportSettings extends SettingPagePanel {
 
     private static final String INSET_LABEL = Resources.getResources().getString("epc.imageexport.settings.inset");
 
@@ -41,7 +41,7 @@ public class ImageExportSettings extends SettingPagePanel{
     private final CancelAction cancelAction = new CancelAction();
 
 
-    public ImageExportSettings(final PresentationModel<ImageExportModel> presentation){
+    public ImageExportSettings(final PresentationModel<ImageExportModel> presentation) {
         //super(INSET_LABEL);
 
         this.presentation = presentation;
@@ -80,7 +80,7 @@ public class ImageExportSettings extends SettingPagePanel{
     }
 
     private void initEventHandling() {
-        insetSpinner.addChangeListener(new ChangeListener(){
+        insetSpinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 //fireButtonEvent(ButtonEvent.ENABLE_BUTTON, ButtonNames.APPLY);
                 fireApplyActionEnable();
