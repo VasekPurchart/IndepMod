@@ -116,8 +116,8 @@ public class IndependentModelerMain {
     private static void verifyJidesoftLicense() {
 
         // TODO: read license from some external resource
-        com.jidesoft.utils.Lm.verifyLicense("Lukáš Vyhlídka", "Independent Modeler",
-                "xKOw7xYFtP:gTng2989VOaAhAJJnIoj1");
+        com.jidesoft.utils.Lm.verifyLicense("Lukas Vyhlidka", "Independent Modeler",
+                "IVvcwhRLbFZFiGm1aBSocn9LRYt:SDR2");
 
     }
 
