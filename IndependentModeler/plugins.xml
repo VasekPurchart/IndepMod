@@ -15,8 +15,8 @@
   </notation>
 
   <notation alias="classmodels" class="cz.cvut.indepmod.classmodel.ClassModelNotation" />
+  <notation alias="usecasemodels" class="cz.cvut.indepmod.usecasemodel.UseCaseModelNotation" />
 
-  
   <extension alias="MemoryIndicatorExtension" class="cz.cvut.promod.memory.MemoryIndicatorExtension" config="memoryIndicator.properties" />
   	
 </promod-plugins>

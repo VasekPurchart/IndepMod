@@ -173,7 +173,6 @@
     </group>
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="Vasek" />
     <dictionary name="martin" />
   </component>
   <component name="ProjectModuleManager">
@@ -186,6 +185,7 @@
       <module fileurl="file://$PROJECT_DIR$/../Plugins/ClassModel/NotationClassModel/NotationClassModel.iml" filepath="$PROJECT_DIR$/../Plugins/ClassModel/NotationClassModel/NotationClassModel.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Plugins/EPC/NotationEPC/NotationEPC.iml" filepath="$PROJECT_DIR$/../Plugins/EPC/NotationEPC/NotationEPC.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Plugins/ProcessHierarchy/NotationProcessHierarchy/NotationProcessHierarchy.iml" filepath="$PROJECT_DIR$/../Plugins/ProcessHierarchy/NotationProcessHierarchy/NotationProcessHierarchy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Plugins/UseCaseModel/NotationUseCaseModel/NotationUseCaseModel.iml" filepath="$PROJECT_DIR$/../Plugins/UseCaseModel/NotationUseCaseModel/NotationUseCaseModel.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK">
