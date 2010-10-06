@@ -21,7 +21,7 @@
     <orderEntry type="module" module-name="ModuleDiagramReference" />
     <orderEntry type="module" module-name="ExtensionMemoryIndicator" />
     <orderEntry type="module" module-name="NotationClassModel" />
-    <orderEntry type="module" module-name="NotationUseCaseModel" />
+    <orderEntry type="module" module-name="NotationUC" />
   </component>
 </module>
 

@@ -16,6 +16,8 @@
     <orderEntry type="module" module-name="NotationEPC" />
     <orderEntry type="module" module-name="NotationProcessHierarchy" />
     <orderEntry type="library" name="jide" level="project" />
+    <orderEntry type="library" name="jgoodies binding" level="project" />
+    <orderEntry type="library" name="jgoodies form" level="project" />
   </component>
 </module>
 

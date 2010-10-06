@@ -1,4 +1,4 @@
-package cz.cvut.indepmod.usecasemodel.modelFactory.diagramModel;
+package cz.cvut.indepmod.uc.modelFactory.diagramModel;
 
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.model.DiagramModel;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.model.DiagramModelChangeListener;
@@ -10,7 +10,7 @@ import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.model.DiagramModelC
  * Time: 13:14:16
  * To change this template use File | Settings | File Templates.
  */
-public class UseCaseModelDiagramModel implements DiagramModel {
+public class UCModelDiagramModel implements DiagramModel {
 
     public void addChangeListener(DiagramModelChangeListener listener) {
         //To change body of implemented methods use File | Settings | File Templates.

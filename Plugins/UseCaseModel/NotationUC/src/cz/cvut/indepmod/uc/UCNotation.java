@@ -1,8 +1,9 @@
-package cz.cvut.indepmod.usecasemodel;
+package cz.cvut.indepmod.uc;
 
-import cz.cvut.indepmod.usecasemodel.ioController.UseCaseModelNotationIOController;
-import cz.cvut.indepmod.usecasemodel.modelFactory.UseCaseModelNotationModelFactory;
-import cz.cvut.indepmod.usecasemodel.resources.Resources;
+import com.jidesoft.status.LabelStatusBarItem;
+import cz.cvut.indepmod.uc.ioController.UCModelNotationIOController;
+import cz.cvut.indepmod.uc.modelFactory.UCModelNotationModelFactory;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.Notation;
@@ -13,25 +14,44 @@ import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.MenuService;
 import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
 /**
  * Plugin providing class model notation
  */
 
-public class UseCaseModelNotation implements Notation {
+public class UCNotation implements Notation {
 
-//    private static final Logger LOG = Logger.getLogger(ClassModelNotation.class);
+    private static final Logger LOG = Logger.getLogger(UCNotation.class);
 
-    private final UseCaseModelNotationModelFactory modelFactory;
-    private final UseCaseModelNotationIOController ioController;
+    private final LabelStatusBarItem selectedToolStatusBarItem;
+    private final UCNotationModel model;
+    private final UCModelNotationModelFactory modelFactory;
+    private final UCModelNotationIOController ioController;
+    private final String NOTATION_DESCRIPTION = Resources.getResources().getString("uc.description");
 
-    public UseCaseModelNotation() {
-        modelFactory = new UseCaseModelNotationModelFactory();
-        ioController = new UseCaseModelNotationIOController();
+    public UCNotation(final File propertiesFile) throws InstantiationException  {
+        final Properties properties = new Properties();
+        try {
+            properties.load(new FileReader(propertiesFile));
+        } catch (IOException e) {
+            LOG.error("Properties for the Use Case Notations couldn't be read.", e);
+            throw new InstantiationException("Mandatory properties couldn't be read.");
+        }
+
+
+        selectedToolStatusBarItem = new LabelStatusBarItem();
+        model = new UCNotationModel(properties, selectedToolStatusBarItem);
+        modelFactory = new UCModelNotationModelFactory();
+        ioController = new UCModelNotationIOController();
     }
 
     public String getIdentifier() {
@@ -71,7 +91,7 @@ public class UseCaseModelNotation implements Notation {
     }
     
     public NotationWorkspaceData getNotationWorkspaceData() {
-        return null;
+        return model.getWorkspace();
     }
 
     public DiagramModelFactory getDiagramModelFactory() {

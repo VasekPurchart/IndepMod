@@ -1,9 +1,9 @@
-package cz.cvut.indepmod.usecasemodel.ioController;
+package cz.cvut.indepmod.uc.ioController;
 
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
 
-public class UseCaseModelNotationIOController implements NotationLocalIOController {
+public class UCModelNotationIOController implements NotationLocalIOController {
 
     public SaveResult saveProjectDiagram(ProjectDiagram projectDiagram, String parentLocation, boolean makeDirs) {
         return null;
