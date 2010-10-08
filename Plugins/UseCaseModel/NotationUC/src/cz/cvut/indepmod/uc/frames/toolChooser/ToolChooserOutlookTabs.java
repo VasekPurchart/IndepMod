@@ -23,30 +23,6 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
     private final String OPERATORS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.operators");
     private final String CONN_LABEL = Resources.getResources().getString("uc.frame.tools.cat.flows");
 
-    protected final JToggleButton addFunctionButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.FUNCTION_TOOL_RES, null
-    );
-
-    protected final JToggleButton addEventButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.EVENT_TOOL_RES, null
-    );
-
-    protected final JToggleButton addDeliverableButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.DELIVERABLE_TOOL_RES, null
-    );
-
-    protected final JToggleButton addInformationObjectButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.INFORMATION_TOOL_RES, null
-    );
-
-    protected final JToggleButton addOrganizationUnitButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.ORG_UNIT_TOOL_RES, null
-    );
-
-    protected final JToggleButton addOrganizationRoleButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.ORG_ROLE_TOOL_RES, null
-    );
-
     protected final JToggleButton addAndButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.AND_TOOL_RES, null
     );
@@ -129,6 +105,14 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
             ToolChooserModel.OR_TOOL_RES, null
     );
 
+    protected final JToggleButton addActorButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.ACTOR_TOOL_RES, null
+    );
+
+    protected final JToggleButton addUseCaseButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.USE_CASE_TOOL_RES, null
+    );
+
 
     public ToolChooserOutlookTabs(){
         initTabPane();
@@ -195,44 +179,12 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
                 "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
         ));
         final CellConstraints cellConstraints = new CellConstraints();
-        panel.add(addFunctionButton, cellConstraints.xy(1,1));
-        panel.add(addEventButton, cellConstraints.xy(1,3));
-        panel.add(addDeliverableButton, cellConstraints.xy(1,5));
-        panel.add(addInformationObjectButton, cellConstraints.xy(1,7));
-        panel.add(addOrganizationRoleButton, cellConstraints.xy(1,9));
-        panel.add(addOrganizationUnitButton, cellConstraints.xy(1,11));
-        panel.add(addApplicationSWButton, cellConstraints.xy(1,13));
-        panel.add(addMessageButton, cellConstraints.xy(1,15));
-        panel.add(addMachineButton, cellConstraints.xy(1,17));
-        panel.add(addHWButton, cellConstraints.xy(1,19));
-        panel.add(addGoalButton, cellConstraints.xy(1,21));
+        panel.add(addActorButton, cellConstraints.xy(1,1));
+        panel.add(addUseCaseButton, cellConstraints.xy(1,3));
 
         return panel;
     }
-
-    public JToggleButton getAddFunctionButton() {
-        return addFunctionButton;
-    }
-
-    public JToggleButton getAddEventButton() {
-        return addEventButton;
-    }
-
-    public JToggleButton getAddDeliverableButton() {
-        return addDeliverableButton;
-    }
-
-    public JToggleButton getAddInformationObjectButton() {
-        return addInformationObjectButton;
-    }
-
-    public JToggleButton getAddOrganizationUnitButton() {
-        return addOrganizationUnitButton;
-    }
-
-    public JToggleButton getAddOrganizationRoleButton() {
-        return addOrganizationRoleButton;
-    }
+    
 
     public JToggleButton getAddAndButton() {
         return addAndButton;
@@ -309,5 +261,13 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     public JToggleButton getAddXorOrButton() {
         return addXorOrButton;
+    }
+
+    public JToggleButton getAddUseCaseButton() {
+        return addUseCaseButton;
+    }
+
+    public JToggleButton getAddActorButton() {
+        return addActorButton;
     }
 }

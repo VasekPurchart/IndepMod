@@ -32,7 +32,7 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
     final Map<String, ProModAction> actions;
 
     /** holds the actual diagram model of a UC notation diagram */
-    private UCDiagramModel actualUCcDiagramModel = null;
+    private UCDiagramModel actualUCDiagramModel = null;
 
     /** holds the actual project diagram of a UC notation diagram */
     private ProjectDiagram actualProjectDiaram = null;
@@ -65,22 +65,22 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
     public void update() {
         try{
             actualProjectDiaram = ModelerSession.getProjectService().getSelectedDiagram();
-            actualUCcDiagramModel = (UCDiagramModel) actualProjectDiaram.getDiagramModel();
+            actualUCDiagramModel = (UCDiagramModel) actualProjectDiaram.getDiagramModel();
 
-            actualUCcDiagramModel.getGraphLayoutCache().getModel().addGraphModelListener(graphModelListener);
+            actualUCDiagramModel.getGraphLayoutCache().getModel().addGraphModelListener(graphModelListener);
 
-            graph.setGraphLayoutCache(actualUCcDiagramModel.getGraphLayoutCache());
+            graph.setGraphLayoutCache(actualUCDiagramModel.getGraphLayoutCache());
 
-            actualUCcDiagramModel.installUndoActions(
+            actualUCDiagramModel.installUndoActions(
                     actions.get(UCNotationModel.UNDO_ACTION_KEY), actions.get(UCNotationModel.REDO_ACTION_KEY)
             );
             
-            actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(actualUCcDiagramModel.getUndoManager().canUndo());
-            actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCcDiagramModel.getUndoManager().canRedo());
+//            actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canUndo());
+     //       actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canRedo());
 
             final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
             projectDiagram.addChangeListener(this);
-            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
+//            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
 
             // sets the frame's title            
             ModelerSession.setFrameTitleText(ProjectServiceUtils.getFileSystemPathToProjectItem(
@@ -101,11 +101,11 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
      * {@inheritDoc}
      *
      * Un-install the last UC notation diagram's listeners, sets the UNDO & REDO action as disable and makes
-     * the actualUCcDiagramModel variable null (actual UC notation diagram is none).
+     * the actualUCDiagramModel variable null (actual UC notation diagram is none).
      */
     public void over() {
-        if(actualUCcDiagramModel != null){
-            actualUCcDiagramModel.uninstallUndoActions();
+        if(actualUCDiagramModel != null){
+            actualUCDiagramModel.uninstallUndoActions();
         } else {
             LOG.error("over() method of UC notation workspace has been invoked, but there hasn't been set any" +
                     "actual UC notation diagram before.");
@@ -115,9 +115,9 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
             actualProjectDiaram.removeChangeListener(this);
         }
 
-        actualUCcDiagramModel.getGraphLayoutCache().getModel().removeGraphModelListener(graphModelListener);
+        actualUCDiagramModel.getGraphLayoutCache().getModel().removeGraphModelListener(graphModelListener);
 
-        actualUCcDiagramModel = null;
+        actualUCDiagramModel = null;
         actualProjectDiaram = null;
 
         actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(false);
@@ -133,11 +133,11 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
             && change.getChangeValue() instanceof Boolean
                 && Boolean.FALSE.equals(change.getChangeValue())){
 
-            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
+            //actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
 
             return;
         }
 
-        actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
+        //actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
     }
 }

@@ -1,12 +1,9 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphModel;
 
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.FunctionModel;
 import cz.cvut.indepmod.uc.resources.Resources;
-import cz.cvut.promod.services.ModelerSession;
 import org.jgraph.graph.*;
 
-import javax.swing.*;
 import java.util.List;
 
 /**
@@ -81,6 +78,7 @@ public class UCGraphModel extends DefaultGraphModel{
         final Object sourceUserObject = sourceCell.getUserObject();
 
         // No function can be connected directly with another event.
+        /*
         if(sourceCell.getUserObject() instanceof FunctionModel && targetCell.getUserObject() instanceof FunctionModel){
             JOptionPane.showMessageDialog(
                     ModelerSession.getFrame(),
@@ -88,6 +86,7 @@ public class UCGraphModel extends DefaultGraphModel{
 
             return false;
         }
+        */
 
         return super.acceptsSource(edge, targetPort);
     }

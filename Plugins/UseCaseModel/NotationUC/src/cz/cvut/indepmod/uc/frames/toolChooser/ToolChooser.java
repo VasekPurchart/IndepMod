@@ -66,12 +66,8 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
         buttonGroup.add(controlButton);
         buttonGroup.add(deleteButton);
 
-        buttonGroup.add(outlookTabbedPane.getAddFunctionButton());
-        buttonGroup.add(outlookTabbedPane.getAddEventButton());
-        buttonGroup.add(outlookTabbedPane.getAddDeliverableButton());
-        buttonGroup.add(outlookTabbedPane.getAddInformationObjectButton());
-        buttonGroup.add(outlookTabbedPane.getAddOrganizationRoleButton());
-        buttonGroup.add(outlookTabbedPane.getAddOrganizationUnitButton());
+        buttonGroup.add(outlookTabbedPane.getAddActorButton());
+        buttonGroup.add(outlookTabbedPane.getAddUseCaseButton());
         buttonGroup.add(outlookTabbedPane.getAddAndButton());
         buttonGroup.add(outlookTabbedPane.getAddOrButton());
         buttonGroup.add(outlookTabbedPane.getAddXorButton());
@@ -108,47 +104,21 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
             }
         });
 
-        outlookTabbedPane.getAddFunctionButton().addActionListener(new ActionListener(){
+        outlookTabbedPane.getAddActorButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_FUNCTION);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.FUNCTION_TOOL_RES);
+                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_ACTOR);
+                updateStatusBarSelectedItemInfo(ToolChooserModel.ACTOR_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddEventButton().addActionListener(new ActionListener(){
+        outlookTabbedPane.getAddUseCaseButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_EVENT);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.EVENT_TOOL_RES);
+                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_USE_CASE);
+                updateStatusBarSelectedItemInfo(ToolChooserModel.USE_CASE_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddDeliverableButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_DELIVERABLE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.DELIVERABLE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddInformationObjectButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_INFORMATION_OBJECT);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.INFORMATION_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddOrganizationRoleButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_ORGANIZATION_ROLE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.ORG_ROLE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddOrganizationUnitButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_ORGANIZATION_UNIT);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.ORG_UNIT_TOOL_RES);
-            }
-        });
+      
 
         outlookTabbedPane.getAddAndButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -291,12 +261,13 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                     case CONTROL:
                         controlButton.doClick();
                         break;
-                    case ADD_FUNCTION:
-                        outlookTabbedPane.getAddFunctionButton().doClick();
+                    case ADD_ACTOR:
+                        outlookTabbedPane.getAddActorButton().doClick();
                         break;
-                    case ADD_EVENT:
-                        outlookTabbedPane.getAddEventButton().doClick();
+                    case ADD_USE_CASE:
+                        outlookTabbedPane.getAddUseCaseButton().doClick();
                         break;
+                    
                     case DELETE:
                         deleteButton.doClick();
                         break;
@@ -330,18 +301,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                     case ADD_GOAL:
                         outlookTabbedPane.getAddGoalButton().doClick();
                         break;
-                    case ADD_INFORMATION_OBJECT:
-                        outlookTabbedPane.getAddInformationObjectButton().doClick();
-                        break;
-                    case ADD_DELIVERABLE:
-                        outlookTabbedPane.getAddDeliverableButton().doClick();
-                        break;
-                    case ADD_ORGANIZATION_ROLE:
-                        outlookTabbedPane.getAddOrganizationRoleButton().doClick();
-                        break;
-                    case ADD_ORGANIZATION_UNIT:
-                        outlookTabbedPane.getAddOrganizationUnitButton().doClick();
-                        break;
+                   
                     case ADD_AND:
                         outlookTabbedPane.getAddAndButton().doClick();
                         break;

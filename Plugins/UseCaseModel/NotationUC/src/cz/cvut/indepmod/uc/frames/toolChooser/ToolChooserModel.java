@@ -18,37 +18,41 @@ public class ToolChooserModel extends Model {
 
     public static final String FRAME_TITLE_RES = "uc.frame.tools.title";
 
+    public static final String ACTOR_TOOL_RES =
+            Resources.getResources().getString("uc.frame.tools.actor");
+    public static final String USE_CASE_TOOL_RES =
+            Resources.getResources().getString("uc.frame.tools.use_case");
     public static final String CONTROL_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.control");
     public static final String FUNCTION_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.function");
     public static final String EVENT_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.event");
-    public static final String DELIVERABLE_TOOL_RES = 
+    public static final String DELIVERABLE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.deliverable");
-    public static final String INFORMATION_TOOL_RES = 
+    public static final String INFORMATION_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.information");
-    public static final String ORG_UNIT_TOOL_RES = 
+    public static final String ORG_UNIT_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.org.unit");
     public static final String ORG_ROLE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.org.role");
-    public static final String AND_TOOL_RES = 
+    public static final String AND_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.and");
     public static final String OR_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.or");
     public static final String XOR_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools..xor");
-    public static final String APP_SW_TOOL_RES = 
+    public static final String APP_SW_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.app.sw");
     public static final String DELETE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.delete");
     public static final String MESSAGE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.message");
-    public static final String GOAL_TOOL_RES = 
+    public static final String GOAL_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.goal");
-    public static final String MACHINE_TOOL_RES = 
+    public static final String MACHINE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.machine");
-    public static final String HW_TOOL_RES = 
+    public static final String HW_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.HW");
 
     public static final String CONTROL_FLOW_LINE_TOOL_RES =
@@ -65,6 +69,8 @@ public class ToolChooserModel extends Model {
 
     public enum Tool {
         CONTROL,
+        ADD_ACTOR,
+        ADD_USE_CASE,
         ADD_FUNCTION,
         ADD_EVENT,
         ADD_DELIVERABLE,

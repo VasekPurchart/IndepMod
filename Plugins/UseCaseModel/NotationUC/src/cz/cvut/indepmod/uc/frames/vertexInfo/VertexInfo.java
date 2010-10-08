@@ -1,25 +1,29 @@
 package cz.cvut.indepmod.uc.frames.vertexInfo;
 
-import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
-import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
-import cz.cvut.promod.epc.modelFactory.epcGraphItemModels.*;
-import cz.cvut.promod.epc.resources.Resources;
-import cz.cvut.promod.services.ModelerSession;
-import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
-
-import javax.swing.*;
-import java.util.*;
-import java.beans.PropertyDescriptor;
-import java.beans.IntrospectionException;
-
-import org.jgraph.graph.DefaultGraphCell;
-import org.jgraph.JGraph;
-import org.jgraph.event.GraphSelectionListener;
-import org.jgraph.event.GraphSelectionEvent;
-import org.apache.log4j.Logger;
 import com.jidesoft.grid.Property;
 import com.jidesoft.grid.PropertyTableModel;
 import com.jidesoft.introspector.BeanProperty;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
+import cz.cvut.promod.epc.modelFactory.epcGraphItemModels.*;
+import cz.cvut.promod.epc.resources.Resources;
+import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
+import cz.cvut.promod.services.ModelerSession;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
+import org.apache.log4j.Logger;
+import org.jgraph.JGraph;
+import org.jgraph.event.GraphSelectionEvent;
+import org.jgraph.event.GraphSelectionListener;
+import org.jgraph.graph.DefaultGraphCell;
+
+import javax.swing.*;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * ProMod, master thesis project
@@ -47,6 +51,8 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
     private static final String NAME_LABEL = Resources.getResources().getString("uc.info.name");
     private static final String UUID_LABEL = Resources.getResources().getString("uc.info.uuid");    
     private static final String APP_SW_LABEL = Resources.getResources().getString("uc.vertex.app.sw");
+    private static final String ACTOR_LABEL = Resources.getResources().getString("uc.vertex.actor");
+    private static final String UC_LABEL = Resources.getResources().getString("uc.vertex.uc");
     private static final String HW_LABEL = Resources.getResources().getString("uc.vertex.hw");
     private static final String DELIVERABLE_LABEL = Resources.getResources().getString("uc.vertex.deliverable");
     private static final String FLOW_LABEL = Resources.getResources().getString("uc.vertex.flow");
@@ -278,6 +284,10 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
                 public Object getValue() {
                     if(userObject instanceof ApplicationSoftwareModel){
                         return APP_SW_LABEL;
+                    } else if(userObject instanceof ActorModel) {
+                        return ACTOR_LABEL;
+                    } else if(userObject instanceof UseCaseModel) {
+                        return UC_LABEL;
                     } else if(userObject instanceof ComputerHWModel){
                         return HW_LABEL;
                     } else if(userObject instanceof DeliverableModel){

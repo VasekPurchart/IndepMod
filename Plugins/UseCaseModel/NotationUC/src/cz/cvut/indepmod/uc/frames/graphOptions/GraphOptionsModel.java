@@ -11,13 +11,13 @@ import com.jgoodies.binding.beans.Model;
  */
 public class GraphOptionsModel extends Model {
 
-    public static final String FRAME_TITLE_RES = "epc.frame.options.title";
-    public static final String BELOW_ZERO_RES = "epc.frame.options.below.zero";
-    public static final String USE_GRID_RES = "epc.frame.options.grid";
-    public static final String CELL_SIZE_RES = "epc.frame.options.cel.size";
-    public static final String VIEW_GRID_RES = "epc.frame.options.grid.view";
-    public static final String GRAPH_SCALE_RES = "epc.frame.options.scale";
-    public static final String GRAPH_SCALE_100_RES = "epc.frame.options.scale.100";
+    public static final String FRAME_TITLE_RES = "uc.frame.options.title";
+    public static final String BELOW_ZERO_RES = "uc.frame.options.below.zero";
+    public static final String USE_GRID_RES = "uc.frame.options.grid";
+    public static final String CELL_SIZE_RES = "uc.frame.options.cel.size";
+    public static final String VIEW_GRID_RES = "uc.frame.options.grid.view";
+    public static final String GRAPH_SCALE_RES = "uc.frame.options.scale";
+    public static final String GRAPH_SCALE_100_RES = "uc.frame.options.scale.100";
 
     public static final int INIT_SPINNER_STEP = 1;
 

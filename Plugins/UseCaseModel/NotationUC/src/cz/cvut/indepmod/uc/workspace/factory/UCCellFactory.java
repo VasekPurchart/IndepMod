@@ -1,7 +1,7 @@
 package cz.cvut.indepmod.uc.workspace.factory;
 
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.*;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import org.apache.log4j.Logger;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
@@ -11,7 +11,6 @@ import org.jgraph.graph.GraphConstants;
 import java.awt.geom.Point2D;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * ProMod, master thesis project
@@ -47,8 +46,8 @@ public class UCCellFactory {
 
         switch (tool){
             case ADD_FUNCTION:
-                cell.setUserObject(new FunctionModel(UUID.randomUUID()));
-                cell.getAttributes().applyMap(FunctionModel.installAttributes(point));
+               // cell.setUserObject(new FunctionModel(UUID.randomUUID()));
+               // cell.getAttributes().applyMap(FunctionModel.installAttributes(point));
                 break;
 
 

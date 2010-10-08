@@ -1,17 +1,15 @@
 package cz.cvut.indepmod.uc.frames.graphOptions;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.builder.PanelBuilder;
-
-import javax.swing.*;
-
+import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
-import cz.cvut.promod.epc.resources.Resources;
 import org.apache.log4j.Logger;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Hashtable;
 
