@@ -2,7 +2,6 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
-import cz.cvut.indepmod.uc.workspace.UCGraph;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
@@ -226,12 +225,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             case ADD_OR:
             case ADD_XOR:
             case ADD_INFORMATION_OBJECT:
-            case ADD_ORGANIZATION_ROLE:
-            case ADD_ORGANIZATION_UNIT:
             case ADD_DELIVERABLE:
-            case ADD_APP_SW:
-            case ADD_MACHINE:
-            case ADD_HW:
             case ADD_MESSAGE:
             case ADD_GOAL:
             case ADD_AND_OR:

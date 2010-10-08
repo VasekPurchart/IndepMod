@@ -288,30 +288,6 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
                         return ACTOR_LABEL;
                     } else if(userObject instanceof UseCaseModel) {
                         return UC_LABEL;
-                    } else if(userObject instanceof ComputerHWModel){
-                        return HW_LABEL;
-                    } else if(userObject instanceof DeliverableModel){
-                        return DELIVERABLE_LABEL;
-                    } else if(userObject instanceof EdgeModel){
-                        return FLOW_LABEL + " " + getFlowType((EdgeModel) userObject);
-                    } else if(userObject instanceof EventModel){
-                        return EVENT_LABEL;
-                    } else if(userObject instanceof FunctionModel){
-                        return FUNCTION_LABEL;
-                    } else if(userObject instanceof GoalModel){
-                        return GOAL_LABEL;
-                    } else if(userObject instanceof InformationObjectModel){
-                        return INFO_OBJ_LABEL;
-                    } else if(userObject instanceof LogicFunctionModel){
-                        return LOGIC_OP_LABEL;
-                    } else if(userObject instanceof MachineModel){
-                        return MACHINE_LABEL;
-                    } else if(userObject instanceof MessageModel){
-                        return MESSAGE_LABEL;
-                    } else if(userObject instanceof OrganizationRoleModel){
-                        return ORG_ROLE_LABEL;
-                    } else if(userObject instanceof OrganizationUnitModel){
-                        return ORG_UNIT_LABEL;
                     } else {
                         LOG.error("An unknown type of EPC item.");
                         return "";
