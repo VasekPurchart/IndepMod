@@ -1,20 +1,19 @@
 package cz.cvut.indepmod.uc.frames.toolChooser;
 
-import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
+import com.jgoodies.binding.PresentationModel;
+import com.jgoodies.binding.value.ValueModel;
+import com.jidesoft.status.LabelStatusBarItem;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
-import cz.cvut.promod.epc.resources.Resources;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.util.Set;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-
-import com.jgoodies.binding.value.ValueModel;
-import com.jgoodies.binding.PresentationModel;
-import com.jidesoft.status.LabelStatusBarItem;
-import org.apache.log4j.Logger;
+import java.beans.PropertyChangeListener;
+import java.util.Set;
 
 /**
  * ProMod, master thesis project
@@ -28,7 +27,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
     private static final Logger LOG = Logger.getLogger(ToolChooser.class);
 
     private static final String SELECTED_TOOL_LABEL =
-            Resources.getResources().getString("epc.frame.tools.selected");
+            Resources.getResources().getString("uc.frame.tools.selected");
 
     private final ToolChooserModel model;
 

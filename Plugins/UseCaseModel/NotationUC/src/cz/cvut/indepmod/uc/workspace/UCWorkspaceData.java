@@ -1,9 +1,7 @@
 package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
-import cz.cvut.promod.epc.frames.toolChooser.ToolChooserModel;
-import cz.cvut.promod.epc.workspace.EPCGraph;
-import cz.cvut.promod.epc.workspace.EPCWorkspace;
+import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.jgraph.JGraph;
@@ -23,7 +21,7 @@ import java.util.Map;
 public class UCWorkspaceData implements NotationWorkspaceData {
 
     private static JGraph graph;
-    private static EPCWorkspace workspace;
+    private static UCWorkspace workspace;
 
     private final ValueModel selectedToolModel;
     private final ValueModel gridModel;
@@ -47,8 +45,8 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
         this.selectedToolModel = selectedToolModel;
 
-        graph = new EPCGraph(selectedToolModel, popupMenu, actions);
-        workspace = new EPCWorkspace(graph, actions);
+        graph = new UCGraph(selectedToolModel, popupMenu, actions);
+        workspace = new UCWorkspace(graph, actions);
 
         this.gridModel = gridModel;
         this.lockModel = lockModel;

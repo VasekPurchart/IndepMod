@@ -1,12 +1,11 @@
 package cz.cvut.indepmod.uc.frames.toolChooser;
 
-import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
-import cz.cvut.promod.epc.resources.Resources;
-
-import java.util.Set;
-import java.util.HashSet;
-
 import com.jgoodies.binding.beans.Model;
+import cz.cvut.indepmod.uc.resources.Resources;
+import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * ProMod, master thesis project
@@ -17,51 +16,51 @@ import com.jgoodies.binding.beans.Model;
  */
 public class ToolChooserModel extends Model {   
 
-    public static final String FRAME_TITLE_RES = "epc.frame.tools.title";
+    public static final String FRAME_TITLE_RES = "uc.frame.tools.title";
 
     public static final String CONTROL_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.control");
+            Resources.getResources().getString("uc.frame.tools.control");
     public static final String FUNCTION_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.function");
+            Resources.getResources().getString("uc.frame.tools.function");
     public static final String EVENT_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.event");
+            Resources.getResources().getString("uc.frame.tools.event");
     public static final String DELIVERABLE_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.deliverable");
+            Resources.getResources().getString("uc.frame.tools.deliverable");
     public static final String INFORMATION_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.information");
+            Resources.getResources().getString("uc.frame.tools.information");
     public static final String ORG_UNIT_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.org.unit");
+            Resources.getResources().getString("uc.frame.tools.org.unit");
     public static final String ORG_ROLE_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.org.role");
+            Resources.getResources().getString("uc.frame.tools.org.role");
     public static final String AND_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.and");
+            Resources.getResources().getString("uc.frame.tools.and");
     public static final String OR_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.or");
+            Resources.getResources().getString("uc.frame.tools.or");
     public static final String XOR_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools..xor");
+            Resources.getResources().getString("uc.frame.tools..xor");
     public static final String APP_SW_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.app.sw");
+            Resources.getResources().getString("uc.frame.tools.app.sw");
     public static final String DELETE_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.delete");
+            Resources.getResources().getString("uc.frame.tools.delete");
     public static final String MESSAGE_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.message");
+            Resources.getResources().getString("uc.frame.tools.message");
     public static final String GOAL_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.goal");
+            Resources.getResources().getString("uc.frame.tools.goal");
     public static final String MACHINE_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.machine");
+            Resources.getResources().getString("uc.frame.tools.machine");
     public static final String HW_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.HW");
+            Resources.getResources().getString("uc.frame.tools.HW");
 
     public static final String CONTROL_FLOW_LINE_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.line.control.flow");
+            Resources.getResources().getString("uc.frame.tools.line.control.flow");
     public static final String INFO_SERVICES_FLOW_LINE_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.line.info.services");
+            Resources.getResources().getString("uc.frame.tools.line.info.services");
     public static final String ORG_FLOW_LINE_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.line.org.flow");
+            Resources.getResources().getString("uc.frame.tools.line.org.flow");
     public static final String INFO_FLOW_LINE_TOOL_RES =
-            Resources.getResources().getString("epc.frame.tools.line.info.flow");
+            Resources.getResources().getString("uc.frame.tools.line.info.flow");
     public static final String MATERIAL_FLOW_LINE_TOOL_RES = 
-            Resources.getResources().getString("epc.frame.tools.line.material");
+            Resources.getResources().getString("uc.frame.tools.line.material");
 
 
     public enum Tool {

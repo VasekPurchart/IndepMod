@@ -1,4 +1,4 @@
-package cz.cvut.indepmod.uc.modelFactory.ucItemModels;
+package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 import cz.cvut.indepmod.uc.resources.Resources;
 
@@ -11,21 +11,21 @@ import java.util.UUID;
  * User: Viktor Bohuslav Bohdal, bohdavik@fel.cvut.cz
  * Date: 6.10.2010
  */
-public class ActorModel extends UCEditableVertex {
-    private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.actor");
+public class UseCaseModel extends UCEditableVertex {
+    private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.usecase");
 
     private final UUID uuid;
 
 
-    public ActorModel(final UUID uuid){
+    public UseCaseModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
     }
 
-    public ActorModel(final ActorModel actorModel, final String name){
+    public UseCaseModel(final UseCaseModel useCaseModel, final String name){
         setName(name);
-        uuid = actorModel.getUuid();
-        setNote(actorModel.getNote());
+        uuid = useCaseModel.getUuid();
+        setNote(useCaseModel.getNote());
 
     }
 
@@ -45,7 +45,7 @@ public class ActorModel extends UCEditableVertex {
         final Map map = new Hashtable();
 
         /**
-         * Tady bude graf. implementace actora
+         * Tady bude graf. implementace UC
          *
          * Neco an tento zpusob:
         map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);

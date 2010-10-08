@@ -1,4 +1,4 @@
-package cz.cvut.indepmod.uc.modelFactory.ucItemModels;
+package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 /**
  * User: Viktor Bohuslav Bohdal, bohdavik@fel.cvut.cz

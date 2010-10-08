@@ -1,15 +1,14 @@
 package cz.cvut.indepmod.uc.frames.toolChooser;
 
-import com.jidesoft.pane.OutlookTabbedPane;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.factories.Borders;
-
-import javax.swing.*;
-
-import cz.cvut.promod.epc.resources.Resources;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jidesoft.pane.OutlookTabbedPane;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
+
+import javax.swing.*;
 
 /**
  * ProMod, master thesis project
@@ -20,9 +19,9 @@ import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
  */
 public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
-    private final String BASICS_LABEL = Resources.getResources().getString("epc.frame.tools.cat.basics");
-    private final String OPERATORS_LABEL = Resources.getResources().getString("epc.frame.tools.cat.operators");
-    private final String CONN_LABEL = Resources.getResources().getString("epc.frame.tools.cat.flows");
+    private final String BASICS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.basics");
+    private final String OPERATORS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.operators");
+    private final String CONN_LABEL = Resources.getResources().getString("uc.frame.tools.cat.flows");
 
     protected final JToggleButton addFunctionButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.FUNCTION_TOOL_RES, null

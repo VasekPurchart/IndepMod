@@ -1,26 +1,25 @@
 package cz.cvut.indepmod.uc.frames.graphOptions;
 
 import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.value.ValueModel;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.BoundedRangeAdapter;
 import com.jgoodies.binding.adapter.SpinnerAdapterFactory;
-import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
+import com.jgoodies.binding.value.ValueModel;
+import cz.cvut.indepmod.uc.UCNotationModel;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
+import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
-import cz.cvut.promod.epc.EPCNotationModel;
-import cz.cvut.promod.epc.resources.Resources;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.util.Set;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Map;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import org.apache.log4j.Logger;
+import java.util.Set;
 
 
 /**
@@ -82,11 +81,11 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
     }
 
     public void initEventHandling(final Map<String, ProModAction> actions) {
-        if(actions.containsKey(EPCNotationModel.REFRESH_ACTION_KEY)){
-            refreshButton.setAction(actions.get(EPCNotationModel.REFRESH_ACTION_KEY));
+        if(actions.containsKey(UCNotationModel.REFRESH_ACTION_KEY)){
+            refreshButton.setAction(actions.get(UCNotationModel.REFRESH_ACTION_KEY));
             
         } else {
-            LOG.error("No " + EPCNotationModel.REFRESH_ACTION_KEY + " action available. Refresh button won't have no action set.");
+            LOG.error("No " + UCNotationModel.REFRESH_ACTION_KEY + " action available. Refresh button won't have no action set.");
         }
 
     }
@@ -147,7 +146,7 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
     }
 
     public String getDockableFrameName() {
-        return "EPCJGRaphOptions";
+        return "UCJGRaphOptions";
     }
 
     public JComponent getDockableFrameComponent() {

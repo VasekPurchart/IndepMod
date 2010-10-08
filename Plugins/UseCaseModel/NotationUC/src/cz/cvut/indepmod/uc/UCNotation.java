@@ -1,8 +1,8 @@
 package cz.cvut.indepmod.uc;
 
 import com.jidesoft.status.LabelStatusBarItem;
-import cz.cvut.indepmod.uc.ioController.UCModelNotationIOController;
-import cz.cvut.indepmod.uc.modelFactory.UCModelNotationModelFactory;
+import cz.cvut.indepmod.uc.ioController.UCNotationIOController;
+import cz.cvut.indepmod.uc.modelFactory.UCNotationModelFactory;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.gui.settings.SettingPageData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
@@ -20,6 +20,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -34,14 +35,21 @@ public class UCNotation implements Notation {
 
     private final LabelStatusBarItem selectedToolStatusBarItem;
     private final UCNotationModel model;
-    private final UCModelNotationModelFactory modelFactory;
-    private final UCModelNotationIOController ioController;
+    private final UCNotationModelFactory modelFactory;
+    private final UCNotationIOController ioController;
     private final String NOTATION_DESCRIPTION = Resources.getResources().getString("uc.description");
 
     public UCNotation(final File propertiesFile) throws InstantiationException  {
         final Properties properties = new Properties();
+        LOG.info(propertiesFile);
         try {
             properties.load(new FileReader(propertiesFile));
+            Enumeration keys = properties.keys();
+while (keys.hasMoreElements()) {
+  String key = (String)keys.nextElement();
+  String value = (String)properties.get(key);
+  LOG.info(key + ": " + value);
+}
         } catch (IOException e) {
             LOG.error("Properties for the Use Case Notations couldn't be read.", e);
             throw new InstantiationException("Mandatory properties couldn't be read.");
@@ -50,8 +58,8 @@ public class UCNotation implements Notation {
 
         selectedToolStatusBarItem = new LabelStatusBarItem();
         model = new UCNotationModel(properties, selectedToolStatusBarItem);
-        modelFactory = new UCModelNotationModelFactory();
-        ioController = new UCModelNotationIOController();
+        modelFactory = new UCNotationModelFactory();
+        ioController = new UCNotationIOController(model.getExtension(), getIdentifier());
     }
 
     public String getIdentifier() {

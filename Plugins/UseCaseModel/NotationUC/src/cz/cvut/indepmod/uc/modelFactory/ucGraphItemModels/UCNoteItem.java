@@ -1,4 +1,4 @@
-package cz.cvut.indepmod.uc.modelFactory.ucItemModels;
+package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 /**
  * Created by IntelliJ IDEA.

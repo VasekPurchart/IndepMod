@@ -32,38 +32,38 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
 
     private static final Logger LOG = Logger.getLogger(VertexInfo.class);
 
-    public static final String FRAME_ID = "epc.info";
+    public static final String FRAME_ID = "uc.info";
 
-    private static final String TITLE_LABEL = Resources.getResources().getString("epc.info.title");
-    private static final String CATEGORY_LOGICS_LABEL = Resources.getResources().getString("epc.info.cat.logics");
-    private static final String CATEGORY_GENERALS_LABEL = Resources.getResources().getString("epc.info.cat.general");
-    private static final String LOGICS_CONDITION_LABEL = Resources.getResources().getString("epc.info.condition");
-    private static final String LOGICS_CONDITION_TOP_LABEL = Resources.getResources().getString("epc.info.condition.top");
-    private static final String LOGICS_CONDITION_BOTTOM_LABEL = Resources.getResources().getString("epc.info.condition.bottom");
-    private static final String CATEGORY_NOTES_LABEL = Resources.getResources().getString("epc.info.cat.notes");
-    private static final String NOTE_LABEL = Resources.getResources().getString("epc.info.note");
-    private static final String CATEGORY_TYPE_LABEL = Resources.getResources().getString("epc.info.cat.type");
-    private static final String TYPE_LABEL = Resources.getResources().getString("epc.info.type");
-    private static final String NAME_LABEL = Resources.getResources().getString("epc.info.name");
-    private static final String UUID_LABEL = Resources.getResources().getString("epc.info.uuid");    
-    private static final String APP_SW_LABEL = Resources.getResources().getString("epc.vertex.app.sw");
-    private static final String HW_LABEL = Resources.getResources().getString("epc.vertex.hw");
-    private static final String DELIVERABLE_LABEL = Resources.getResources().getString("epc.vertex.deliverable");
-    private static final String FLOW_LABEL = Resources.getResources().getString("epc.vertex.flow");
-    private static final String EVENT_LABEL = Resources.getResources().getString("epc.vertex.event");
-    private static final String FUNCTION_LABEL = Resources.getResources().getString("epc.vertex.function");
-    private static final String GOAL_LABEL = Resources.getResources().getString("epc.vertex.goal");
-    private static final String INFO_OBJ_LABEL = Resources.getResources().getString("epc.vertex.info.object");
-    private static final String LOGIC_OP_LABEL = Resources.getResources().getString("epc.vertex.logic.op");
-    private static final String MACHINE_LABEL = Resources.getResources().getString("epc.vertex.machine");
-    private static final String MESSAGE_LABEL = Resources.getResources().getString("epc.vertex.message");
-    private static final String ORG_ROLE_LABEL = Resources.getResources().getString("epc.vertex.org.role");
-    private static final String ORG_UNIT_LABEL = Resources.getResources().getString("epc.vertex.org.unit");
-    private static final String CTR_FLOW_LABEL = Resources.getResources().getString("epc.frame.tools.line.control.flow");
-    private static final String INF_SERVICES_FLOW_LABEL = Resources.getResources().getString("epc.frame.tools.line.info.services");
-    private static final String ORG_FLOW_LABEL = Resources.getResources().getString("epc.frame.tools.line.org.flow");
-    private static final String INFO_FLOW_LABEL = Resources.getResources().getString("epc.frame.tools.line.info.flow");
-    private static final String MATERIAL_FLOW_LABEL = Resources.getResources().getString("epc.frame.tools.line.material");
+    private static final String TITLE_LABEL = Resources.getResources().getString("uc.info.title");
+    private static final String CATEGORY_LOGICS_LABEL = Resources.getResources().getString("uc.info.cat.logics");
+    private static final String CATEGORY_GENERALS_LABEL = Resources.getResources().getString("uc.info.cat.general");
+    private static final String LOGICS_CONDITION_LABEL = Resources.getResources().getString("uc.info.condition");
+    private static final String LOGICS_CONDITION_TOP_LABEL = Resources.getResources().getString("uc.info.condition.top");
+    private static final String LOGICS_CONDITION_BOTTOM_LABEL = Resources.getResources().getString("uc.info.condition.bottom");
+    private static final String CATEGORY_NOTES_LABEL = Resources.getResources().getString("uc.info.cat.notes");
+    private static final String NOTE_LABEL = Resources.getResources().getString("uc.info.note");
+    private static final String CATEGORY_TYPE_LABEL = Resources.getResources().getString("uc.info.cat.type");
+    private static final String TYPE_LABEL = Resources.getResources().getString("uc.info.type");
+    private static final String NAME_LABEL = Resources.getResources().getString("uc.info.name");
+    private static final String UUID_LABEL = Resources.getResources().getString("uc.info.uuid");    
+    private static final String APP_SW_LABEL = Resources.getResources().getString("uc.vertex.app.sw");
+    private static final String HW_LABEL = Resources.getResources().getString("uc.vertex.hw");
+    private static final String DELIVERABLE_LABEL = Resources.getResources().getString("uc.vertex.deliverable");
+    private static final String FLOW_LABEL = Resources.getResources().getString("uc.vertex.flow");
+    private static final String EVENT_LABEL = Resources.getResources().getString("uc.vertex.event");
+    private static final String FUNCTION_LABEL = Resources.getResources().getString("uc.vertex.function");
+    private static final String GOAL_LABEL = Resources.getResources().getString("uc.vertex.goal");
+    private static final String INFO_OBJ_LABEL = Resources.getResources().getString("uc.vertex.info.object");
+    private static final String LOGIC_OP_LABEL = Resources.getResources().getString("uc.vertex.logic.op");
+    private static final String MACHINE_LABEL = Resources.getResources().getString("uc.vertex.machine");
+    private static final String MESSAGE_LABEL = Resources.getResources().getString("uc.vertex.message");
+    private static final String ORG_ROLE_LABEL = Resources.getResources().getString("uc.vertex.org.role");
+    private static final String ORG_UNIT_LABEL = Resources.getResources().getString("uc.vertex.org.unit");
+    private static final String CTR_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.control.flow");
+    private static final String INF_SERVICES_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.info.services");
+    private static final String ORG_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.org.flow");
+    private static final String INFO_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.info.flow");
+    private static final String MATERIAL_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.material");
 
 
     public String getDockableFrameName() {

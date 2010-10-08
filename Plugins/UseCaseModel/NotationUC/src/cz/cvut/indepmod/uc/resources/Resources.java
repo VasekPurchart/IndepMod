@@ -14,6 +14,16 @@ public class Resources extends AbstractResources {
     public static final String PREVIEW = "preview.png";
 
     public static final String RESOURCES_FILE = "uc";
+
+    public static final String PORTS = "ports/";
+
+
+
+    public static final String PORT_BLUE = "portBlue.png";
+
+
+    public static final String ELEMENT = "element.png";
+    public static final String CONNECTOR = "connector.png";
     
     private final static Map<String, ImageIcon> icons = new HashMap<String, ImageIcon>();
     private static ResourceBundle resources = null;
