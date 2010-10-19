@@ -538,6 +538,7 @@ public class Modeler extends ModelerView{
                 }
 
             } catch (NullPointerException exception){
+                exception.printStackTrace();
                 LOG.error("Not workspace provided, notationIdentifier: " + notationIdentifier);
             }
         }

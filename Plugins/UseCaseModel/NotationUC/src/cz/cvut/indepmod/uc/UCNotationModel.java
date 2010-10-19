@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc;
 import com.jidesoft.status.LabelStatusBarItem;
 import cz.cvut.indepmod.uc.frames.graphOptions.GraphOptions;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooser;
+import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
 import cz.cvut.promod.epc.frames.vertexInfo.VertexInfo;
@@ -13,10 +14,12 @@ import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.menuService.MenuService;
 import cz.cvut.promod.services.menuService.utils.InsertMenuItemResult;
 import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
+import javax.swing.undo.UndoManager;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
@@ -25,7 +28,7 @@ import java.util.*;
  * User: Petr Zverina, petr.zverina@gmail.com
  * Date: 19:43:00, 5.12.2009
  *
- * A model component for the EPCNotation plugin.
+ * A model component for the UCNotation plugin.
  */
 public class UCNotationModel {
 
@@ -61,7 +64,7 @@ public class UCNotationModel {
 
 
     /**
-     * Constructs a new EPCNotationModel.
+     * Constructs a new UCNotationModel.
      *
      * @param properties are the required properties
      * @param selectedToolStatusBarItem is the status bat item holding the actual select tool
@@ -109,9 +112,23 @@ public class UCNotationModel {
     }
 
     private void initActions() {
+        actions.put(SAVE_ALL_ACTION_KEY,
+            new ProModAction(Resources.getResources().getString(SAVE_ALL_ACTION_KEY), null, null){
+                public void actionPerformed(ActionEvent event) {
+                    final TreePath treePath = ModelerSession.getProjectService().getSelectedProjectPath();
+
+                    if(treePath != null){
+                        ModelerSession.getProjectControlService().synchronize(
+                                treePath,
+                                true, true, false, false
+                        );
+                    }
+                }
+            }
+        );
+
         actions.put(SAVE_ACTION_KEY,
-            new ProModAction(Resources.getResources().getString(SAVE_ACTION_KEY),
-                    Resources.getIcon(Resources.ICONS + Resources.SAVE), null){
+            new ProModAction(Resources.getResources().getString(SAVE_ACTION_KEY), null, null){
                 public void actionPerformed(ActionEvent event) {
                     final TreePath treePath = ModelerSession.getProjectService().getSelectedDiagramPath();
 
@@ -120,6 +137,48 @@ public class UCNotationModel {
                                 treePath,
                                 true, true, false, false
                         );
+                    }
+                }
+            }
+        );
+
+        actions.put(REDO_ACTION_KEY,
+            new ProModAction(Resources.getResources().getString(REDO_ACTION_KEY), null, null){
+                public void actionPerformed(ActionEvent event) {
+                    final ProjectDiagram diagram = ModelerSession.getProjectService().getSelectedDiagram();
+
+                    if(diagram.getDiagramModel() instanceof UCDiagramModel){
+                        final UCDiagramModel diagramModel = (UCDiagramModel) diagram.getDiagramModel();
+
+                        final UndoManager undoManager = diagramModel.getUndoManager();
+                        undoManager.redo();
+                        setEnabled(undoManager.canRedo());
+                        actions.get(UNDO_ACTION_KEY).setEnabled(undoManager.canUndo()); // enables undo action
+                        actions.get(SAVE_ACTION_KEY).setEnabled(true);
+
+                    } else {
+                        LOG.error("Unable to perform undo action, because of the casting problem.");
+                    }
+                }
+            }
+        );
+
+        actions.put(UNDO_ACTION_KEY,
+            new ProModAction(Resources.getResources().getString(UNDO_ACTION_KEY), null, null){
+                public void actionPerformed(ActionEvent event) {
+                    final ProjectDiagram diagram = ModelerSession.getProjectService().getSelectedDiagram();
+
+                    if(diagram.getDiagramModel() instanceof UCDiagramModel){
+                        final UCDiagramModel diagramModel = (UCDiagramModel) diagram.getDiagramModel();
+
+                        final UndoManager undoManager = diagramModel.getUndoManager();
+                        undoManager.undo();
+                        setEnabled(undoManager.canUndo());
+                        actions.get(REDO_ACTION_KEY).setEnabled(undoManager.canRedo()); // enables redo action
+                        actions.get(SAVE_ACTION_KEY).setEnabled(true);
+
+                    } else {
+                        LOG.error("Unable to perform undo action, because of the casting problem.");
                     }
                 }
             }

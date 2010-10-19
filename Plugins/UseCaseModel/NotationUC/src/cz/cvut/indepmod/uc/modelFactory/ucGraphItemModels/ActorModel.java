@@ -52,7 +52,7 @@ public class ActorModel extends UCEditableVertex {
      */
     public static Map installAttributes(final Point2D point) {
         final Map map = new Hashtable();
-
+        
         map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);
 
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 0, 0));

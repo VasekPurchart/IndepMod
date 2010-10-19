@@ -21,8 +21,12 @@ public class UseCaseModel extends UCEditableVertex {
 
     public static final int DEFAULT_INSET = 6;
 
-    private final UUID uuid;
+    private UUID uuid;
 
+    public UseCaseModel() {
+        this.uuid = null;
+
+    }
 
     public UseCaseModel(final UUID uuid){
         this.uuid = uuid;
@@ -30,7 +34,7 @@ public class UseCaseModel extends UCEditableVertex {
     }
 
     public UseCaseModel(final UseCaseModel useCaseModel, final String name){
-        setName(name);
+        setName(name + "x");
         uuid = useCaseModel.getUuid();
         setNote(useCaseModel.getNote());
     }
@@ -64,4 +68,5 @@ public class UseCaseModel extends UCEditableVertex {
     public UUID getUuid() {
         return this.uuid;  
     }
+
 }

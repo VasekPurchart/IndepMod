@@ -80,7 +80,7 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
 
             final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
             projectDiagram.addChangeListener(this);
-//            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
+            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
 
             // sets the frame's title            
             ModelerSession.setFrameTitleText(ProjectServiceUtils.getFileSystemPathToProjectItem(
@@ -120,7 +120,7 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
         actualUCDiagramModel = null;
         actualProjectDiaram = null;
 
-        actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(false);
+//        actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(false);
         actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(false);        
 
         ModelerSession.clearFrameTitleText();
