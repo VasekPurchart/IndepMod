@@ -76,7 +76,7 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
             );
             
 //            actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canUndo());
-     //       actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canRedo());
+//            actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canRedo());
 
             final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
             projectDiagram.addChangeListener(this);
@@ -133,11 +133,11 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
             && change.getChangeValue() instanceof Boolean
                 && Boolean.FALSE.equals(change.getChangeValue())){
 
-            //actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
+            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
 
             return;
         }
 
-        //actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
+        actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
     }
 }

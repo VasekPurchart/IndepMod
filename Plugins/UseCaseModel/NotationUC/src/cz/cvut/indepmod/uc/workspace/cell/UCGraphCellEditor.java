@@ -43,10 +43,11 @@ public class UCGraphCellEditor extends DefaultGraphCellEditor {
 
             } else if(oldUserObject instanceof UseCaseModel){
                 newUserObject = new UseCaseModel((UseCaseModel)oldUserObject, newName);
-
+            } else if(oldUserObject instanceof ActorModel) {
+                newUserObject = new ActorModel((ActorModel)oldUserObject, newName);
             } else {
                 // should never happened, testing & debugging purposes
-                LOG.error("Unknown EPC vertex model");
+                LOG.error("Unknown UC vertex model");
                 newUserObject = errorString;
             }
 
@@ -54,7 +55,7 @@ public class UCGraphCellEditor extends DefaultGraphCellEditor {
 
         } else {
             // should never happened, testing & debugging purposes
-            LOG.error("EPC vertexes is not an instances of DefaultGraphCell class.");
+            LOG.error("UC vertexes is not an instances of DefaultGraphCell class.");
         }
 
         return errorString;

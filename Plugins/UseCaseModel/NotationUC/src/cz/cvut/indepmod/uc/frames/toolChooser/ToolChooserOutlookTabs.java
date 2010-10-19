@@ -23,17 +23,6 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
     private final String OPERATORS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.operators");
     private final String CONN_LABEL = Resources.getResources().getString("uc.frame.tools.cat.flows");
 
-    protected final JToggleButton addAndButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.AND_TOOL_RES, null
-    );
-
-    protected final JToggleButton addOrButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.OR_TOOL_RES, null
-    );
-
-    protected final JToggleButton addXorButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.XOR_TOOL_RES, null
-    );
 
     protected final JToggleButton addControlFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.CONTROL_FLOW_LINE_TOOL_RES, null
@@ -55,55 +44,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
             ToolChooserModel.MATERIAL_FLOW_LINE_TOOL_RES, null
     );
 
-    protected final JToggleButton addApplicationSWButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.APP_SW_TOOL_RES, null
-    );
-
-    protected final JToggleButton addMessageButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.MESSAGE_TOOL_RES, null
-    );
-
-    protected final JToggleButton addGoalButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.GOAL_TOOL_RES, null
-    );
-
-    protected final JToggleButton addMachineButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.MACHINE_TOOL_RES, null
-    );
-
-    protected final JToggleButton addHWButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.HW_TOOL_RES, null
-    );
-
-    protected final JToggleButton addAndOrButton = ModelerSession.getComponentFactoryService().createToggleButton(
-             ToolChooserModel.AND_TOOL_RES + " / " +
-             ToolChooserModel.OR_TOOL_RES, null
-    );
-
-    protected final JToggleButton addAndXorButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.AND_TOOL_RES + " / " +
-             ToolChooserModel.XOR_TOOL_RES, null
-    );
-
-    protected final JToggleButton addOrAndButton = ModelerSession.getComponentFactoryService().createToggleButton(
-             ToolChooserModel.OR_TOOL_RES + " / " +
-            ToolChooserModel.AND_TOOL_RES, null
-    );
-
-    protected final JToggleButton addOrXorButton = ModelerSession.getComponentFactoryService().createToggleButton(
-             ToolChooserModel.OR_TOOL_RES + " / " +
-            ToolChooserModel.XOR_TOOL_RES, null
-    );
-
-    protected final JToggleButton addXorAndButton = ModelerSession.getComponentFactoryService().createToggleButton(
-             ToolChooserModel.XOR_TOOL_RES + " / " +
-            ToolChooserModel.AND_TOOL_RES, null
-    );
-
-    protected final JToggleButton addXorOrButton = ModelerSession.getComponentFactoryService().createToggleButton(
-             ToolChooserModel.XOR_TOOL_RES + " / " +
-            ToolChooserModel.OR_TOOL_RES, null
-    );
+    
 
     protected final JToggleButton addActorButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.ACTOR_TOOL_RES, null
@@ -157,15 +98,6 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
                 "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
         ));
         final CellConstraints cellConstraints = new CellConstraints();
-        panel.add(addAndButton, cellConstraints.xy(1,1));
-        panel.add(addOrButton, cellConstraints.xy(1,3));
-        panel.add(addXorButton, cellConstraints.xy(1,5));
-        panel.add(addAndOrButton, cellConstraints.xy(1,7));
-        panel.add(addAndXorButton, cellConstraints.xy(1,9));
-        panel.add(addOrAndButton, cellConstraints.xy(1,11));
-        panel.add(addOrXorButton, cellConstraints.xy(1,13));
-        panel.add(addXorAndButton, cellConstraints.xy(1,15));
-        panel.add(addXorOrButton, cellConstraints.xy(1,17));
 
         return panel;
     }
@@ -185,20 +117,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         return panel;
     }
     
-
-    public JToggleButton getAddAndButton() {
-        return addAndButton;
-    }
-
-    public JToggleButton getAddOrButton() {
-        return addOrButton;
-    }
-
-    public JToggleButton getAddXorButton() {
-        return addXorButton;
-    }
-
-    public JToggleButton getAddControlFlowLineButton() {
+  public JToggleButton getAddControlFlowLineButton() {
         return addControlFlowLineButton;
     }
 
@@ -216,51 +135,6 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     public JToggleButton getAddMaterialFlowLineButton() {
         return addMaterialFlowLineButton;
-    }
-
-    //88
-    public JToggleButton getAddApplicationSWButton() {
-        return addApplicationSWButton;
-    }
-
-    public JToggleButton getAddMessageButton() {
-        return addMessageButton;
-    }
-
-    public JToggleButton getAddGoalButton() {
-        return addGoalButton;
-    }
-
-    public JToggleButton getAddMachineButton() {
-        return addMachineButton;
-    }
-
-    public JToggleButton getAddHWButton() {
-        return addHWButton;
-    }
-
-    public JToggleButton getAddAndOrButton() {
-        return addAndOrButton;
-    }
-
-    public JToggleButton getAddAndXorButton() {
-        return addAndXorButton;
-    }
-
-    public JToggleButton getAddOrAndButton() {
-        return addOrAndButton;
-    }
-
-    public JToggleButton getAddOrXorButton() {
-        return addOrXorButton;
-    }
-
-    public JToggleButton getAddXorAndButton() {
-        return addXorAndButton;
-    }
-
-    public JToggleButton getAddXorOrButton() {
-        return addXorOrButton;
     }
 
     public JToggleButton getAddUseCaseButton() {

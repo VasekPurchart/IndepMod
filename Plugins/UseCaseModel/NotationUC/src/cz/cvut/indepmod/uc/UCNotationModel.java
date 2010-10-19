@@ -109,9 +109,9 @@ public class UCNotationModel {
     }
 
     private void initPopupMenu() {
-              /*  final Action deleteAction = getAction(DELETE_ACTION_KEY);
+                final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
-        popupMenu.add(deleteAction);*/
+        popupMenu.add(deleteAction);
     }
 
     public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable)  {

@@ -57,6 +57,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             return true; //don't use any other handler
         }
 
+
         currentPort = graph.getSourcePortAt(e.getPoint());
         return (currentPort != null && graph.isPortsVisible()) || super.isForceMarqueeEvent(e);
 
@@ -219,21 +220,8 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
 
         final boolean addingTool;
         switch (tool){
-            case ADD_FUNCTION:
-            case ADD_EVENT:
-            case ADD_AND:
-            case ADD_OR:
-            case ADD_XOR:
-            case ADD_INFORMATION_OBJECT:
-            case ADD_DELIVERABLE:
-            case ADD_MESSAGE:
-            case ADD_GOAL:
-            case ADD_AND_OR:
-            case ADD_AND_XOR:
-            case ADD_OR_AND:
-            case ADD_OR_XOR:
-            case ADD_XOR_AND:
-            case ADD_XOR_OR:
+            case ADD_ACTOR:
+            case ADD_USE_CASE:
 
                 addingTool = true;
                 break;

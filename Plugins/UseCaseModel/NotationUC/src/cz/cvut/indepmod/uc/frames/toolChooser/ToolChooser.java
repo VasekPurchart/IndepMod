@@ -68,25 +68,12 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
         buttonGroup.add(outlookTabbedPane.getAddActorButton());
         buttonGroup.add(outlookTabbedPane.getAddUseCaseButton());
-        buttonGroup.add(outlookTabbedPane.getAddAndButton());
-        buttonGroup.add(outlookTabbedPane.getAddOrButton());
-        buttonGroup.add(outlookTabbedPane.getAddXorButton());
         buttonGroup.add(outlookTabbedPane.getAddControlFlowLineButton());
         buttonGroup.add(outlookTabbedPane.getAddInfoServicesFlowLineButton());
         buttonGroup.add(outlookTabbedPane.getAddOrganizationFlowLineButton());
         buttonGroup.add(outlookTabbedPane.getAddInformationFlowLineButton());
         buttonGroup.add(outlookTabbedPane.getAddMaterialFlowLineButton());
-        buttonGroup.add(outlookTabbedPane.getAddApplicationSWButton());
-        buttonGroup.add(outlookTabbedPane.getAddMessageButton());
-        buttonGroup.add(outlookTabbedPane.getAddGoalButton());
-        buttonGroup.add(outlookTabbedPane.getAddMachineButton());
-        buttonGroup.add(outlookTabbedPane.getAddHWButton());
-        buttonGroup.add(outlookTabbedPane.getAddAndOrButton());
-        buttonGroup.add(outlookTabbedPane.getAddAndXorButton());
-        buttonGroup.add(outlookTabbedPane.getAddOrAndButton());
-        buttonGroup.add(outlookTabbedPane.getAddOrXorButton());
-        buttonGroup.add(outlookTabbedPane.getAddXorAndButton());
-        buttonGroup.add(outlookTabbedPane.getAddXorOrButton());
+        
     }
 
     private void initEventHandling() {
@@ -120,26 +107,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
       
 
-        outlookTabbedPane.getAddAndButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_AND);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.AND_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddOrButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_OR);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.OR_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddXorButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_XOR);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.XOR_TOOL_RES);
-            }
-        });
 
         outlookTabbedPane.getAddControlFlowLineButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -176,83 +143,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
             }
         });
 
-        outlookTabbedPane.getAddApplicationSWButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_APP_SW);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.APP_SW_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddMessageButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_MESSAGE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.MESSAGE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddGoalButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_GOAL);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.GOAL_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddMachineButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_MACHINE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.MACHINE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddHWButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_HW);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.HW_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddAndOrButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_AND_OR);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.AND_TOOL_RES + LOG_OP_SEPARATOR + ToolChooserModel.OR_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddAndXorButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_AND_XOR);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.AND_TOOL_RES + LOG_OP_SEPARATOR + ToolChooserModel.XOR_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddOrAndButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_OR_AND);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.OR_TOOL_RES + LOG_OP_SEPARATOR + ToolChooserModel.AND_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddOrXorButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_OR_XOR);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.OR_TOOL_RES + LOG_OP_SEPARATOR + ToolChooserModel.XOR_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddXorAndButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_XOR_AND);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.XOR_TOOL_RES + LOG_OP_SEPARATOR + ToolChooserModel.AND_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddXorOrButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_XOR_OR);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.XOR_TOOL_RES + LOG_OP_SEPARATOR + ToolChooserModel.OR_TOOL_RES);
-            }
-        });
-
         selectedToolModel.addValueChangeListener(new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent evt) {
                 final ToolChooserModel.Tool tool = (ToolChooserModel.Tool) evt.getNewValue();
@@ -286,49 +176,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                     case ADD_ORGANIZATION_FLOW_LINE:
                         outlookTabbedPane.getAddOrganizationFlowLineButton().doClick();
                         break;                     
-                    case ADD_HW:
-                        outlookTabbedPane.getAddHWButton().doClick();
-                        break;
-                    case ADD_MACHINE:
-                        outlookTabbedPane.getAddMachineButton().doClick();
-                        break;
-                    case ADD_APP_SW:
-                        outlookTabbedPane.getAddApplicationSWButton().doClick();
-                        break;
-                    case ADD_MESSAGE:
-                        outlookTabbedPane.getAddMessageButton().doClick();
-                        break;
-                    case ADD_GOAL:
-                        outlookTabbedPane.getAddGoalButton().doClick();
-                        break;
-                   
-                    case ADD_AND:
-                        outlookTabbedPane.getAddAndButton().doClick();
-                        break;
-                    case ADD_OR:
-                        outlookTabbedPane.getAddOrButton().doClick();
-                        break;
-                    case ADD_XOR:
-                        outlookTabbedPane.getAddXorButton().doClick();
-                        break;
-                    case ADD_AND_OR:
-                        outlookTabbedPane.getAddAndOrButton().doClick();
-                        break;
-                    case ADD_AND_XOR:
-                        outlookTabbedPane.getAddAndXorButton().doClick();
-                        break;
-                    case ADD_OR_AND:
-                        outlookTabbedPane.getAddOrAndButton().doClick();
-                        break;
-                    case ADD_OR_XOR:
-                        outlookTabbedPane.getAddOrXorButton().doClick();
-                        break;
-                    case ADD_XOR_AND:
-                        outlookTabbedPane.getAddXorAndButton().doClick();
-                        break;
-                    case ADD_XOR_OR:
-                        outlookTabbedPane.getAddXorOrButton().doClick();
-                        break;
                     default:
                         LOG.error("No such a tool in EPC notation.");
                 }

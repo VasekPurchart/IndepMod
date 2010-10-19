@@ -16,6 +16,7 @@ import org.jgraph.graph.PortView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.Map;
 
@@ -46,8 +47,18 @@ public class UCGraph extends JGraph {
         setJumpToDefaultPort(true);
 
         initActions(actions);
-
+        
         setMarqueeHandler(new UCWorkspaceMarqueeHandler(this, selectedToolModel, popupMenu));
+    }
+
+    protected void processKeyEvent(KeyEvent e) {
+        if(127 == e.getKeyCode()) {
+            if (!isSelectionEmpty()) {
+                Object[] selectedCells = getSelectionCells();
+                logDeleteInfo(selectedCells);
+                getGraphLayoutCache().remove(selectedCells, true, true);
+            }
+        }
     }
 
     private void initActions(final Map<String, ProModAction> actions) {

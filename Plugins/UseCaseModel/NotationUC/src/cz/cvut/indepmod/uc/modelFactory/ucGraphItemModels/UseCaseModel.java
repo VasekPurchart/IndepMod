@@ -63,6 +63,6 @@ public class UseCaseModel extends UCEditableVertex {
     }
     
     public UUID getUuid() {
-        return null;  
+        return this.uuid;  
     }
 }

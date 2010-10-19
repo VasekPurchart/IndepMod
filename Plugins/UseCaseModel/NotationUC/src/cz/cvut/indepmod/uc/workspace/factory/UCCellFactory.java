@@ -1,7 +1,9 @@
 package cz.cvut.indepmod.uc.workspace.factory;
 
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import org.apache.log4j.Logger;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
@@ -11,6 +13,7 @@ import org.jgraph.graph.GraphConstants;
 import java.awt.geom.Point2D;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * ProMod, master thesis project
@@ -45,20 +48,21 @@ public class UCCellFactory {
         final DefaultGraphCell cell = new DefaultGraphCell();
 
         switch (tool){
-            case ADD_FUNCTION:
-               // cell.setUserObject(new FunctionModel(UUID.randomUUID()));
-               // cell.getAttributes().applyMap(FunctionModel.installAttributes(point));
+            case ADD_USE_CASE:
+                cell.setUserObject(new UseCaseModel(UUID.randomUUID()));
+                cell.getAttributes().applyMap(UseCaseModel.installAttributes(point));
                 break;
-
-
+            case ADD_ACTOR:
+                cell.setUserObject(new ActorModel(UUID.randomUUID()));
+                cell.getAttributes().applyMap(ActorModel.installAttributes(point));
             default:
-                LOG.error("No such a vertex type exists in EPC notation.");
+                LOG.error("No such a vertex type exists in UC notation.");
                 return null;
         }
 
         final DefaultPort defaultPort = new DefaultPort();
         cell.add(defaultPort);
-
+        
         return cell;
     }
 

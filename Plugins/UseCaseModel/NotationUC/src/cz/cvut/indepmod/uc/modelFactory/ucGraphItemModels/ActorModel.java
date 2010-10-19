@@ -1,8 +1,13 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
+import com.jgraph.components.labels.CellConstants;
+import com.jgraph.components.labels.MultiLineVertexRenderer;
 import cz.cvut.indepmod.uc.resources.Resources;
+import org.jgraph.graph.GraphConstants;
 
+import java.awt.*;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +18,7 @@ import java.util.UUID;
  */
 public class ActorModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.actor");
+    public static final int DEFAULT_INSET = 6;
 
     private final UUID uuid;
 
@@ -44,10 +50,6 @@ public class ActorModel extends UCEditableVertex {
     public static Map installAttributes(final Point2D point) {
         final Map map = new Hashtable();
 
-        /**
-         * Tady bude graf. implementace actora
-         *
-         * Neco an tento zpusob:
         map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);
 
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 0, 0));
@@ -55,9 +57,6 @@ public class ActorModel extends UCEditableVertex {
         GraphConstants.setBorderColor(map, Color.black);
         GraphConstants.setOpaque(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
-
-
-         */
 
         return map;
     }
