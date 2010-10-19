@@ -133,7 +133,7 @@ public class UCWorkspace extends JScrollPane implements UpdatableWorkspaceCompon
             && change.getChangeValue() instanceof Boolean
                 && Boolean.FALSE.equals(change.getChangeValue())){
 
-            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
+            //actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
 
             return;
         }

@@ -5,7 +5,6 @@ import com.jgraph.components.labels.MultiLineVertexRenderer;
 import cz.cvut.indepmod.uc.resources.Resources;
 import org.jgraph.graph.GraphConstants;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
@@ -18,10 +17,15 @@ import java.util.UUID;
  */
 public class ActorModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.actor");
+
     public static final int DEFAULT_INSET = 6;
 
     private final UUID uuid;
 
+    public ActorModel() {
+        this.uuid = null;
+        
+    }
 
     public ActorModel(final UUID uuid){
         this.uuid = uuid;
@@ -32,7 +36,6 @@ public class ActorModel extends UCEditableVertex {
         setName(name);
         uuid = actorModel.getUuid();
         setNote(actorModel.getNote());
-
     }
 
     @Override
@@ -54,14 +57,14 @@ public class ActorModel extends UCEditableVertex {
 
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 0, 0));
         GraphConstants.setResize(map, true);
-        GraphConstants.setBorderColor(map, Color.black);
         GraphConstants.setOpaque(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
+
 
         return map;
     }
     
     public UUID getUuid() {
-        return null;  
+        return this.uuid;  
     }
 }

@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc;
 import com.jidesoft.status.LabelStatusBarItem;
 import cz.cvut.indepmod.uc.frames.graphOptions.GraphOptions;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooser;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
 import cz.cvut.promod.epc.frames.vertexInfo.VertexInfo;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
@@ -15,6 +16,8 @@ import cz.cvut.promod.services.menuService.utils.MenuItemPosition;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
+import javax.swing.tree.TreePath;
+import java.awt.event.ActionEvent;
 import java.util.*;
 
 /**
@@ -106,10 +109,25 @@ public class UCNotationModel {
     }
 
     private void initActions() {
+        actions.put(SAVE_ACTION_KEY,
+            new ProModAction(Resources.getResources().getString(SAVE_ACTION_KEY),
+                    Resources.getIcon(Resources.ICONS + Resources.SAVE), null){
+                public void actionPerformed(ActionEvent event) {
+                    final TreePath treePath = ModelerSession.getProjectService().getSelectedDiagramPath();
+
+                    if(treePath != null){
+                        ModelerSession.getProjectControlService().synchronize(
+                                treePath,
+                                true, true, false, false
+                        );
+                    }
+                }
+            }
+        );
     }
 
     private void initPopupMenu() {
-                final Action deleteAction = getAction(DELETE_ACTION_KEY);
+        final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
         popupMenu.add(deleteAction);
     }

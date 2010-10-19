@@ -48,13 +48,7 @@ public class UCNotation implements Notation {
         try {
             properties.load(new FileReader(propertiesFile));
 
-      /*      Enumeration keys = properties.keys();
-while (keys.hasMoreElements()) {
-  String key = (String)keys.nextElement();
-  String value = (String)properties.get(key);
-  LOG.info(key + ": " + value);
-}          */
-        } catch (IOException e) {
+           } catch (IOException e) {
             LOG.error("Properties for the Use Case Notations couldn't be read.", e);
             throw new InstantiationException("Mandatory properties couldn't be read.");
         }
@@ -211,7 +205,7 @@ while (keys.hasMoreElements()) {
 
     private void initMainMenu() {
         ModelerSession.getMenuService().insertMainMenuItem(
-            model.getAction(UCNotationModel.SAVE_ACTION_KEY),
+            model.getAction(UCNotationModel.SAVE_ACTION_KEY + "xx"),
             new MenuItemPosition(Modeler.FILE_LABEL, MenuItemPosition.PlacementStyle.FIRST)
         );
 

@@ -3,11 +3,11 @@ package cz.cvut.indepmod.uc.modelFactory.diagramModel;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.model.DiagramModel;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.model.DiagramModelChangeListener;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
-import cz.cvut.promod.epc.settings.EPCSettings;
-import org.jgraph.graph.*;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphUndoManager;
 
-import javax.swing.event.UndoableEditEvent;
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
 import java.util.HashSet;
 import java.util.Set;
 

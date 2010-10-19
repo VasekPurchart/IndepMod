@@ -55,6 +55,7 @@ public class UCCellFactory {
             case ADD_ACTOR:
                 cell.setUserObject(new ActorModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(ActorModel.installAttributes(point));
+                break;
             default:
                 LOG.error("No such a vertex type exists in UC notation.");
                 return null;

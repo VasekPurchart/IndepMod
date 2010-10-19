@@ -23,7 +23,6 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
     private final String OPERATORS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.operators");
     private final String CONN_LABEL = Resources.getResources().getString("uc.frame.tools.cat.flows");
 
-
     protected final JToggleButton addControlFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.CONTROL_FLOW_LINE_TOOL_RES, null
     );
@@ -43,9 +42,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
     protected final JToggleButton addMaterialFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.MATERIAL_FLOW_LINE_TOOL_RES, null
     );
-
-    
-
+                                
     protected final JToggleButton addActorButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.ACTOR_TOOL_RES, null
     );

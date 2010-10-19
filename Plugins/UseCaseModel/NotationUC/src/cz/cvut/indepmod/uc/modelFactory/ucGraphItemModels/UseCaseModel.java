@@ -33,7 +33,6 @@ public class UseCaseModel extends UCEditableVertex {
         setName(name);
         uuid = useCaseModel.getUuid();
         setNote(useCaseModel.getNote());
-
     }
 
     @Override

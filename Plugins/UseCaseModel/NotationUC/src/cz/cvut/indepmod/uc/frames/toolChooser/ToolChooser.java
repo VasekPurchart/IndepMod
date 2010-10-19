@@ -104,10 +104,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                 updateStatusBarSelectedItemInfo(ToolChooserModel.USE_CASE_TOOL_RES);
             }
         });
-
-      
-
-
+       
         outlookTabbedPane.getAddControlFlowLineButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_CONTROL_FLOW_LINE);
@@ -157,7 +154,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                     case ADD_USE_CASE:
                         outlookTabbedPane.getAddUseCaseButton().doClick();
                         break;
-                    
                     case DELETE:
                         deleteButton.doClick();
                         break;
