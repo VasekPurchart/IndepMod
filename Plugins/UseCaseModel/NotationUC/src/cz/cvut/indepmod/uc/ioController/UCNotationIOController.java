@@ -97,13 +97,7 @@ public class UCNotationIOController implements NotationLocalIOController {
        initEncoder(encoder);
 
         try{
-            encoder.setExceptionListener(new ExceptionListener()
-{
-public void exceptionThrown(Exception e)
-{
-e.printStackTrace();
-}
-});
+            
             encoder.writeObject(projectDiagram);
 
         } catch (Exception exception){
@@ -208,8 +202,9 @@ e.printStackTrace();
         final ProjectDiagram projectDiagram;
         try {
             final XMLDecoder decoder = new XMLDecoder(new FileInputStream(file));
-
+                    
             projectDiagram = (ProjectDiagram) decoder.readObject();
+
         } catch (ClassCastException e){
             LOG.error("Unable to cast the loaded object as ProjectDiagram class.", e);
             throw e;

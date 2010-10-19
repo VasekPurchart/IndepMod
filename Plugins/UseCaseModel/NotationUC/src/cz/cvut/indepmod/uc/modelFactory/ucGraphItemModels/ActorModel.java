@@ -22,11 +22,6 @@ public class ActorModel extends UCEditableVertex {
 
     private final UUID uuid;
 
-    public ActorModel() {
-        this.uuid = null;
-        
-    }
-
     public ActorModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
