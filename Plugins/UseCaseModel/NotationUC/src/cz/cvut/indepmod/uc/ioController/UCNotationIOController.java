@@ -97,6 +97,11 @@ public class UCNotationIOController implements NotationLocalIOController {
        initEncoder(encoder);
 
         try{
+            encoder.setExceptionListener(new ExceptionListener() {
+                public void exceptionThrown(Exception e) {
+                    e.printStackTrace();
+                }                   
+            });
             
             encoder.writeObject(projectDiagram);
 
