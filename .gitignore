@@ -3,3 +3,4 @@
 /libs/*
 !/libs/LIBRARIES
 *.iml
+*.ipr
