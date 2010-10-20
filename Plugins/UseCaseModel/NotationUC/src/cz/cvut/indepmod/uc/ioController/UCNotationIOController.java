@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.ioController;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphModel.UCGraphModel;
 import cz.cvut.indepmod.uc.workspace.cell.UCPortView;
@@ -169,6 +170,7 @@ public class UCNotationIOController implements NotationLocalIOController {
         // vertex models
         encoder.setPersistenceDelegate(UseCaseModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(ActorModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
+        encoder.setPersistenceDelegate(SystemBorderModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
 
         // ports
         encoder.setPersistenceDelegate(UCPortView.class, new DefaultPersistenceDelegate(new String[] {CELL_PROPERTY}));
