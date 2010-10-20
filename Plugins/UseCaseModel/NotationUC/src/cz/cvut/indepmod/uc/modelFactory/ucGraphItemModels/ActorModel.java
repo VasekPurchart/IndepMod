@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * User: Viktor Bohuslav Bohdal, bohdavik@fel.cvut.cz
- * Date: 6.10.2010
+ * User: Lukáš Beran
+ * Date: 20.10.2010
  */
 public class ActorModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.actor");
