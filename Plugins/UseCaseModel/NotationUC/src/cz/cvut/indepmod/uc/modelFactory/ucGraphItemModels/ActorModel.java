@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 import com.jgraph.components.labels.CellConstants;
 import com.jgraph.components.labels.MultiLineVertexRenderer;
 import cz.cvut.indepmod.uc.resources.Resources;
+import cz.cvut.indepmod.uc.workspace.cell.UCVertexRenderer;
 import org.jgraph.graph.GraphConstants;
 
 import java.awt.geom.Point2D;
@@ -53,7 +54,7 @@ public class ActorModel extends UCEditableVertex {
     public static Map installAttributes(final Point2D point) {
         final Map map = new Hashtable();
         
-        map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);
+        map.put(CellConstants.VERTEXSHAPE, UCVertexRenderer.SHAPE_UC_ENVELOPE);
 
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 0, 0));
         GraphConstants.setResize(map, true);
