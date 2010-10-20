@@ -50,8 +50,8 @@ public class ActorModel extends UCEditableVertex {
         
         map.put(CellConstants.VERTEXSHAPE, UCVertexRenderer.SHAPE_UC_ACTOR);
 
-        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 0, 0));
-        GraphConstants.setResize(map, true);
+        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 40, 120));
+        //GraphConstants.setResize(map, true);
         GraphConstants.setOpaque(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
 
