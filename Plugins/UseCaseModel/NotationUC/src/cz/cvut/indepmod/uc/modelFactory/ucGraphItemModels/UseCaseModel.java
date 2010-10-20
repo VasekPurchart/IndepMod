@@ -23,18 +23,13 @@ public class UseCaseModel extends UCEditableVertex {
 
     private UUID uuid;
 
-    public UseCaseModel() {
-        this.uuid = null;
-
-    }
-
     public UseCaseModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
     }
 
     public UseCaseModel(final UseCaseModel useCaseModel, final String name){
-        setName(name + "x");
+        setName(name);
         uuid = useCaseModel.getUuid();
         setNote(useCaseModel.getNote());
     }

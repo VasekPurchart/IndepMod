@@ -2,3 +2,4 @@
 /IndependentModeler/out/
 /libs/*
 !/libs/LIBRARIES
+*.iml
