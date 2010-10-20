@@ -211,14 +211,14 @@
     </library>
     <library name="jgoodies binding">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../libs/jgoodies/binding-2.0.6.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../libs/jgoodies/binding-2.0.6/binding-2.0.6.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="jgoodies form">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../libs/jgoodies/forms-1.3.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../libs/jgoodies/forms-1.2.1/forms-1.2.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -233,7 +233,7 @@
     </library>
     <library name="foxtrot">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../libs/foxtrot/foxtrot-core-3.0.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../libs/foxtrot-3.0/lib/foxtrot-core-3.0.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
