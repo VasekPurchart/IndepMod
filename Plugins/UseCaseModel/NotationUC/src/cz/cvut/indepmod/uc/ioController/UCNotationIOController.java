@@ -1,7 +1,10 @@
 package cz.cvut.indepmod.uc.ioController;
 
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphModel.UCGraphModel;
 import cz.cvut.indepmod.uc.workspace.cell.UCPortView;
 import cz.cvut.indepmod.uc.workspace.cell.UCVertexView;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
@@ -18,6 +21,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 
 public class UCNotationIOController implements NotationLocalIOController {
 
@@ -89,8 +93,8 @@ public class UCNotationIOController implements NotationLocalIOController {
         }
 
         // un-install UndoManager
-        final UCDiagramModel UCDiagramModel = (UCDiagramModel) projectDiagram.getDiagramModel();
-        UCDiagramModel.uninstallUndoManager(); // don't serialize undo listeners
+        final UCDiagramModel ucDiagramModel = (UCDiagramModel) projectDiagram.getDiagramModel();
+        ucDiagramModel.uninstallUndoManager(); // don't serialize undo listeners
 
         boolean error = false;
 
@@ -110,7 +114,7 @@ public class UCNotationIOController implements NotationLocalIOController {
             error = true;
         } finally {
             encoder.close();
-            UCDiagramModel.installUndoManager();
+            ucDiagramModel.installUndoManager();
         }
 
         if(!error){
@@ -160,7 +164,12 @@ public class UCNotationIOController implements NotationLocalIOController {
 
         // vertex
         encoder.setPersistenceDelegate(UCVertexView.class, new DefaultPersistenceDelegate(new String[] {CELL_PROPERTY}));
-        
+        encoder.setPersistenceDelegate(DefaultGraphCell.class, new DefaultPersistenceDelegate( new String[] {USER_OBJECT_PROPERTY}));
+
+        // vertex models
+        encoder.setPersistenceDelegate(UseCaseModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
+        encoder.setPersistenceDelegate(ActorModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
+
         // ports
         encoder.setPersistenceDelegate(UCPortView.class, new DefaultPersistenceDelegate(new String[] {CELL_PROPERTY}));
 
@@ -179,7 +188,8 @@ public class UCNotationIOController implements NotationLocalIOController {
 
         // graph models
         encoder.setPersistenceDelegate(DefaultGraphModel.class, new DefaultPersistenceDelegate(new String[] {ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));
-       
+        encoder.setPersistenceDelegate(UCGraphModel.class, new DefaultPersistenceDelegate(new String[] {ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));
+
         // graph layout cache
         encoder.setPersistenceDelegate(GraphLayoutCache.class, new DefaultPersistenceDelegate(
                         new String[] {MODEl_PROPERTY, FACTORY_PROPERTY, CELL_VIEWS_PROPERTY, HIDD_CELLS_PROPERTY, PARTIAL_PROPERTY}));
@@ -209,7 +219,6 @@ public class UCNotationIOController implements NotationLocalIOController {
             final XMLDecoder decoder = new XMLDecoder(new FileInputStream(file));
                     
             projectDiagram = (ProjectDiagram) decoder.readObject();
-
         } catch (ClassCastException e){
             LOG.error("Unable to cast the loaded object as ProjectDiagram class.", e);
             throw e;

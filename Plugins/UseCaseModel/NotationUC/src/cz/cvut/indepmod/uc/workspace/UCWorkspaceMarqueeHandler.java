@@ -57,7 +57,6 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             return true; //don't use any other handler
         }
 
-
         currentPort = graph.getSourcePortAt(e.getPoint());
         return (currentPort != null && graph.isPortsVisible()) || super.isForceMarqueeEvent(e);
 
