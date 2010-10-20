@@ -4,6 +4,7 @@ import com.jidesoft.grid.Property;
 import com.jidesoft.grid.PropertyTableModel;
 import com.jidesoft.introspector.BeanProperty;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.promod.epc.modelFactory.epcGraphItemModels.*;
 import cz.cvut.promod.epc.resources.Resources;
@@ -53,6 +54,7 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
     private static final String APP_SW_LABEL = Resources.getResources().getString("uc.vertex.app.sw");
     private static final String ACTOR_LABEL = Resources.getResources().getString("uc.vertex.actor");
     private static final String UC_LABEL = Resources.getResources().getString("uc.vertex.uc");
+    private static final String SYSTEM_BORDER_LABEL = Resources.getResources().getString("uc.vertex.border");
     private static final String HW_LABEL = Resources.getResources().getString("uc.vertex.hw");
     private static final String DELIVERABLE_LABEL = Resources.getResources().getString("uc.vertex.deliverable");
     private static final String FLOW_LABEL = Resources.getResources().getString("uc.vertex.flow");
@@ -286,10 +288,12 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
                         return APP_SW_LABEL;
                     } else if(userObject instanceof ActorModel) {
                         return ACTOR_LABEL;
+                    } else if(userObject instanceof SystemBorderModel) {
+                        return SYSTEM_BORDER_LABEL;
                     } else if(userObject instanceof UseCaseModel) {
                         return UC_LABEL;
                     } else {
-                        LOG.error("An unknown type of EPC item.");
+                        LOG.error("An unknown type of UC item.");
                         return "";
                     }
                 }

@@ -45,6 +45,8 @@ public class UCGraphCellEditor extends DefaultGraphCellEditor {
                 newUserObject = new UseCaseModel((UseCaseModel)oldUserObject, newName);
             } else if(oldUserObject instanceof ActorModel) {
                 newUserObject = new ActorModel((ActorModel)oldUserObject, newName);
+            } else if(oldUserObject instanceof SystemBorderModel) {
+                newUserObject = new SystemBorderModel((SystemBorderModel)oldUserObject, newName);
             } else {
                 // should never happened, testing & debugging purposes
                 LOG.error("Unknown UC vertex model");

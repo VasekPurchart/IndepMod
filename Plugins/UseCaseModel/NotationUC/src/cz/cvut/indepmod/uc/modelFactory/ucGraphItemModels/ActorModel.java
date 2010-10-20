@@ -5,6 +5,7 @@ import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.cell.UCVertexRenderer;
 import org.jgraph.graph.GraphConstants;
 
+import javax.swing.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Hashtable;
@@ -54,7 +55,9 @@ public class ActorModel extends UCEditableVertex {
         //GraphConstants.setResize(map, true);
         GraphConstants.setOpaque(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
-
+        GraphConstants.setVerticalAlignment(map, SwingConstants.BOTTOM);
+        GraphConstants.setSizeableAxis(map, GraphConstants.X_AXIS);
+        //GraphConstants.setAutoSize(map, true);
 
         return map;
     }
