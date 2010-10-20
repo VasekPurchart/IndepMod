@@ -22,6 +22,8 @@ public class ToolChooserModel extends Model {
             Resources.getResources().getString("uc.frame.tools.actor");
     public static final String USE_CASE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.use_case");
+    public static final String SYSTEM_BORDER_TOOL_RES =
+            Resources.getResources().getString("uc.frame.tools.border");
     public static final String CONTROL_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.control");
     public static final String DELETE_TOOL_RES =
@@ -42,6 +44,7 @@ public class ToolChooserModel extends Model {
         CONTROL,
         ADD_ACTOR,
         ADD_USE_CASE,
+        ADD_SYSTEM_BORDER,
         ADD_CONTROL_FLOW_LINE, //solid line with narrow 
         ADD_INFORMATION_SERVICE_FLOW_LINE, //dashed line with narrow
         ADD_INFORMATION_FLOW_LINE, //dotted line with narrow

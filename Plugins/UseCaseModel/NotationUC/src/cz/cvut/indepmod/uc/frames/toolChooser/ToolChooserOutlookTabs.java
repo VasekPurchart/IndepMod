@@ -51,6 +51,9 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
             ToolChooserModel.USE_CASE_TOOL_RES, null
     );
 
+    protected final JToggleButton addSystemBorderButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.SYSTEM_BORDER_TOOL_RES, null
+    );
 
     public ToolChooserOutlookTabs(){
         initTabPane();
@@ -110,6 +113,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         final CellConstraints cellConstraints = new CellConstraints();
         panel.add(addActorButton, cellConstraints.xy(1,1));
         panel.add(addUseCaseButton, cellConstraints.xy(1,3));
+        panel.add(addSystemBorderButton, cellConstraints.xy(1,5));
 
         return panel;
     }
@@ -140,5 +144,9 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     public JToggleButton getAddActorButton() {
         return addActorButton;
+    }
+
+    public JToggleButton getAddSystemBorderButton() {
+        return addSystemBorderButton;
     }
 }

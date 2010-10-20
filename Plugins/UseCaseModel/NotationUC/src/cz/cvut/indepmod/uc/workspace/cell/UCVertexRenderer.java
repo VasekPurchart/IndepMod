@@ -34,14 +34,25 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
 
        if(shape == SHAPE_UC_ACTOR){
             final Color originColor = g.getColor();
+            int actorH = 120, actorW = 40;
+
+            int borderH = (actorH < height) ? (height - actorH) / 2 : 0;
+            int borderW = (actorW < width) ? (width - actorW) : 0;
             g.setColor(getForeground());
 
-            g.drawLine(0, height, width / 2, height - height / 3);
-            g.drawLine(width, height, width / 2, height - height / 3);
-            g.drawLine(width / 2, height - height / 3, width / 2, height / 4);
-            g.drawLine(0, height / 3, width, height / 3);            
+            g.drawLine(borderW / 2, actorH - 20, borderW / 2 + actorW / 2, actorH - actorH / 3);
+            g.drawLine(borderW / 2 + actorW, actorH - 20, borderW / 2 + actorW / 2, actorH - actorH / 3);
 
+            g.drawLine(borderW / 2 + actorW / 2, actorH - actorH / 3, borderW / 2 + actorW / 2, actorH / 4);
+            g.drawLine(borderW / 2, actorH / 3, borderW / 2 + actorW, actorH / 3);
+            g.drawArc(borderW / 2 + actorW / 4, 0 , actorW / 2, actorH / 4, 0, 360);
+            /*
+            g.drawLine(0, height - 20, width / 2, height - height / 3);
+            g.drawLine(width, height - 20, width / 2, height - height / 3);
+            g.drawLine(width / 2, height - height / 3, width / 2, height / 4);
+            g.drawLine(0, height / 3, width, height / 3);
             g.drawArc(width >> 2, 0 , width / 2, height / 4, 0, 360);
+            */
             
             g.setColor(originColor);
         } else {

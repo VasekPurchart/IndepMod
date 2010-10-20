@@ -3,9 +3,9 @@ package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 import java.util.UUID;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 23:34:37, 19.1.2010
+ * InterMod, master thesis project
+ * User: Lukáš Beran
+ * Date: 23:34:37, 20.10.2010
  *
  * Represents the general edge element of the EPCNotation plugin.
  */

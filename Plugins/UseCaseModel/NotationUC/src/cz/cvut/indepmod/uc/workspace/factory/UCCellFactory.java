@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace.factory;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import org.apache.log4j.Logger;
 import org.jgraph.graph.DefaultEdge;
@@ -55,6 +56,10 @@ public class UCCellFactory {
             case ADD_ACTOR:
                 cell.setUserObject(new ActorModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(ActorModel.installAttributes(point));
+                break;
+            case ADD_SYSTEM_BORDER:
+                cell.setUserObject(new SystemBorderModel(UUID.randomUUID()));
+                cell.getAttributes().applyMap(SystemBorderModel.installAttributes(point));
                 break;
             default:
                 LOG.error("No such a vertex type exists in UC notation.");
