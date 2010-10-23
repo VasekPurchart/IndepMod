@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$/../NotationUC">
       <sourceFolder url="file://$MODULE_DIR$/../NotationUC/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../NotationUC/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../NotationUC/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -19,6 +20,15 @@
     <orderEntry type="library" name="jgoodies binding" level="project" />
     <orderEntry type="library" name="jgoodies form" level="project" />
     <orderEntry type="library" name="jgraph" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
