@@ -3,11 +3,11 @@ package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 import java.util.UUID;
 
 /**
- * InterMod, master thesis project
+ * UseCase plugin - SI2/3 school project
  * User: Lukáš Beran
  * Date: 23:34:37, 20.10.2010
  *
- * Represents the general edge element of the EPCNotation plugin.
+ * Represents the general edge element of the UCNotation plugin.
  */
 public class EdgeModel extends UCEditableVertex {
 

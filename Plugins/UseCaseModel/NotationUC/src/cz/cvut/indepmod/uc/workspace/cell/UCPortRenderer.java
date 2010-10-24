@@ -6,9 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 19:51:23, 7.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * Special implementation of the UCPortRenderer for the UCNotation plugin.
  */

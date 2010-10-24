@@ -11,9 +11,9 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 19:50:18, 7.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * Special implementation of the PortView for the UCNotation plugin.
  */

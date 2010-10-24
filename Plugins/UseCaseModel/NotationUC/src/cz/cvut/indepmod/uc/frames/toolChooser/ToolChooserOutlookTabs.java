@@ -11,9 +11,9 @@ import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
 import javax.swing.*;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 17:54:59, 18.1.2010
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The OutlookTabbedPane implementation for the View component of the ToolChooser dockable frame.
  */

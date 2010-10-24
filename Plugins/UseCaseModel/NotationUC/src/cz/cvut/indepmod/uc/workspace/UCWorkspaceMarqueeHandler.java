@@ -12,9 +12,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 12:41:16, 9.1.2010
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  * 
  * Implementation of MarqueeHandler for UC notation.
  */

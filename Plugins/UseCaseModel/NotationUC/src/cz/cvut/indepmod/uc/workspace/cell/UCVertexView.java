@@ -7,21 +7,22 @@ import org.jgraph.graph.VertexRenderer;
 
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
+ * UseCase plugin - SI2/3 school project
+ * Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  * Date: 22:41:01, 6.12.2009
  *
- * Special implementation of the MultiLineVertexView for the EPCNotation plugin.
+ * Special implementation of the MultiLineVertexView for the UCNotation plugin.
  */
 public class UCVertexView extends MultiLineVertexView {
 
     private static final VertexRenderer RENDERER = new UCVertexRenderer();
 
     /**
-     * EPCGraphCellEditor class overrides getCellEditorValue() method. For details
-     * @see cz.cvut.promod.epc.workspace.cell.EPCGraphCellEditor
+     * UCGraphCellEditor class overrides getCellEditorValue() method. For details
+     * @see cz.cvut.indepmod.uc.workspace.cell.UCGraphCellEditor
      */
-    private static final GraphCellEditor epcCellEditor = new UCGraphCellEditor();
+    private static final GraphCellEditor ucCellEditor = new UCGraphCellEditor();
 
 
     public UCVertexView(final Object cell){
@@ -35,6 +36,6 @@ public class UCVertexView extends MultiLineVertexView {
 
     @Override
     public GraphCellEditor getEditor() {
-        return epcCellEditor;
+        return ucCellEditor;
     }
 }

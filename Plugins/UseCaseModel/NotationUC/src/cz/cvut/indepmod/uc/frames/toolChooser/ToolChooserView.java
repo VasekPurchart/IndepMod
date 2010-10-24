@@ -13,9 +13,9 @@ import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
 import java.awt.*;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 12:48:31, 29.11.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The View component of the ToolChooser dockable frame.
  */

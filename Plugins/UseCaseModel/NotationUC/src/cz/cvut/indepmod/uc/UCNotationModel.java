@@ -24,8 +24,10 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
+ * UceCase plugin - SI2/3 school project
+ * User: Alena Varkockova, varkockova.a@gmail.com
+ * User: Viktor Bohuslav Bohdal, viktor.bohdal@gmail.com
+ *
  * Date: 19:43:00, 5.12.2009
  *
  * A model component for the UCNotation plugin.

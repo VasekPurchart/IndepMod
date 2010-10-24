@@ -3,9 +3,9 @@ package cz.cvut.indepmod.uc.frames.graphOptions;
 import com.jgoodies.binding.beans.Model;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 0:29:57, 27.11.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The Model component of the GraphOptions dockable frame. 
  */

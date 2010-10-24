@@ -8,11 +8,11 @@ import org.jgraph.graph.PortView;
 import org.jgraph.graph.VertexView;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 11:25:37, 17.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
- * Special implementation of DefaultCellViewFactory for the EPCNotation plugin.
+ * Special implementation of DefaultCellViewFactory for the UCNotation plugin.
  */
 public class UCCellViewFactory extends DefaultCellViewFactory{
 

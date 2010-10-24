@@ -21,11 +21,12 @@ import java.awt.geom.Point2D;
 import java.util.Map;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  * Date: 14:42:28, 6.12.2009
  *
- * Implementation of JGraph for EPC notation. 
+ * Implementation of JGraph for UC notation. 
  */
 public class UCGraph extends JGraph {
 

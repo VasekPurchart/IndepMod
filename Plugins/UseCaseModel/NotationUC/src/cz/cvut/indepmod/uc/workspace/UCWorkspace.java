@@ -18,9 +18,9 @@ import javax.swing.*;
 import java.util.Map;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 20:00:20, 5.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * UCWorkspace encapsulate the UCGraph component. 
  */

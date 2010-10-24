@@ -14,9 +14,9 @@ import java.awt.*;
 import java.util.Hashtable;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 0:29:49, 27.11.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The View component of the GraphOptions dockable frame.
  */

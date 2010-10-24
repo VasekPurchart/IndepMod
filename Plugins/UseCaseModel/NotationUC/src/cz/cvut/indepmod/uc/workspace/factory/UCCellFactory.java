@@ -18,10 +18,11 @@ import java.util.UUID;
 
 /**
  * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 23:40:07, 7.12.2009
+ * 
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
- * EPCCellFactory is responsible for creating a new vertexes in the EPCNotation plugin.
+ * UCCellFactory is responsible for creating a new vertexes in the UCNotation plugin.
  */
 public class UCCellFactory {
 
@@ -114,9 +115,9 @@ public class UCCellFactory {
 
 
     /**
-     * Creates attributes for a epc graph edges
+     * Creates attributes for a uc graph edges
      *
-     * @param tool selected epc tool
+     * @param tool selected uc tool
      *
      * @return the map with relevant attributes for the edge
      */

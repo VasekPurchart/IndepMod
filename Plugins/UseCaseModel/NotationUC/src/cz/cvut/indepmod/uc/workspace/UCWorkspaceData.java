@@ -12,11 +12,11 @@ import java.beans.PropertyChangeListener;
 import java.util.Map;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 19:59:34, 5.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
- * EPCWorkspaceData represents the NotationWorkspaceData interface implementation for the EPCNotation plugin.  
+ * UCWorkspaceData represents the NotationWorkspaceData interface implementation for the UCNotation plugin.  
  */
 public class UCWorkspaceData implements NotationWorkspaceData {
 

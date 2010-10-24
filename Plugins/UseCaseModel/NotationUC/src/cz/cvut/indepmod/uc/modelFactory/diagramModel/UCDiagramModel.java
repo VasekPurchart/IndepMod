@@ -12,9 +12,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 19:57:33, 5.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * Implementation of DiagramModel for the UCNotation plugin.
  */

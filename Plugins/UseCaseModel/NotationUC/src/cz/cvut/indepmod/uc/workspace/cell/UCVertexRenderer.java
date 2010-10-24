@@ -7,12 +7,14 @@ import java.awt.*;
 
 /**
  * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
+ * 
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  * Date: 21:52:01, 2.12.2009
  *
- * Special implementation of the MultiLineVertexRenderer for the EPCNotation plugin.
+ * Special implementation of the MultiLineVertexRenderer for the UCNotation plugin.
  *
- * It paints the special shapes of EPC items.
+ * It paints the special shapes of UC items.
  */
 public class UCVertexRenderer extends MultiLineVertexRenderer{
 

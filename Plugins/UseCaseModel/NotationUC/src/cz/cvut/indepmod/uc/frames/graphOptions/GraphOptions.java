@@ -23,9 +23,9 @@ import java.util.Set;
 
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 0:29:23, 27.11.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * Dockable frame controlling the options of the graph. 
  */

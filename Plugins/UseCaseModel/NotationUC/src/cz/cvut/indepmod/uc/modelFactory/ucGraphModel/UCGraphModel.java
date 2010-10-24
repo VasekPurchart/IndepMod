@@ -7,11 +7,11 @@ import org.jgraph.graph.*;
 import java.util.List;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 19:58:07, 5.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
- * Represents an implementation of common GraphModel for EPC notation diagrams.
+ * Represents an implementation of common GraphModel for UC notation diagrams.
  */
 public class UCGraphModel extends DefaultGraphModel{       
 

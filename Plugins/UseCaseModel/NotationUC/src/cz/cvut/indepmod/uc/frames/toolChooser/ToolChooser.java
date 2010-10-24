@@ -16,9 +16,9 @@ import java.beans.PropertyChangeListener;
 import java.util.Set;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 12:48:24, 29.11.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The tool chooser dockable frame.
  */
@@ -184,7 +184,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                         outlookTabbedPane.getAddOrganizationFlowLineButton().doClick();
                         break;                     
                     default:
-                        LOG.error("No such a tool in EPC notation.");
+                        LOG.error("No such a tool in UC notation.");
                 }
             }
         });
@@ -201,7 +201,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
 
     public String getDockableFrameName() {
-        return "EPCToolChooser";
+        return "UCToolChooser";
     }
 
     public JComponent getDockableFrameComponent() {

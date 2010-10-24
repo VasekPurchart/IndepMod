@@ -7,10 +7,11 @@ import org.jgraph.graph.DefaultGraphCellEditor;
 
 /**
  * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 19:48:33, 9.12.2009
+ * 
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
- * Special implementation of the EPCGraphCellEditor for the EPCNotation plugin.
+ * Special implementation of the UCGraphCellEditor for the UCNotation plugin.
  */
 public class UCGraphCellEditor extends DefaultGraphCellEditor {
 

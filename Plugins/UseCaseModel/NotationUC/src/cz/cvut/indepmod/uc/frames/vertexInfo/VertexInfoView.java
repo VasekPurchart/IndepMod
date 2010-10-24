@@ -8,9 +8,9 @@ import java.awt.*;
 import com.jidesoft.grid.PropertyTable;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 0:20:55, 8.12.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The View component for the Info dockable frame. 
  */

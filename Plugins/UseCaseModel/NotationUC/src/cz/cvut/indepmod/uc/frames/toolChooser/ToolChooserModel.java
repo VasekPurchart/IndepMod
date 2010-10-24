@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * ProMod, master thesis project
- * User: Petr Zverina, petr.zverina@gmail.com
- * Date: 12:48:44, 29.11.2009
+ * UseCase plugin - SI2/3 school project
+ * User: Alena Varkockova
+ * User: Viktor Bohuslav Bohdal
  *
  * The model component of the ToolChooser dockable frame.   
  */
