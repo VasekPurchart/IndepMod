@@ -184,7 +184,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                         outlookTabbedPane.getAddOrganizationFlowLineButton().doClick();
                         break;                     
                     default:
-                        LOG.error("No such a tool in EPC notation.");
+                        LOG.error("No such a tool in UC notation.");
                 }
             }
         });
@@ -201,7 +201,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
 
     public String getDockableFrameName() {
-        return "EPCToolChooser";
+        return "UCToolChooser";
     }
 
     public JComponent getDockableFrameComponent() {

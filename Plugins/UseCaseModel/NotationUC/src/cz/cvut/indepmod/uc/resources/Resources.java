@@ -24,7 +24,7 @@ public class Resources extends AbstractResources {
 
 
     public static final String ELEMENT = "element.png";
-    public static final String CONNECTOR = "connector.png";
+    public static final String CONNECTOR = "uc_connector.png";
     
     private final static Map<String, ImageIcon> icons = new HashMap<String, ImageIcon>();
     private static ResourceBundle resources = null;
