@@ -185,6 +185,7 @@
       <module fileurl="file://$PROJECT_DIR$/../Plugins/ClassModel/NotationClassModel/NotationClassModel.iml" filepath="$PROJECT_DIR$/../Plugins/ClassModel/NotationClassModel/NotationClassModel.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Plugins/EPC/NotationEPC/NotationEPC.iml" filepath="$PROJECT_DIR$/../Plugins/EPC/NotationEPC/NotationEPC.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Plugins/ProcessHierarchy/NotationProcessHierarchy/NotationProcessHierarchy.iml" filepath="$PROJECT_DIR$/../Plugins/ProcessHierarchy/NotationProcessHierarchy/NotationProcessHierarchy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Plugins/UseCaseModel/NotationUC/NotationUC.iml" filepath="$PROJECT_DIR$/../Plugins/UseCaseModel/NotationUC/NotationUC.iml" />
       <module fileurl="file://$PROJECT_DIR$/../Plugins/UseCaseModel/NotationUseCaseModel/NotationUC.iml" filepath="$PROJECT_DIR$/../Plugins/UseCaseModel/NotationUseCaseModel/NotationUC.iml" />
     </modules>
   </component>
