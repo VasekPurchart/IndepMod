@@ -19,6 +19,7 @@
     <orderEntry type="library" name="jide" level="project" />
     <orderEntry type="library" name="jgoodies binding" level="project" />
     <orderEntry type="library" name="jgoodies form" level="project" />
+    <orderEntry type="library" name="jgraph" level="project" />
   </component>
 </module>
 

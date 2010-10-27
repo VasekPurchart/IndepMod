@@ -250,6 +250,7 @@
     <library name="jgraph">
       <CLASSES>
         <root url="file://$PROJECT_DIR$/../libs/jgraph" />
+        <root url="file://$PROJECT_DIR$/../libs/jgraph" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
