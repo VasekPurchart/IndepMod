@@ -55,6 +55,22 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
             ToolChooserModel.SYSTEM_BORDER_TOOL_RES, null
     );
 
+    protected final JToggleButton addScenarioButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.SCENARIO_TOOL_RES, null
+    );
+
+    protected final JToggleButton addSelectMssButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.SELECT_MSS_TOOL_RES, null
+    );
+
+    protected final JToggleButton addStepButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.STEP_TOOL_RES, null
+    );
+
+    protected final JToggleButton addIncludeUcButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.INCLUDE_UC_TOOL_RES, null
+    );
+
     public ToolChooserOutlookTabs(){
         initTabPane();
     }
@@ -92,7 +108,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
     private JPanel createOperatorsPanel() {
         JPanel panel = ModelerSession.getComponentFactoryService().createPanel();
         panel.setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
-        
+
         panel.setLayout(new FormLayout(
                 "pref:grow",
                 "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
@@ -114,6 +130,10 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         panel.add(addActorButton, cellConstraints.xy(1,1));
         panel.add(addUseCaseButton, cellConstraints.xy(1,3));
         panel.add(addSystemBorderButton, cellConstraints.xy(1,5));
+        panel.add(addScenarioButton, cellConstraints.xy(1,7));
+        panel.add(addSelectMssButton, cellConstraints.xy(1,9));
+        panel.add(addStepButton, cellConstraints.xy(1,11));
+        panel.add(addIncludeUcButton, cellConstraints.xy(1,13));
 
         return panel;
     }
@@ -144,6 +164,22 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     public JToggleButton getAddActorButton() {
         return addActorButton;
+    }
+
+    public JToggleButton getAddScenarioButton() {
+        return addScenarioButton;
+    }
+
+    public JToggleButton getAddSelectMssButton() {
+        return addSelectMssButton;
+    }
+
+    public JToggleButton getAddStepButton() {
+        return addStepButton;
+    }
+
+    public JToggleButton getAddIncludeUcButton() {
+        return addIncludeUcButton;
     }
 
     public JToggleButton getAddSystemBorderButton() {
