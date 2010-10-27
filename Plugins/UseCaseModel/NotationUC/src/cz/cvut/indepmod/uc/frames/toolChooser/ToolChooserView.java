@@ -27,10 +27,6 @@ public class ToolChooserView extends JPanel {
             ToolChooserModel.CONTROL_TOOL_RES, null
     );
 
-    protected final JToggleButton deleteButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.DELETE_TOOL_RES, null
-    );
-
     public ToolChooserView(){
         outlookTabbedPane = new ToolChooserOutlookTabs();
 
@@ -49,7 +45,6 @@ public class ToolChooserView extends JPanel {
         final CellConstraints cellConstraints = new CellConstraints();
 
         builder.add(controlButton, cellConstraints.xy(1,1));
-        builder.add(deleteButton, cellConstraints.xy(1,3));
         
         setLayout(new BorderLayout());
 

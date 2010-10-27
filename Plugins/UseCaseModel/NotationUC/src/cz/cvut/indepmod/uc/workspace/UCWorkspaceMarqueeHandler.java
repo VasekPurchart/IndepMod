@@ -53,7 +53,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             return false; // when one pressed shift and right button, there will be added a new point on the edge
         }
 
-        if (SwingUtilities.isRightMouseButton(e) || addingVertex(e) || deletingVertex(e) ){
+        if (SwingUtilities.isRightMouseButton(e) || addingVertex(e)  ){
             return true; //don't use any other handler
         }
 
@@ -72,13 +72,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             // show the popup menu
             popupMenu.show(graph, e.getX(), e.getY());
 
-        } else if(deletingVertex(e)){
-            // delete selected vertexes
-            final Object cell = graph.getFirstCellForLocation(e.getX(), e.getY());
-            graph.getSelectionModel().setSelectionCell(cell);
-            graph.getRemoveAction().actionPerformed(null);
-
-        } else if(addingVertex(e)){
+        }  else if(addingVertex(e)){
             // insert new cell
             graph.insert(e.getPoint());
 
@@ -175,14 +169,6 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         startingPoint = null;
         point = null;
 
-        /**
-         * Consume event when deleting cells using Delete tool. This prevents before NullPointerException
-         * occurring when graph repaints handles of already deleted edges.
-         */
-        if(e!= null && ToolChooserModel.Tool.DELETE.equals(selectedToolModel.getValue())){
-            e.consume();
-        }
-
         super.mouseReleased(e);
 
     }
@@ -230,22 +216,5 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         }
 
         return (SwingUtilities.isLeftMouseButton(e) && addingTool);
-    }
-
-    /**
-     * Decides whether the user is deleting an existing vertex or no.
-     *
-     * @param e is the current mouse event
-     * @return true if user is removing vertex, false otherwise
-     */
-    private boolean deletingVertex(final MouseEvent e) {
-        final ToolChooserModel.Tool tool;
-        try{
-            tool = (ToolChooserModel.Tool) selectedToolModel.getValue();
-        } catch (ClassCastException exception){
-            return false;
-        }
-
-        return (SwingUtilities.isLeftMouseButton(e) && ToolChooserModel.Tool.DELETE.equals(tool));
     }
 }

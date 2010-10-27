@@ -64,7 +64,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
     private void initButtonGroup() {
         buttonGroup.add(controlButton);
-        buttonGroup.add(deleteButton);
 
         buttonGroup.add(outlookTabbedPane.getAddActorButton());
         buttonGroup.add(outlookTabbedPane.getAddUseCaseButton());
@@ -82,13 +81,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
             public void actionPerformed(ActionEvent actionEvent) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.CONTROL);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.CONTROL_TOOL_RES);
-            }
-        });
-
-        deleteButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.DELETE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.DELETE_TOOL_RES);
             }
         });
 
@@ -164,9 +156,6 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                         break;
                     case ADD_SYSTEM_BORDER:
                         outlookTabbedPane.getAddSystemBorderButton().doClick();
-                        break;
-                    case DELETE:
-                        deleteButton.doClick();
                         break;
                     case ADD_CONTROL_FLOW_LINE:
                         outlookTabbedPane.getAddControlFlowLineButton().doClick();

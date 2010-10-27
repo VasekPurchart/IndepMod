@@ -26,8 +26,6 @@ public class ToolChooserModel extends Model {
             Resources.getResources().getString("uc.frame.tools.border");
     public static final String CONTROL_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.control");
-    public static final String DELETE_TOOL_RES =
-            Resources.getResources().getString("uc.frame.tools.delete");
     public static final String CONTROL_FLOW_LINE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.line.control.flow");
     public static final String INFO_SERVICES_FLOW_LINE_TOOL_RES = 
@@ -49,8 +47,7 @@ public class ToolChooserModel extends Model {
         ADD_INFORMATION_SERVICE_FLOW_LINE, //dashed line with narrow
         ADD_INFORMATION_FLOW_LINE, //dotted line with narrow
         ADD_MATERIAL_OUTPUT_FLOW_LINE, // dot-and-dash line with narrow        
-        ADD_ORGANIZATION_FLOW_LINE, // solid line without narrow
-        DELETE
+        ADD_ORGANIZATION_FLOW_LINE // solid line without narrow
     }
 
     public static final String PROPERTY_SELECTED_TOOL = "selectedTool";
