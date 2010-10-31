@@ -36,14 +36,8 @@ public class ToolChooserModel extends Model {
             Resources.getResources().getString("uc.frame.tools.control");
     public static final String CONTROL_FLOW_LINE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.line.control.flow");
-    public static final String INFO_SERVICES_FLOW_LINE_TOOL_RES = 
-            Resources.getResources().getString("uc.frame.tools.line.info.services");
-    public static final String ORG_FLOW_LINE_TOOL_RES =
-            Resources.getResources().getString("uc.frame.tools.line.org.flow");
-    public static final String INFO_FLOW_LINE_TOOL_RES =
-            Resources.getResources().getString("uc.frame.tools.line.info.flow");
-    public static final String MATERIAL_FLOW_LINE_TOOL_RES = 
-            Resources.getResources().getString("uc.frame.tools.line.material");
+    public static final String INCLUDE_FLOW_LINE_TOOL_RES = 
+            Resources.getResources().getString("uc.frame.tools.line.include");
 
 
     public enum Tool {
@@ -55,11 +49,8 @@ public class ToolChooserModel extends Model {
         INCLUDE_UC,
         ADD_USE_CASE,
         ADD_SYSTEM_BORDER,
-        ADD_CONTROL_FLOW_LINE, //solid line with narrow 
-        ADD_INFORMATION_SERVICE_FLOW_LINE, //dashed line with narrow
-        ADD_INFORMATION_FLOW_LINE, //dotted line with narrow
-        ADD_MATERIAL_OUTPUT_FLOW_LINE, // dot-and-dash line with narrow        
-        ADD_ORGANIZATION_FLOW_LINE // solid line without narrow
+        ADD_CONTROL_FLOW_LINE, //solid line with narrow
+        ADD_INCLUDE_FLOW_LINE, //solid line with narrow 
     }
 
     public static final String PROPERTY_SELECTED_TOOL = "selectedTool";

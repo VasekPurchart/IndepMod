@@ -88,17 +88,8 @@ public class UCCellFactory {
             case ADD_CONTROL_FLOW_LINE:
                 edgeType = EdgeModel.EdgeType.CONTROL_FLOW;
                 break;
-            case ADD_MATERIAL_OUTPUT_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.MATERIAL_FLOW;
-                break;
-            case ADD_INFORMATION_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.INFORMATION_FLOW;
-                break;
-            case ADD_ORGANIZATION_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.ORGANIZATION_FLOW;
-                break;
-            case ADD_INFORMATION_SERVICE_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.INFORMATION_SERVICES_FLOW;
+            case ADD_INCLUDE_FLOW_LINE:
+                edgeType = EdgeModel.EdgeType.INCLUDE_FLOW;
                 break;
             default:
                 // should never happened, testing & developing purposes
@@ -124,9 +115,8 @@ public class UCCellFactory {
     private static  Map createEdgeAttributes(final ToolChooserModel.Tool tool) {
 		final Map map = new Hashtable();
 
-        if(!ToolChooserModel.Tool.ADD_ORGANIZATION_FLOW_LINE.equals(tool)){
-            GraphConstants.setLineEnd(map, GraphConstants.ARROW_SIMPLE);
-        }
+        GraphConstants.setLineEnd(map, GraphConstants.ARROW_SIMPLE);
+
         
         GraphConstants.setEndFill(map, true);
         GraphConstants.setLineStyle(map, GraphConstants.STYLE_ORTHOGONAL);
@@ -135,19 +125,10 @@ public class UCCellFactory {
         GraphConstants.setMoveable(map, true);
         GraphConstants.setDisconnectable(map, false);
 
-        if(ToolChooserModel.Tool.ADD_INFORMATION_SERVICE_FLOW_LINE.equals(tool)){
+        if(ToolChooserModel.Tool.ADD_INCLUDE_FLOW_LINE.equals(tool)){
             // make dashed line
             GraphConstants.setDashPattern(map, new float[] {DASH_LINE_SEGMENT_LENGTH, DASH_SPACE_SEGMENT_LENGTH});
 
-        } else if(ToolChooserModel.Tool.ADD_INFORMATION_FLOW_LINE.equals(tool)){
-            // make dotted line
-            GraphConstants.setDashPattern(map, new float[] {DOTTED_LINE_SEGMENT_LENGTH, DOTTED_SPACE_SEGMENT_LENGTH});
-
-        } else if(ToolChooserModel.Tool.ADD_MATERIAL_OUTPUT_FLOW_LINE.equals(tool)){
-            // make dot-and-dash line
-            GraphConstants.setDashPattern(map, new float[] {
-                    DOT_AND_DASH_SEGMENT_1, DOT_AND_DASH_SEGMENT_2,
-                    DOT_AND_DASH_SEGMENT_3, DOT_AND_DASH_SEGMENT_4});
         }
 
 		return map;

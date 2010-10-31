@@ -94,10 +94,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
                 switch(selectedTool){
                     case ADD_CONTROL_FLOW_LINE:
-                    case ADD_INFORMATION_SERVICE_FLOW_LINE:
-                    case ADD_ORGANIZATION_FLOW_LINE:
-                    case ADD_MATERIAL_OUTPUT_FLOW_LINE:
-                    case ADD_INFORMATION_FLOW_LINE:
+                    case ADD_INCLUDE_FLOW_LINE:
                         portsVisible = true;
                 }
 

@@ -73,10 +73,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
         buttonGroup.add(outlookTabbedPane.getAddUseCaseButton());
         buttonGroup.add(outlookTabbedPane.getAddSystemBorderButton());
         buttonGroup.add(outlookTabbedPane.getAddControlFlowLineButton());
-        buttonGroup.add(outlookTabbedPane.getAddInfoServicesFlowLineButton());
-        buttonGroup.add(outlookTabbedPane.getAddOrganizationFlowLineButton());
-        buttonGroup.add(outlookTabbedPane.getAddInformationFlowLineButton());
-        buttonGroup.add(outlookTabbedPane.getAddMaterialFlowLineButton());
+        buttonGroup.add(outlookTabbedPane.getAddIncludeFlowLineButton());
         
     }
 
@@ -144,31 +141,10 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
             }
         });
 
-        outlookTabbedPane.getAddInfoServicesFlowLineButton().addActionListener(new ActionListener(){
+        outlookTabbedPane.getAddIncludeFlowLineButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_INFORMATION_SERVICE_FLOW_LINE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.INFO_SERVICES_FLOW_LINE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddOrganizationFlowLineButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_ORGANIZATION_FLOW_LINE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.ORG_FLOW_LINE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddInformationFlowLineButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_INFORMATION_FLOW_LINE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.INFO_FLOW_LINE_TOOL_RES);
-            }
-        });
-
-        outlookTabbedPane.getAddMaterialFlowLineButton().addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_MATERIAL_OUTPUT_FLOW_LINE);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.MATERIAL_FLOW_LINE_TOOL_RES);
+                selectedToolModel.setValue(ToolChooserModel.Tool.ADD_INCLUDE_FLOW_LINE);
+                updateStatusBarSelectedItemInfo(ToolChooserModel.INCLUDE_FLOW_LINE_TOOL_RES);
             }
         });
 
@@ -204,18 +180,9 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                     case ADD_CONTROL_FLOW_LINE:
                         outlookTabbedPane.getAddControlFlowLineButton().doClick();
                         break;
-                    case ADD_INFORMATION_SERVICE_FLOW_LINE:
-                        outlookTabbedPane.getAddInfoServicesFlowLineButton().doClick();
+                    case ADD_INCLUDE_FLOW_LINE:
+                        outlookTabbedPane.getAddIncludeFlowLineButton().doClick();
                         break;
-                    case ADD_MATERIAL_OUTPUT_FLOW_LINE:
-                        outlookTabbedPane.getAddMaterialFlowLineButton().doClick();
-                        break;
-                    case ADD_INFORMATION_FLOW_LINE:
-                        outlookTabbedPane.getAddInformationFlowLineButton().doClick();
-                        break;
-                    case ADD_ORGANIZATION_FLOW_LINE:
-                        outlookTabbedPane.getAddOrganizationFlowLineButton().doClick();
-                        break;                     
                     default:
                         LOG.error("No such a tool in UC notation.");
                 }

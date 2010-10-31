@@ -13,10 +13,7 @@ public class EdgeModel extends UCEditableVertex {
 
     public static enum EdgeType {
         CONTROL_FLOW,
-        ORGANIZATION_FLOW,
-        INFORMATION_FLOW,
-        INFORMATION_SERVICES_FLOW,
-        MATERIAL_FLOW
+        INCLUDE_FLOW
     }
 
     private final EdgeType edgeType;

@@ -27,20 +27,8 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
             ToolChooserModel.CONTROL_FLOW_LINE_TOOL_RES, null
     );
 
-    protected final JToggleButton addInfoServicesFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.INFO_SERVICES_FLOW_LINE_TOOL_RES, null
-    );
-
-    protected final JToggleButton addOrganizationFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.ORG_FLOW_LINE_TOOL_RES, null
-    );
-
-    protected final JToggleButton addInformationFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.INFO_FLOW_LINE_TOOL_RES, null
-    );
-
-    protected final JToggleButton addMaterialFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.MATERIAL_FLOW_LINE_TOOL_RES, null
+    protected final JToggleButton addIncludeFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
+            ToolChooserModel.INCLUDE_FLOW_LINE_TOOL_RES, null
     );
                                 
     protected final JToggleButton addActorButton = ModelerSession.getComponentFactoryService().createToggleButton(
@@ -97,10 +85,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         ));
         final CellConstraints cellConstraints = new CellConstraints();
         panel.add(addControlFlowLineButton, cellConstraints.xy(1,1));
-        panel.add(addInfoServicesFlowLineButton, cellConstraints.xy(1,3));
-        panel.add(addOrganizationFlowLineButton, cellConstraints.xy(1,5));
-        panel.add(addInformationFlowLineButton, cellConstraints.xy(1,7));
-        panel.add(addMaterialFlowLineButton, cellConstraints.xy(1,9));
+        panel.add(addIncludeFlowLineButton, cellConstraints.xy(1,3));
 
         return panel;
     }
@@ -142,20 +127,8 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         return addControlFlowLineButton;
     }
 
-    public JToggleButton getAddInfoServicesFlowLineButton() {
-        return addInfoServicesFlowLineButton;
-    }
-
-    public JToggleButton getAddOrganizationFlowLineButton() {
-        return addOrganizationFlowLineButton;
-    }
-
-    public JToggleButton getAddInformationFlowLineButton() {
-        return addInformationFlowLineButton;
-    }
-
-    public JToggleButton getAddMaterialFlowLineButton() {
-        return addMaterialFlowLineButton;
+    public JToggleButton getAddIncludeFlowLineButton() {
+        return addIncludeFlowLineButton;
     }
 
     public JToggleButton getAddUseCaseButton() {
