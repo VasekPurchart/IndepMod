@@ -67,6 +67,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         addTab(BASICS_LABEL, createBasicsPanel());
         addTab(OPERATORS_LABEL, createOperatorsPanel());
         addTab(CONN_LABEL, createConnectionsPanel());
+        
     }
 
 
