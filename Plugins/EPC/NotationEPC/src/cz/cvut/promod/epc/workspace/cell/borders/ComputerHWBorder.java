@@ -8,7 +8,7 @@ import java.awt.*;
  * User: Petr Zverina, petr.zverina@gmail.com
  * Date: 19:06:36, 7.12.2009
  *
- * The special border for Computer HW epc element.
+ * The special borders for Computer HW epc element.
  */
 public class ComputerHWBorder extends AbstractBorder {
 

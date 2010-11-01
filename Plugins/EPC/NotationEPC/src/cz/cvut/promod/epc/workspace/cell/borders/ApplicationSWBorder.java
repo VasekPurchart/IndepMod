@@ -8,7 +8,7 @@ import java.awt.*;
  * User: Petr Zverina, petr.zverina@gmail.com
  * Date: 19:06:36, 7.12.2009
  *
- * The special border for Application SW epc element. 
+ * The special borders for Application SW epc element.
  */
 public class ApplicationSWBorder extends AbstractBorder {
 

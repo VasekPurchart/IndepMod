@@ -6,8 +6,8 @@ import com.jidesoft.introspector.BeanProperty;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
-import cz.cvut.promod.epc.modelFactory.epcGraphItemModels.*;
-import cz.cvut.promod.epc.resources.Resources;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.*;
+import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.promod.gui.support.utils.NotationGuiHolder;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.services.ModelerSession;
@@ -40,21 +40,27 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
     public static final String FRAME_ID = "uc.info";
 
     private static final String TITLE_LABEL = Resources.getResources().getString("uc.info.title");
-    private static final String CATEGORY_LOGICS_LABEL = Resources.getResources().getString("uc.info.cat.logics");
-    private static final String CATEGORY_GENERALS_LABEL = Resources.getResources().getString("uc.info.cat.general");
-    private static final String LOGICS_CONDITION_LABEL = Resources.getResources().getString("uc.info.condition");
-    private static final String LOGICS_CONDITION_TOP_LABEL = Resources.getResources().getString("uc.info.condition.top");
-    private static final String LOGICS_CONDITION_BOTTOM_LABEL = Resources.getResources().getString("uc.info.condition.bottom");
-    private static final String CATEGORY_NOTES_LABEL = Resources.getResources().getString("uc.info.cat.notes");
     private static final String NOTE_LABEL = Resources.getResources().getString("uc.info.note");
-    private static final String CATEGORY_TYPE_LABEL = Resources.getResources().getString("uc.info.cat.type");
-    private static final String TYPE_LABEL = Resources.getResources().getString("uc.info.type");
-    private static final String NAME_LABEL = Resources.getResources().getString("uc.info.name");
-    private static final String UUID_LABEL = Resources.getResources().getString("uc.info.uuid");    
+    private static final String CATEGORY_NOTES_LABEL = Resources.getResources().getString("uc.info.cat.notes");
     private static final String APP_SW_LABEL = Resources.getResources().getString("uc.vertex.app.sw");
     private static final String ACTOR_LABEL = Resources.getResources().getString("uc.vertex.actor");
     private static final String UC_LABEL = Resources.getResources().getString("uc.vertex.uc");
     private static final String SYSTEM_BORDER_LABEL = Resources.getResources().getString("uc.vertex.border");
+    private static final String CATEGORY_TYPE_LABEL = Resources.getResources().getString("uc.info.cat.type");
+    private static final String TYPE_LABEL = Resources.getResources().getString("uc.info.type");
+    private static final String NAME_LABEL = Resources.getResources().getString("uc.info.name");
+    private static final String UUID_LABEL = Resources.getResources().getString("uc.info.uuid");
+    private static final String CATEGORY_GENERALS_LABEL = Resources.getResources().getString("uc.info.cat.general");
+    private static final String CTR_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.control.flow");
+
+    /*
+
+    private static final String CATEGORY_LOGICS_LABEL = Resources.getResources().getString("uc.info.cat.logics");
+
+    private static final String LOGICS_CONDITION_LABEL = Resources.getResources().getString("uc.info.condition");
+    private static final String LOGICS_CONDITION_TOP_LABEL = Resources.getResources().getString("uc.info.condition.top");
+    private static final String LOGICS_CONDITION_BOTTOM_LABEL = Resources.getResources().getString("uc.info.condition.bottom");
+
     private static final String HW_LABEL = Resources.getResources().getString("uc.vertex.hw");
     private static final String DELIVERABLE_LABEL = Resources.getResources().getString("uc.vertex.deliverable");
     private static final String FLOW_LABEL = Resources.getResources().getString("uc.vertex.flow");
@@ -67,12 +73,12 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
     private static final String MESSAGE_LABEL = Resources.getResources().getString("uc.vertex.message");
     private static final String ORG_ROLE_LABEL = Resources.getResources().getString("uc.vertex.org.role");
     private static final String ORG_UNIT_LABEL = Resources.getResources().getString("uc.vertex.org.unit");
-    private static final String CTR_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.control.flow");
+
     private static final String INF_SERVICES_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.info.services");
     private static final String ORG_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.org.flow");
     private static final String INFO_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.info.flow");
     private static final String MATERIAL_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.material");
-
+           */
 
     public String getDockableFrameName() {
         return FRAME_ID;
@@ -129,13 +135,13 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
 
                         recognizeItemType(userObject, listProperties);
 
-                        if(userObject instanceof EPCEditableVertex){
+                        if(userObject instanceof UCEditableVertex){
                             updateInfo(listProperties, userObject);
                         }
-
+                        /*
                         if(userObject instanceof LogicFunctionModel){
                             getLogicOperatorCondition((LogicFunctionModel)userObject, listProperties);
-                        }
+                        }    */
 
                         getItemNote(userObject, listProperties);
 
@@ -158,10 +164,10 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
      * @param listProperties is the list where is the info about note supposed to be added
      */
     private void getItemNote(final Object userObject, final List<Property> listProperties) {
-        if(userObject instanceof EPCNoteItem){
+        if(userObject instanceof UCNoteItem){
             try {
                 final BeanProperty conditionBean = new BeanProperty(
-                        new PropertyDescriptor(EPCNoteItem.NOTE_PROPERTY, EPCNoteItem.class)){
+                        new PropertyDescriptor(UCNoteItem.NOTE_PROPERTY, UCNoteItem.class)){
 
                     @Override
                     public void setValue(Object o) {
@@ -183,94 +189,11 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
                 listProperties.add(conditionBean);
 
             } catch (IntrospectionException e) {
-                LOG.error("Couldn't introspect an instance of EPCNoteItem", e);
+                LOG.error("Couldn't introspect an instance of UCNoteItem", e);
             }
         }
     }
 
-    /**
-     * Adds the logic condition to operator(s). Double-conditions-operators (i.g. AND_OR) have two
-     * conditions (TOP & BOTTOM), Single-condition-operators (i.g. AND) have only one condition.
-     *
-     * @param logicFunctionModel is the logic operator
-     * @param listProperties is the list where is the info about condition supposed to be added
-     */
-    private void getLogicOperatorCondition(final LogicFunctionModel logicFunctionModel,
-                                               final List<Property> listProperties) {
-
-        try {
-            final BeanProperty condition1Bean = new BeanProperty(
-                    new PropertyDescriptor(LogicFunctionModel.CONDITION_1_PROPERTY, LogicFunctionModel.class)){
-
-                    public void setValue(Object o) {
-                        super.setValue(o);
-
-                        // let the project diagram know about the change
-                        final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
-                        if(projectDiagram != null){
-                            projectDiagram.changePerformed(null);
-                        }
-                    }
-            };
-
-            final boolean doubleConditionOperator = isDoubleOperator(logicFunctionModel.getOperator());
-
-            condition1Bean.setInstance(logicFunctionModel);
-            if(doubleConditionOperator){
-                condition1Bean.setName(LOGICS_CONDITION_TOP_LABEL);
-            } else {
-                condition1Bean.setName(LOGICS_CONDITION_LABEL);
-            }
-            condition1Bean.setCategory(CATEGORY_LOGICS_LABEL);
-            condition1Bean.setEditable(true);
-            listProperties.add(condition1Bean);
-
-            if(doubleConditionOperator){
-                final BeanProperty condition2Bean = new BeanProperty(
-                        new PropertyDescriptor(LogicFunctionModel.CONDITION_2_PROPERTY, LogicFunctionModel.class)){
-
-                        public void setValue(Object o) {
-                            super.setValue(o);
-
-                            // let the project diagram know about the change
-                            final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
-                            if(projectDiagram != null){
-                                projectDiagram.changePerformed(null);
-                            }
-                        }
-                };
-
-                condition2Bean.setInstance(logicFunctionModel);
-                condition2Bean.setName(LOGICS_CONDITION_BOTTOM_LABEL);
-                condition2Bean.setCategory(CATEGORY_LOGICS_LABEL);
-                condition2Bean.setEditable(true);
-                listProperties.add(condition2Bean);
-            }
-
-        } catch (IntrospectionException e) {
-            LOG.error("Couldn't introspect an instance of LogicFunctionModel", e);
-        }
-    }
-
-    /**
-     * Checks for 2 condition operators.
-     *
-     * @param operator is the operator tbe checked
-     * @return true if operator has 2 conditions, false otherwise
-     */
-    private boolean isDoubleOperator(final LogicFunctionModel.LogicOperator operator) {
-        if(LogicFunctionModel.LogicOperator.AND_OR.equals(operator)
-                || LogicFunctionModel.LogicOperator.AND_XOR.equals(operator)
-                || LogicFunctionModel.LogicOperator.OR_AND.equals(operator)
-                || LogicFunctionModel.LogicOperator.OR_XOR.equals(operator)
-                || LogicFunctionModel.LogicOperator.XOR_AND.equals(operator)
-                || LogicFunctionModel.LogicOperator.XOR_OR.equals(operator)){
-
-            return true;
-        }
-
-        return false;                                    
-    }
 
     /**
      * Determinate the type of selected graph item.
@@ -319,18 +242,10 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
             case CONTROL_FLOW:
                 type.append(CTR_FLOW_LABEL);
                 break;
-            case INFORMATION_FLOW:
-                type.append(INFO_FLOW_LABEL);
+            case INCLUDE_FLOW:
+                //type.append(INFO_FLOW_LABEL);
                 break;
-            case INFORMATION_SERVICES_FLOW:
-                type.append(INF_SERVICES_FLOW_LABEL);
-                break;
-            case MATERIAL_FLOW:
-                type.append(MATERIAL_FLOW_LABEL);
-                break;
-            case ORGANIZATION_FLOW:
-                type.append(ORG_FLOW_LABEL);
-                break;
+
             default:
                 type.append("-");
                 LOG.error("Unknown type of flow.");
@@ -365,7 +280,7 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
 
     private void updateInfo(final List<Property> listProperties, final Object userObject) {
         try{
-            final EPCEditableVertex editableVertex = (EPCEditableVertex) userObject;
+            final UCEditableVertex editableVertex = (UCEditableVertex) userObject;
 
             final Property nameBean = new Property(){
                 public void setValue(Object object) {
