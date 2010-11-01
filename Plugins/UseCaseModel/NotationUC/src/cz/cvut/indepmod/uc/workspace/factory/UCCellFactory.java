@@ -97,10 +97,12 @@ public class UCCellFactory {
                 return null;
         }
 
-        edge.setUserObject(new EdgeModel(edgeType));
+        EdgeModel edgeModel = new EdgeModel(edgeType);
+        if(edgeType == EdgeModel.EdgeType.INCLUDE_FLOW)
+            edgeModel.setName("<< include >>");
+        edge.setUserObject(edgeModel);
 
         edge.getAttributes().applyMap(createEdgeAttributes(tool));
-
         return edge;
     }
 
@@ -126,9 +128,11 @@ public class UCCellFactory {
         GraphConstants.setDisconnectable(map, false);
 
         if(ToolChooserModel.Tool.ADD_INCLUDE_FLOW_LINE.equals(tool)){
+            GraphConstants.setEditable(map, false);
             // make dashed line
-            GraphConstants.setDashPattern(map, new float[] {DASH_LINE_SEGMENT_LENGTH, DASH_SPACE_SEGMENT_LENGTH});
-
+            //GraphConstants.setDashPattern(map, new float[] {DASH_LINE_SEGMENT_LENGTH, DASH_SPACE_SEGMENT_LENGTH});
+        } else {
+            GraphConstants.setLineEnd(map, GraphConstants.ARROW_NONE);
         }
 
 		return map;
