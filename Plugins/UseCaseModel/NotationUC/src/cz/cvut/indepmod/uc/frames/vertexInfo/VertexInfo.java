@@ -52,33 +52,7 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
     private static final String UUID_LABEL = Resources.getResources().getString("uc.info.uuid");
     private static final String CATEGORY_GENERALS_LABEL = Resources.getResources().getString("uc.info.cat.general");
     private static final String CTR_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.control.flow");
-
-    /*
-
-    private static final String CATEGORY_LOGICS_LABEL = Resources.getResources().getString("uc.info.cat.logics");
-
-    private static final String LOGICS_CONDITION_LABEL = Resources.getResources().getString("uc.info.condition");
-    private static final String LOGICS_CONDITION_TOP_LABEL = Resources.getResources().getString("uc.info.condition.top");
-    private static final String LOGICS_CONDITION_BOTTOM_LABEL = Resources.getResources().getString("uc.info.condition.bottom");
-
-    private static final String HW_LABEL = Resources.getResources().getString("uc.vertex.hw");
-    private static final String DELIVERABLE_LABEL = Resources.getResources().getString("uc.vertex.deliverable");
-    private static final String FLOW_LABEL = Resources.getResources().getString("uc.vertex.flow");
-    private static final String EVENT_LABEL = Resources.getResources().getString("uc.vertex.event");
-    private static final String FUNCTION_LABEL = Resources.getResources().getString("uc.vertex.function");
-    private static final String GOAL_LABEL = Resources.getResources().getString("uc.vertex.goal");
-    private static final String INFO_OBJ_LABEL = Resources.getResources().getString("uc.vertex.info.object");
-    private static final String LOGIC_OP_LABEL = Resources.getResources().getString("uc.vertex.logic.op");
-    private static final String MACHINE_LABEL = Resources.getResources().getString("uc.vertex.machine");
-    private static final String MESSAGE_LABEL = Resources.getResources().getString("uc.vertex.message");
-    private static final String ORG_ROLE_LABEL = Resources.getResources().getString("uc.vertex.org.role");
-    private static final String ORG_UNIT_LABEL = Resources.getResources().getString("uc.vertex.org.unit");
-
-    private static final String INF_SERVICES_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.info.services");
-    private static final String ORG_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.org.flow");
-    private static final String INFO_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.info.flow");
-    private static final String MATERIAL_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.material");
-           */
+    private static final String INCLUDE_FLOW_LABEL = Resources.getResources().getString("uc.frame.tools.line.include.flow");
 
     public String getDockableFrameName() {
         return FRAME_ID;
@@ -243,7 +217,7 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
                 type.append(CTR_FLOW_LABEL);
                 break;
             case INCLUDE_FLOW:
-                //type.append(INFO_FLOW_LABEL);
+                type.append(INCLUDE_FLOW_LABEL);
                 break;
 
             default:
@@ -264,8 +238,18 @@ public class VertexInfo extends VertexInfoView implements DockableFrameData {
      */
     private Object getNewlySelectedVertex(final GraphSelectionEvent event) {
         Object newCell = null;
-
+        Object systemBorderCell = null;
+        
         for(Object cell : event.getCells()){
+            if(cell instanceof org.jgraph.graph.DefaultGraphCell)
+            {
+                org.jgraph.graph.DefaultGraphCell gCell = (org.jgraph.graph.DefaultGraphCell) cell;
+                if(gCell.getUserObject() instanceof SystemBorderModel)
+                {
+                    systemBorderCell = cell;
+                    continue;
+                }
+            }
             if(event.isAddedCell(cell)){
                 if(newCell != null) {
                     return null; // multiple vertex selection
