@@ -65,9 +65,8 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     private void initTabPane() {
         addTab(BASICS_LABEL, createBasicsPanel());
-        addTab(OPERATORS_LABEL, createOperatorsPanel());
-        addTab(CONN_LABEL, createConnectionsPanel());
-        
+        //addTab(OPERATORS_LABEL, createOperatorsPanel());
+        //addTab(CONN_LABEL, createConnectionsPanel());
     }
 
 
@@ -76,7 +75,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
      *
      * @return an instance of JPanel holding connections/flows controls
      */
-    private JPanel createConnectionsPanel() {
+   /* private JPanel createConnectionsPanel() {
         JPanel panel = ModelerSession.getComponentFactoryService().createPanel();
         panel.setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
 
@@ -89,7 +88,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         panel.add(addIncludeFlowLineButton, cellConstraints.xy(1,3));
 
         return panel;
-    }
+    }*/
 
     private JPanel createOperatorsPanel() {
         JPanel panel = ModelerSession.getComponentFactoryService().createPanel();
@@ -120,6 +119,8 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         panel.add(addSelectMssButton, cellConstraints.xy(1,9));
         panel.add(addStepButton, cellConstraints.xy(1,11));
         panel.add(addIncludeUcButton, cellConstraints.xy(1,13));
+        panel.add(addControlFlowLineButton, cellConstraints.xy(1,15));
+        panel.add(addIncludeFlowLineButton, cellConstraints.xy(1,17));
 
         return panel;
     }
