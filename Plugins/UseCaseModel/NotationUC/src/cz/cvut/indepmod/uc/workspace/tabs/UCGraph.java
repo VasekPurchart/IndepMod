@@ -1,4 +1,4 @@
-package cz.cvut.indepmod.uc.workspace;
+package cz.cvut.indepmod.uc.workspace.tabs;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
@@ -6,6 +6,9 @@ import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCEditableVertex;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.resources.Resources;
+import cz.cvut.indepmod.uc.workspace.UCWorkspace;
+import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
+import cz.cvut.indepmod.uc.workspace.UCWorkspaceMarqueeHandler;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.apache.log4j.Logger;
