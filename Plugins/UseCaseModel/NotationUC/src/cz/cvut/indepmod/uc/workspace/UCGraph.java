@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCEditableVertex;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
@@ -25,8 +26,8 @@ import java.util.Map;
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
  * Date: 14:42:28, 6.12.2009
- *
- * Implementation of JGraph for UC notation. 
+ * <p/>
+ * Implementation of JGraph for UC notation.
  */
 public class UCGraph extends JGraph {
 
@@ -39,8 +40,8 @@ public class UCGraph extends JGraph {
     private ProModAction removeAction; //never change this action once has been instantiated
 
     public UCGraph(final ValueModel selectedToolModel,
-                    final JPopupMenu popupMenu,
-                    Map<String, ProModAction> actions) {
+                   final JPopupMenu popupMenu,
+                   Map<String, ProModAction> actions) {
 
         this.selectedToolModel = selectedToolModel;
 
@@ -48,12 +49,12 @@ public class UCGraph extends JGraph {
         setJumpToDefaultPort(true);
 
         initActions(actions);
-        
+
         setMarqueeHandler(new UCWorkspaceMarqueeHandler(this, selectedToolModel, popupMenu));
     }
 
     protected void processKeyEvent(KeyEvent e) {
-        if(127 == e.getKeyCode()) {
+        if (127 == e.getKeyCode()) {
             if (!isSelectionEmpty()) {
                 Object[] selectedCells = getSelectionCells();
                 logDeleteInfo(selectedCells);
@@ -63,25 +64,56 @@ public class UCGraph extends JGraph {
     }
 
     private void initActions(final Map<String, ProModAction> actions) {
-        final ProModAction refreshAction = new ProModAction(Resources.getResources().getString(UCNotationModel.REFRESH_ACTION_KEY), null, null){
+        final ProModAction refreshAction = new ProModAction(Resources.getResources().getString(UCNotationModel.REFRESH_ACTION_KEY), null, null) {
             public void actionPerformed(ActionEvent event) {
                 refresh();
             }
         };
 
-        actions.put(UCNotationModel.REFRESH_ACTION_KEY, refreshAction);       
+        actions.put(UCNotationModel.REFRESH_ACTION_KEY, refreshAction);
 
-        removeAction = new ProModAction(Resources.getResources().getString(UCNotationModel.DELETE_ACTION_KEY), null, null){
-                            public void actionPerformed(ActionEvent event) {
-                                if (!isSelectionEmpty()) {
-					                Object[] selectedCells = getSelectionCells();
-                                    logDeleteInfo(selectedCells);
-                                    getGraphLayoutCache().remove(selectedCells, true, true);
-				                }
-                            }
-                        };
+        removeAction = new ProModAction(Resources.getResources().getString(UCNotationModel.DELETE_ACTION_KEY), null, null) {
+            public void actionPerformed(ActionEvent event) {
+                if (!isSelectionEmpty()) {
+                    Object[] selectedCells = getSelectionCells();
+                    logDeleteInfo(selectedCells);
+                    getGraphLayoutCache().remove(selectedCells, true, true);
+                }
+            }
+        };
 
         actions.put(UCNotationModel.DELETE_ACTION_KEY, removeAction);
+
+        final ProModAction detailAction = new ProModAction(Resources.getResources().getString(UCNotationModel.DETAIL_ACTION_KEY), null, null) {
+            public void actionPerformed(ActionEvent event) {
+                if (!isSelectionEmpty()) {
+                    Object selectedCells = getSelectionCell();
+                    if (selectedCells instanceof DefaultGraphCell) {
+                        final DefaultGraphCell defaultGraphCell = (DefaultGraphCell) selectedCells;
+                        final Object object = defaultGraphCell.getUserObject();
+
+                        final String name;
+                        if (object instanceof UCEditableVertex) {
+                            name = ((UCEditableVertex) object).getName();
+                        } else {
+                            name = "Not identifiable item";
+                        }
+                        UCWorkspaceData.getWorkspaceComponentSingletonStatic().add(name,
+                                new JScrollPane(
+                                        new UCGraphUseCase(
+                                                selectedToolModel,
+                                                getComponentPopupMenu(),
+                                                actions
+                                        )
+                                )
+                        );
+                    }
+                }
+            }
+        };
+
+
+        actions.put(UCNotationModel.DETAIL_ACTION_KEY, detailAction);
     }
 
     /**
@@ -89,18 +121,19 @@ public class UCGraph extends JGraph {
      *
      * @param selectedCells that have been deleted
      */
-    private void logDeleteInfo(final Object[] selectedCells){
-        for(final Object cell : selectedCells){
-            if(cell instanceof DefaultEdge){
+
+    private void logDeleteInfo(final Object[] selectedCells) {
+        for (final Object cell : selectedCells) {
+            if (cell instanceof DefaultEdge) {
                 final DefaultEdge edge = (DefaultEdge) cell;
                 LOG.info("Edge has been deleted.");
 
-            } else if(cell instanceof DefaultGraphCell){
+            } else if (cell instanceof DefaultGraphCell) {
                 final DefaultGraphCell defaultGraphCell = (DefaultGraphCell) cell;
                 final Object object = defaultGraphCell.getUserObject();
 
                 final String identifier;
-                if(object instanceof UCIdentifiableVertex){
+                if (object instanceof UCIdentifiableVertex) {
                     identifier = ((UCIdentifiableVertex) object).getUuid().toString();
                 } else {
                     identifier = "Not identifiable item";
@@ -118,10 +151,10 @@ public class UCGraph extends JGraph {
         setJumpToDefaultPort(false); // do not use default currentPort if no another currentPort is on the point
 
         PortView result;
-        try{
+        try {
             result = getPortViewAt(point.getX(), point.getY(), GET_PORTVIEW_TOLERANCE);
         }
-        catch (Exception exception){
+        catch (Exception exception) {
             LOG.error("Couldn't locate the portview.");
             result = null;
         }
@@ -138,7 +171,7 @@ public class UCGraph extends JGraph {
     /**
      * Inserts a new vertex (type depends on currently selected tool) to the graph and currently selected
      * graph layout cache.
-     *
+     * <p/>
      * Finally switch selected tool to 'control' tool.
      *
      * @param point where the new vertex is supposed to be inserted
@@ -158,23 +191,22 @@ public class UCGraph extends JGraph {
      * @param source is the source port for new edge
      * @param target is the target port for new edge
      */
-	public void connectVertexes(final Port source, final Port target) {
+    public void connectVertexes(final Port source, final Port target) {
         final ToolChooserModel.Tool tool = (ToolChooserModel.Tool) selectedToolModel.getValue();
 
-		final DefaultEdge edge = UCCellFactory.createEdge(tool);
+        final DefaultEdge edge = UCCellFactory.createEdge(tool);
         edge.setSource(source);
         edge.setTarget(target);
-        
-		if ((getModel().acceptsSource(edge, source)) && (getModel().acceptsTarget(edge, target))) {			
-			getGraphLayoutCache().insertEdge(edge, source, target);
-		}
-	}
+
+        if ((getModel().acceptsSource(edge, source)) && (getModel().acceptsTarget(edge, target))) {
+            getGraphLayoutCache().insertEdge(edge, source, target);
+        }
+    }
 
     /**
      * Creates new vertex (type depends on selected tool).
      *
      * @param point is the point where the new vertex is supposed to be inserted
-     *
      * @return new vertex of required type
      */
     private DefaultGraphCell createVertex(final Point2D point) {

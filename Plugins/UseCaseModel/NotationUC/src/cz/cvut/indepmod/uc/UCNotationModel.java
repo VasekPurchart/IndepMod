@@ -40,6 +40,7 @@ public class UCNotationModel {
     public static final String UNDO_ACTION_KEY = "uc.action.undo";
     public static final String REDO_ACTION_KEY = "uc.action.redo";
     public static final String DELETE_ACTION_KEY = "uc.action.delete";
+    public static final String DETAIL_ACTION_KEY = "uc.action.detail";
 
     // resources
     public static final String REFRESH_ACTION_KEY = "uc.action.refresh";
@@ -188,9 +189,14 @@ public class UCNotationModel {
     }
 
     private void initPopupMenu() {
+
         final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
         popupMenu.add(deleteAction);
+        
+        final Action detailAction = getAction(DETAIL_ACTION_KEY);
+        detailAction.setEnabled(true);
+        popupMenu.add(detailAction);
     }
 
     public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable)  {
@@ -221,6 +227,10 @@ public class UCNotationModel {
         if(!properties.containsKey(DELETE_ACTION_KEY)){
             LOG.error("Missing property " + UCNotationModel.DELETE_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.DELETE_ACTION_KEY);
+        }
+        if(!properties.containsKey(DETAIL_ACTION_KEY)){
+            LOG.error("Missing property " + UCNotationModel.DETAIL_ACTION_KEY);
+            throw new InstantiationException("Missing property " + UCNotationModel.DETAIL_ACTION_KEY);
         }
         if(!properties.containsKey(UNDO_ACTION_KEY)){
             LOG.error("Missing property " + UCNotationModel.UNDO_ACTION_KEY);

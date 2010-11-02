@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class UCGraphModel extends DefaultGraphModel{       
 
-    private final static String ERROR_TITLE_LABEL = "aa";// Resources.getResources().getString("uc.menu.uc.notation");
+    private final static String ERROR_TITLE_LABEL = Resources.getResources().getString("uc.menu.uc.notation");
     private final static String ERROR_EVENTS_LABEL = Resources.getResources().getString("uc.conn.error.events");
     private final static String ERROR_FUNCTIONS_LABEL = Resources.getResources().getString("uc.conn.error.functions");
     private final static String ERROR_MULTIPLE_CONTROL_FLOW_LABEL =

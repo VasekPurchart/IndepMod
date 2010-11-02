@@ -9,19 +9,19 @@ import java.awt.*;
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- *
+ * <p/>
  * Special implementation of the UCPortRenderer for the UCNotation plugin.
  */
 public class UCPortRenderer extends PortRenderer {
 
     private ImageIcon portIcon = null;
 
-    public UCPortRenderer(final ImageIcon portIcon){
+    public UCPortRenderer(final ImageIcon portIcon) {
         this.portIcon = portIcon;
     }
 
     public void paint(Graphics g) {
-        if(portIcon != null){
+        if (portIcon != null) {
             portIcon.paintIcon(this, g, 0, 0);
 
         } else {
@@ -29,5 +29,5 @@ public class UCPortRenderer extends PortRenderer {
             super.paint(g);
         }
     }
-    
+
 }

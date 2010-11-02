@@ -168,6 +168,12 @@ public class UCNotation implements Notation {
 
         ModelerSession.getActionService().registerAction(
                 getIdentifier(),
+                model.getActionIdentifier(UCNotationModel.DETAIL_ACTION_KEY),
+                model.getAction(UCNotationModel.DETAIL_ACTION_KEY)
+        );
+
+        ModelerSession.getActionService().registerAction(
+                getIdentifier(),
                 model.getActionIdentifier(UCNotationModel.DELETE_ACTION_KEY),
                 model.getAction(UCNotationModel.DELETE_ACTION_KEY)
         );

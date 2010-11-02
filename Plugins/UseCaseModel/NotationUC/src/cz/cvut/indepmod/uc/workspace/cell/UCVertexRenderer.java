@@ -7,16 +7,16 @@ import java.awt.*;
 
 /**
  * ProMod, master thesis project
- * 
+ * <p/>
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
  * Date: 21:52:01, 2.12.2009
- *
+ * <p/>
  * Special implementation of the MultiLineVertexRenderer for the UCNotation plugin.
- *
+ * <p/>
  * It paints the special shapes of UC items.
  */
-public class UCVertexRenderer extends MultiLineVertexRenderer{
+public class UCVertexRenderer extends MultiLineVertexRenderer {
 
     private final static Logger LOG = Logger.getLogger(UCVertexRenderer.class);
 
@@ -34,7 +34,7 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
         final int width = d.width - b;
         final int height = d.height - b;
 
-       if(shape == SHAPE_UC_ACTOR){
+        if (shape == SHAPE_UC_ACTOR) {
             final Color originColor = g.getColor();
             int actorH = 120, actorW = 40;
 
@@ -47,7 +47,7 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
 
             g.drawLine(borderW / 2 + actorW / 2, actorH - actorH / 3, borderW / 2 + actorW / 2, actorH / 4);
             g.drawLine(borderW / 2, actorH / 3, borderW / 2 + actorW, actorH / 3);
-            g.drawArc(borderW / 2 + actorW / 4, 0 , actorW / 2, actorH / 4, 0, 360);
+            g.drawArc(borderW / 2 + actorW / 4, 0, actorW / 2, actorH / 4, 0, 360);
             /*
             g.drawLine(0, height - 20, width / 2, height - height / 3);
             g.drawLine(width, height - 20, width / 2, height - height / 3);
@@ -55,7 +55,7 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
             g.drawLine(0, height / 3, width, height / 3);
             g.drawArc(width >> 2, 0 , width / 2, height / 4, 0, 360);
             */
-            
+
             g.setColor(originColor);
         } else {
             super.paintBackground(g);
@@ -64,7 +64,7 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
 
 
     /**
-     *  Calculates distance from horizontal axis.
+     * Calculates distance from horizontal axis.
      *
      * @param xFromLeft is a distance from left side of eclipse
      * @return the distance of  eclipse borders at the given horizontal position
@@ -73,16 +73,16 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
         final double x = (getWidth() / 2.0) - xFromLeft;
         final double a = getWidth() / 2.0;
         final double b = getHeight() / 2.0;
-        final double b_square = b*b;
+        final double b_square = b * b;
 
-        return new Double(Math.sqrt( b_square - ((b_square * x * x) / (a*a)))).intValue();
+        return new Double(Math.sqrt(b_square - ((b_square * x * x) / (a * a)))).intValue();
     }
 
     @Override
     protected void paintShapeBorder(Graphics g) {
 
-            super.paintShapeBorder(g);
-       
+        super.paintShapeBorder(g);
+
     }
 
 }

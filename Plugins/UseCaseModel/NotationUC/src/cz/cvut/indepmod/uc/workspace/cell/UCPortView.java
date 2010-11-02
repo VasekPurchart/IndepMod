@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- *
+ * <p/>
  * Special implementation of the PortView for the UCNotation plugin.
  */
 public class UCPortView extends PortView {
@@ -24,7 +24,7 @@ public class UCPortView extends PortView {
     private static ImageIcon portIcon = Resources.getIcon(Resources.PORTS + Resources.PORT_BLUE);
 
 
-    public UCPortView(final Object cell){
+    public UCPortView(final Object cell) {
         super(cell);
 
         RENDERER = new UCPortRenderer(portIcon);
@@ -32,7 +32,7 @@ public class UCPortView extends PortView {
 
     @Override
     public Rectangle2D getBounds() {
-		if (portIcon != null) {
+        if (portIcon != null) {
             final Point2D point = getLocation();
             final Rectangle2D bounds = new Rectangle2D.Double();
             int width = portIcon.getIconWidth();
@@ -40,7 +40,7 @@ public class UCPortView extends PortView {
             double x = 0;
             double y = 0;
 
-            if(point != null){
+            if (point != null) {
                 final Point2D pointClone = (Point2D) point.clone();
                 x = pointClone.getX() - width / 2;
                 y = pointClone.getY() - height / 2;
@@ -49,10 +49,10 @@ public class UCPortView extends PortView {
             bounds.setFrame(x, y, width, height);
 
             return bounds;
-		}
-        
-		return super.getBounds();
-	}
+        }
+
+        return super.getBounds();
+    }
 
     @Override
     public CellViewRenderer getRenderer() {
