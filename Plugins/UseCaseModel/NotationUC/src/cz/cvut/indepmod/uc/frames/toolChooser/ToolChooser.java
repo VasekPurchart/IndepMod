@@ -56,8 +56,8 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
         outlookTabbedPane.setChevronVisible(false);
 
         outlookTabbedPane.setIconAt(0, Resources.getIcon(Resources.ICONS + Resources.ELEMENT));
-        outlookTabbedPane.setIconAt(1, Resources.getIcon(Resources.ICONS + Resources.CONNECTOR));
-        outlookTabbedPane.setIconAt(2, Resources.getIcon(Resources.PORTS + Resources.PORT_BLUE));
+        //outlookTabbedPane.setIconAt(1, Resources.getIcon(Resources.ICONS + Resources.CONNECTOR));
+        //outlookTabbedPane.setIconAt(2, Resources.getIcon(Resources.PORTS + Resources.PORT_BLUE));
 
         controlButton.doClick(); // initial tool is "control"
     }
