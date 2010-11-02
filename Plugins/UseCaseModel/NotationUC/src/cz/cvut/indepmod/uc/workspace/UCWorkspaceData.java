@@ -9,7 +9,9 @@ import org.jgraph.JGraph;
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
@@ -22,6 +24,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
     private static JGraph graph;
     private static UCWorkspace workspace;
+    private static HashMap<UUID, JScrollPane> tabs = new HashMap<UUID, JScrollPane>();
 
     private final ValueModel selectedToolModel;
     private final ValueModel gridModel;
@@ -129,6 +132,10 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
     public JGraph getGraph() {
         return graph;
+    }
+
+    public static HashMap<UUID, JScrollPane> getTabs() {
+        return tabs;
     }
 
 }

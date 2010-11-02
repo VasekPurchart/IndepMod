@@ -1,6 +1,8 @@
 package cz.cvut.indepmod.uc.workspace.cell;
 
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.*;
+import cz.cvut.indepmod.uc.workspace.UCWorkspace;
+import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
 import org.apache.log4j.Logger;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphCellEditor;
@@ -44,6 +46,11 @@ public class UCGraphCellEditor extends DefaultGraphCellEditor {
 
             } else if (oldUserObject instanceof UseCaseModel) {
                 newUserObject = new UseCaseModel((UseCaseModel) oldUserObject, newName);
+                if(UCWorkspaceData.getTabs().containsKey(((UseCaseModel) newUserObject).getUuid())) {
+                    UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
+                    int index = workspace.indexOfComponent(UCWorkspaceData.getTabs().get(((UseCaseModel) newUserObject).getUuid()));
+                    workspace.setTitleAt(index, newName);
+                }
             } else if (oldUserObject instanceof ActorModel) {
                 newUserObject = new ActorModel((ActorModel) oldUserObject, newName);
             } else if (oldUserObject instanceof SystemBorderModel) {

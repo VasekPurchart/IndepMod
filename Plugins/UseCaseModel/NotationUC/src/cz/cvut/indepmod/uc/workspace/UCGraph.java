@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
@@ -93,25 +94,42 @@ public class UCGraph extends JGraph {
                         final Object object = defaultGraphCell.getUserObject();
 
                         final String name;
+                        final UUID uuid;
                         if (object instanceof UCEditableVertex) {
                             name = ((UCEditableVertex) object).getName();
                         } else {
-                            name = "Not identifiable item";
+                            name = null;
                         }
-                        UCWorkspaceData.getWorkspaceComponentSingletonStatic().add(name,
-                                new JScrollPane(
+                        if (object instanceof UCIdentifiableVertex) {
+                            uuid = ((UCIdentifiableVertex) object).getUuid();
+                        } else {
+                            uuid = null;
+                        }
+                        if (name != null && uuid != null) {
+                            UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
+
+                            if(UCWorkspaceData.getTabs().containsKey(uuid)) {
+                                int index = workspace.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
+                                workspace.setSelectedIndex(index);
+                            } else {
+                                UCTabUseCase tab = new UCTabUseCase(
                                         new UCGraphUseCase(
-                                                selectedToolModel,
-                                                getComponentPopupMenu(),
-                                                actions
-                                        )
-                                )
-                        );
+                                                        uuid,
+                                                        selectedToolModel,
+                                                        getComponentPopupMenu(),
+                                                        actions
+                                        ),
+                                        uuid);
+                                workspace.add(name, tab);
+                                UCWorkspaceData.getTabs().put(uuid, tab);
+                                int index = workspace.indexOfComponent(tab);
+                                workspace.setSelectedIndex(index);
+                            }
+                        }
                     }
                 }
             }
         };
-
 
         actions.put(UCNotationModel.DETAIL_ACTION_KEY, detailAction);
     }
