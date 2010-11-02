@@ -46,7 +46,8 @@ public class UCGraphCellEditor extends DefaultGraphCellEditor {
 
             } else if (oldUserObject instanceof UseCaseModel) {
                 newUserObject = new UseCaseModel((UseCaseModel) oldUserObject, newName);
-                if(UCWorkspaceData.getTabs().containsKey(((UseCaseModel) newUserObject).getUuid())) {
+                // tabs name change
+                if(UCWorkspaceData.getTabs().containsKey(((UCIdentifiableVertex) newUserObject).getUuid())) {
                     UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
                     int index = workspace.indexOfComponent(UCWorkspaceData.getTabs().get(((UseCaseModel) newUserObject).getUuid()));
                     workspace.setTitleAt(index, newName);
