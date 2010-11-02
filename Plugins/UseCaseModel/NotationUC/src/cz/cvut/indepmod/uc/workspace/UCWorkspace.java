@@ -15,6 +15,8 @@ import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 
 import javax.swing.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Map;
 
 /**
@@ -24,7 +26,7 @@ import java.util.Map;
  * <p/>
  * UCWorkspace encapsulate the UCGraph component.
  */
-public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener {
+public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener, MouseListener {
 
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
 
@@ -144,5 +146,20 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         }
 
         actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
+    }
+
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    public void mousePressed(MouseEvent e) {
+    }
+
+    public void mouseReleased(MouseEvent e) {
     }
 }

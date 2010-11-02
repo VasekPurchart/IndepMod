@@ -7,6 +7,7 @@ import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCEditableVertex;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
+import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.apache.log4j.Logger;
 import org.jgraph.JGraph;
@@ -108,19 +109,20 @@ public class UCGraph extends JGraph {
                         if (name != null && uuid != null) {
                             UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
 
-                            if(UCWorkspaceData.getTabs().containsKey(uuid)) {
+                            if (UCWorkspaceData.getTabs().containsKey(uuid)) {
                                 int index = workspace.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
                                 workspace.setSelectedIndex(index);
                             } else {
                                 UCTabUseCase tab = new UCTabUseCase(
                                         new UCGraphUseCase(
-                                                        uuid,
-                                                        selectedToolModel,
-                                                        getComponentPopupMenu(),
-                                                        actions
+                                                uuid,
+                                                selectedToolModel,
+                                                getComponentPopupMenu(),
+                                                actions
                                         ),
                                         uuid);
-                                workspace.add(name, tab);
+                                workspace.addTab(name, new CloseTabIcon(), tab);
+
                                 UCWorkspaceData.getTabs().put(uuid, tab);
                                 int index = workspace.indexOfComponent(tab);
                                 workspace.setSelectedIndex(index);
