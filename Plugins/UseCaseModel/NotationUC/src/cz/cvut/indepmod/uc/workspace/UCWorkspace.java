@@ -2,6 +2,9 @@ package cz.cvut.indepmod.uc.workspace;
 
 import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
+import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
+import cz.cvut.indepmod.uc.workspace.tabs.UCDefaultTab;
+import cz.cvut.indepmod.uc.workspace.tabs.UCUseCaseTab;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.workspace.UpdatableWorkspaceComponent;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
@@ -15,9 +18,8 @@ import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
@@ -26,34 +28,19 @@ import java.util.Map;
  * <p/>
  * UCWorkspace encapsulate the UCGraph component.
  */
-public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener, MouseListener {
-
+public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener {
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
-
+    private UCDiagramModel actualUCDiagramModel = null;
+    private ProjectDiagram actualProjectDiagram = null;
     private final JGraph graph;
     final Map<String, ProModAction> actions;
-
-    /**
-     * holds the actual diagram model of a UC notation diagram
-     */
-    private UCDiagramModel actualUCDiagramModel = null;
-
-    /**
-     * holds the actual project diagram of a UC notation diagram
-     */
-    private ProjectDiagram actualProjectDiaram = null;
-
     private final GraphModelListener graphModelListener;
 
-
     public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions) {
-        
         this.graph = graph;
         this.actions = actions;
-
-        /**
-         * Whenever an vertex is updated, this forces VertexInfo frame to update as well.
-         */
+        this.add(new UCDefaultTab(graph, actions));
+        
         graphModelListener = new GraphModelListener() {
             public void graphChanged(GraphModelEvent e) {
                 final Object[] selectedCells = graph.getSelectionModel().getSelectionCells();
@@ -62,18 +49,30 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
             }
         };
-        this.add(new JScrollPane(graph), 0);
     }
 
+    public void openTab(UUID uuid, String name) {
+        if (UCWorkspaceData.getTabs().containsKey(uuid)) {
+            int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
+            this.setSelectedIndex(index);
+        } else {
+            JScrollPane tab = new JScrollPane(new UCUseCaseTab());
+            this.addTab(name, new CloseTabIcon(), tab);
+
+            UCWorkspaceData.getTabs().put(uuid, tab);
+            int index = this.indexOfComponent(tab);
+            this.setSelectedIndex(index);
+        }
+    }
     /**
      * Used when the context is switched. Installs the undoMa
      */
     public void update() {
         try {
-            actualProjectDiaram = ModelerSession.getProjectService().getSelectedDiagram();
-            actualUCDiagramModel = (UCDiagramModel) actualProjectDiaram.getDiagramModel();
-            this.setTitleAt(0, actualProjectDiaram.getDisplayName());
+            actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+            actualUCDiagramModel = (UCDiagramModel) actualProjectDiagram.getDiagramModel();
             actualUCDiagramModel.getGraphLayoutCache().getModel().addGraphModelListener(graphModelListener);
+            this.setTitleAt(0, actualProjectDiagram.getDisplayName());
 
             graph.setGraphLayoutCache(actualUCDiagramModel.getGraphLayoutCache());
 
@@ -88,7 +87,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
             projectDiagram.addChangeListener(this);
             actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
 
-            // sets the frame's title            
+            // sets the frame's title
             ModelerSession.setFrameTitleText(ProjectServiceUtils.getFileSystemPathToProjectItem(
                     ModelerSession.getProjectService().getSelectedTreePath()
             ));
@@ -117,14 +116,14 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
                     "actual UC notation diagram before.");
         }
 
-        if (actualProjectDiaram != null) {
-            actualProjectDiaram.removeChangeListener(this);
+        if (actualProjectDiagram != null) {
+            actualProjectDiagram.removeChangeListener(this);
         }
 
         actualUCDiagramModel.getGraphLayoutCache().getModel().removeGraphModelListener(graphModelListener);
 
         actualUCDiagramModel = null;
-        actualProjectDiaram = null;
+        actualProjectDiagram = null;
 
         actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(false);
         actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(false);
@@ -145,20 +144,5 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         }
 
         actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
-    }
-
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
-    }
-
-    public void mousePressed(MouseEvent e) {
-    }
-
-    public void mouseReleased(MouseEvent e) {
     }
 }

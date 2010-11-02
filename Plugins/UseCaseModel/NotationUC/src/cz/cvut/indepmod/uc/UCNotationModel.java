@@ -6,7 +6,6 @@ import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooser;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
-import cz.cvut.promod.epc.frames.vertexInfo.VertexInfo;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.services.ModelerSession;
@@ -89,9 +88,6 @@ public class UCNotationModel {
         final ToolChooser toolChooser = new ToolChooser(selectedToolStatusBarItem);
         dockableFrames.add(toolChooser);
 
-        final VertexInfo vertexInfo = new VertexInfo();
-        dockableFrames.add(vertexInfo);
-
         final GraphOptions graphOptions = new GraphOptions();
         dockableFrames.add(graphOptions);
 
@@ -109,7 +105,6 @@ public class UCNotationModel {
         );
 
         // frames event handling
-        vertexInfo.initCellSelectionListener(workspace.getGraph());
         graphOptions.initEventHandling(actions);
         initPopupMenu();
     }

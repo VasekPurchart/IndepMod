@@ -2,17 +2,17 @@ package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 import com.jgraph.components.labels.CellConstants;
 import com.jgraph.components.labels.MultiLineVertexRenderer;
-import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.resources.Resources;
 import org.jgraph.graph.GraphConstants;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
+import java.util.List;
 
 /**
  * User: Viktor Bohuslav Bohdal, bohdavik@fel.cvut.cz
@@ -20,6 +20,7 @@ import java.util.UUID;
  */
 public class UseCaseModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.uc");
+    private List<ScenarioModel> scenarios = new ArrayList<ScenarioModel>();
 
     public static final int DEFAULT_INSET = 6;
 
