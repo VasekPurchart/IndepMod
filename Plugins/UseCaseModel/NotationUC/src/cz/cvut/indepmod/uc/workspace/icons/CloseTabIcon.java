@@ -1,12 +1,7 @@
 package cz.cvut.indepmod.uc.workspace.icons;
 
-import cz.cvut.indepmod.uc.workspace.UCWorkspace;
-import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  * Created by IntelliJ IDEA.

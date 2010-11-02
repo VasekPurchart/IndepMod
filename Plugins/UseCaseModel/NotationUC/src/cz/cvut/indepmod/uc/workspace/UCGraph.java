@@ -113,7 +113,7 @@ public class UCGraph extends JGraph {
                                 int index = workspace.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
                                 workspace.setSelectedIndex(index);
                             } else {
-                                UCTabUseCase tab = new UCTabUseCase(
+                                UCWorkspaceTabUseCase workspaceTab = new UCWorkspaceTabUseCase(
                                         new UCGraphUseCase(
                                                 uuid,
                                                 selectedToolModel,
@@ -121,10 +121,10 @@ public class UCGraph extends JGraph {
                                                 actions
                                         ),
                                         uuid);
-                                workspace.addTab(name, new CloseTabIcon(), tab);
+                                workspace.addTab(name, new CloseTabIcon(), workspaceTab);
 
-                                UCWorkspaceData.getTabs().put(uuid, tab);
-                                int index = workspace.indexOfComponent(tab);
+                                UCWorkspaceData.getTabs().put(uuid, workspaceTab);
+                                int index = workspace.indexOfComponent(workspaceTab);
                                 workspace.setSelectedIndex(index);
                             }
                         }

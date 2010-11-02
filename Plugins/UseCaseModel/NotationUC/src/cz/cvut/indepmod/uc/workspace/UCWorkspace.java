@@ -47,8 +47,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
 
     public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions) {
-        // super(graph);
-
+        
         this.graph = graph;
         this.actions = actions;
 
