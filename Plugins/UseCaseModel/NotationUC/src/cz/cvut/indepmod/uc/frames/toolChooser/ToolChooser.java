@@ -221,7 +221,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
     }
 
     public InitialState getInitialState() {
-        return InitialState.HIDDEN;
+        return InitialState.OPENED;
     }
 
     public String getDockableFrameTitle() {
