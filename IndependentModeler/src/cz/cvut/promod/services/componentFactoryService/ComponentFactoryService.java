@@ -28,7 +28,7 @@ import cz.cvut.promod.services.Service;
 public interface ComponentFactoryService extends Service {
 
     /**
-     * Defines the recommended form border. Usually for usage in JGoodies.Borders factory.
+     * Defines the recommended form borders. Usually for usage in JGoodies.Borders factory.
      * @see com.jgoodies.forms.factories.Borders
      */
     public static final String DEFAULT_FORM_BORDER = "5dlu, 5dlu, 5dlu, 5dlu";    

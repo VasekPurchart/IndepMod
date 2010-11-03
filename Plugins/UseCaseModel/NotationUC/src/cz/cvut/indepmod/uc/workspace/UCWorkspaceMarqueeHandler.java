@@ -59,7 +59,6 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
 
         currentPort = graph.getSourcePortAt(e.getPoint());
         return (currentPort != null && graph.isPortsVisible()) || super.isForceMarqueeEvent(e);
-
     }
 
     /**
@@ -68,6 +67,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mousePressed(final MouseEvent e) {
+
         if(SwingUtilities.isRightMouseButton(e)){
             // show the popup menu
             popupMenu.show(graph, e.getX(), e.getY());
@@ -170,7 +170,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         point = null;
 
         super.mouseReleased(e);
-
+                      
     }
 
     /**

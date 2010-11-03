@@ -1,11 +1,10 @@
 package cz.cvut.indepmod.uc.frames.vertexInfo;
 
+import com.jidesoft.grid.PropertyTable;
 import cz.cvut.promod.services.ModelerSession;
 
 import javax.swing.*;
 import java.awt.*;
-
-import com.jidesoft.grid.PropertyTable;
 
 /**
  * UseCase plugin - SI2/3 school project

@@ -22,8 +22,9 @@ public class EdgeModel extends UCEditableVertex {
         this.edgeType = edgeType;
     }
 
-    public EdgeModel(final EdgeModel edgeModel, final String newName){
+    public EdgeModel(final EdgeModel edgeModel, String newName){
         this.edgeType = edgeModel.getEdgeType();
+
         setName(newName);
         setNote(edgeModel.getNote());
     }

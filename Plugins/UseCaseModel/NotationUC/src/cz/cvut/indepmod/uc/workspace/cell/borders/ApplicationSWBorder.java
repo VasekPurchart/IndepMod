@@ -1,4 +1,4 @@
-package cz.cvut.promod.epc.workspace.cell.borders;
+package cz.cvut.indepmod.uc.workspace.cell.borders;
 
 import javax.swing.border.AbstractBorder;
 import java.awt.*;
@@ -8,18 +8,27 @@ import java.awt.*;
  * User: Petr Zverina, petr.zverina@gmail.com
  * Date: 19:06:36, 7.12.2009
  *
- * The special borders for Machine epc element.
+ * The special borders for Application SW uc element.
  */
-public class MachineBorder extends AbstractBorder {
+public class ApplicationSWBorder extends AbstractBorder {
 
-    private final int VERTICAL_LINE_OFFSET = 11;
+    private final int FIRST_VERTICAL_LINE_OFFSET = 7;
 
     private final Insets INSETS = new Insets(1,9,1,9);
 
+    private static final Stroke STROKE = new BasicStroke(
+            1,
+            BasicStroke.CAP_BUTT,
+            BasicStroke.JOIN_BEVEL,
+            0,
+            new float[] {3},
+            0
+    );
+
     private Color lineColor;
 
-
-    public MachineBorder(final Color color) {
+    
+    public ApplicationSWBorder(final Color color) {
         lineColor = color;
     }
 
@@ -37,12 +46,16 @@ public class MachineBorder extends AbstractBorder {
 
         final Graphics2D g2d = (Graphics2D) g;
 
-        final int x2 = width - (VERTICAL_LINE_OFFSET);
+        g2d.setStroke(STROKE);
 
+        final int x1 = x + FIRST_VERTICAL_LINE_OFFSET;
+        final int x2 = width - (FIRST_VERTICAL_LINE_OFFSET);
+
+        g2d.drawLine(x1, 0, x1, height);
         g2d.drawLine(x2, 0, x2, height);
-        g2d.drawOval(x2+1, 0, VERTICAL_LINE_OFFSET-3, VERTICAL_LINE_OFFSET-4);
     }
 
+    @Override
     public Insets getBorderInsets(final Component component) {
         return INSETS;
     }
