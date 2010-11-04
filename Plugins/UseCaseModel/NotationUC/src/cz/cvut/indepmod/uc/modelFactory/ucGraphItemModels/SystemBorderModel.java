@@ -59,7 +59,7 @@ public class SystemBorderModel extends UCEditableVertex {
         GraphConstants.setVerticalAlignment(map, SwingConstants.TOP);
         GraphConstants.setMoveable(map, true);
         GraphConstants.setEditable(map, true);
-        GraphConstants.setConnectable(map, true);
+        GraphConstants.setConnectable(map, false);
         GraphConstants.setSelectable(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
         GraphConstants.setDisconnectable(map, false);
