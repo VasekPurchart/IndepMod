@@ -1,6 +1,7 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphModel;
 
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
