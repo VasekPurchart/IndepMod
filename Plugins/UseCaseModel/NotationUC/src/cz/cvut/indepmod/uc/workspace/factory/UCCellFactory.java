@@ -48,7 +48,7 @@ public class UCCellFactory {
      */
     public static DefaultGraphCell createVertex(final Point2D point, final ToolChooserModel.Tool tool) {
         final DefaultGraphCell cell = new DefaultGraphCell();
-
+        
         switch (tool) {
             case ADD_USE_CASE:
                 cell.setUserObject(new UseCaseModel(UUID.randomUUID()));

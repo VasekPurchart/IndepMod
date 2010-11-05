@@ -50,7 +50,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         this.selectedToolModel = selectedToolModel;
 
         graph = new UCGraph(selectedToolModel, popupMenu, actions);
-        workspace = new UCWorkspace(graph, actions);
+        workspace = new UCWorkspace(graph, actions, selectedToolModel, popupMenu);
 
         this.gridModel = gridModel;
         this.lockModel = lockModel;

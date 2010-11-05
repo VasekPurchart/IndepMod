@@ -32,8 +32,6 @@ public class UCDefaultTab extends JScrollPane {
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
     private final JGraph graph;
     final Map<String, ProModAction> actions;
-    private UCDiagramModel actualUCDiagramModel = null;
-    private ProjectDiagram actualProjectDiagram = null;
 
     public UCDefaultTab(final JGraph graph, final Map<String, ProModAction> actions) {
         super(graph);

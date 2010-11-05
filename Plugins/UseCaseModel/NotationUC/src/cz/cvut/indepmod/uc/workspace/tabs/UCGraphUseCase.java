@@ -8,7 +8,7 @@ import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.UCWorkspace;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
-import cz.cvut.indepmod.uc.workspace.UCWorkspaceMarqueeHandler;
+import cz.cvut.indepmod.uc.workspace.UCWorkspaceMarqueeHandlerUseCase;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.apache.log4j.Logger;
@@ -33,15 +33,19 @@ import java.util.UUID;
  * <p/>
  * Implementation of JGraph for UC notation.
  */
-public class UCGraph extends JGraph {
-    private static final Logger LOG = Logger.getLogger(UCGraph.class);
+public class UCGraphUseCase extends JGraph {
+
+    private static final Logger LOG = Logger.getLogger(UCGraphUseCase.class);
+
     private static final int GET_PORTVIEW_TOLERANCE = 2;
+
     private final ValueModel selectedToolModel;
+
     private ProModAction removeAction; //never change this action once has been instantiated
 
-    public UCGraph(final ValueModel selectedToolModel,
-                   final JPopupMenu popupMenu,
-                   Map<String, ProModAction> actions) {
+    public UCGraphUseCase(final ValueModel selectedToolModel,
+                          final JPopupMenu popupMenu,
+                          Map<String, ProModAction> actions) {
 
         this.selectedToolModel = selectedToolModel;
 
@@ -50,7 +54,7 @@ public class UCGraph extends JGraph {
 
         initActions(actions);
 
-        setMarqueeHandler(new UCWorkspaceMarqueeHandler(this, selectedToolModel, popupMenu));
+        setMarqueeHandler(new UCWorkspaceMarqueeHandlerUseCase(this, selectedToolModel, popupMenu));
     }
 
     protected void processKeyEvent(KeyEvent e) {
@@ -74,6 +78,7 @@ public class UCGraph extends JGraph {
 
         removeAction = new ProModAction(Resources.getResources().getString(UCNotationModel.DELETE_ACTION_KEY), null, null) {
             public void actionPerformed(ActionEvent event) {
+                LOG.info("tu som");
                 if (!isSelectionEmpty()) {
                     Object[] selectedCells = getSelectionCells();
                     logDeleteInfo(selectedCells);
@@ -178,8 +183,8 @@ public class UCGraph extends JGraph {
      */
     public void insert(final Point2D point) {
         DefaultGraphCell vertex = createVertex(point);
-        getGraphLayoutCache().insert(vertex);
 
+        getGraphLayoutCache().insert(vertex);
         selectedToolModel.setValue(ToolChooserModel.Tool.CONTROL);
     }
 
@@ -211,7 +216,6 @@ public class UCGraph extends JGraph {
     private DefaultGraphCell createVertex(final Point2D point) {
         final ToolChooserModel.Tool tool = (ToolChooserModel.Tool) selectedToolModel.getValue();
         final Point2D snappedPoint = snap((Point2D) point.clone());
-
         return UCCellFactory.createVertex(snappedPoint, tool);
     }
 

@@ -188,7 +188,7 @@ public class UCNotationModel {
         final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
         popupMenu.add(deleteAction);
-        
+
         final Action detailAction = getAction(DETAIL_ACTION_KEY);
         detailAction.setEnabled(true);
         popupMenu.add(detailAction);
