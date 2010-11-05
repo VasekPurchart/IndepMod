@@ -20,8 +20,6 @@ import javax.swing.*;
 public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     private final String BASICS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.basics");
-    private final String OPERATORS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.operators");
-    private final String CONN_LABEL = Resources.getResources().getString("uc.frame.tools.cat.flows");
 
     protected final JToggleButton addControlFlowLineButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.CONTROL_FLOW_LINE_TOOL_RES, null
@@ -65,51 +63,15 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
 
     private void initTabPane() {
         addTab(BASICS_LABEL, createBasicsPanel());
-        //addTab(OPERATORS_LABEL, createOperatorsPanel());
-        //addTab(CONN_LABEL, createConnectionsPanel());
     }
-
-
-    /**
-     * Creates a tab with connections/flows.
-     *
-     * @return an instance of JPanel holding connections/flows controls
-     */
-   /* private JPanel createConnectionsPanel() {
-        JPanel panel = ModelerSession.getComponentFactoryService().createPanel();
-        panel.setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
-
-        panel.setLayout(new FormLayout(
-                "pref:grow",
-                "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
-        ));
-        final CellConstraints cellConstraints = new CellConstraints();
-        panel.add(addControlFlowLineButton, cellConstraints.xy(1,1));
-        panel.add(addIncludeFlowLineButton, cellConstraints.xy(1,3));
-
-        return panel;
-    }*/
-
-    private JPanel createOperatorsPanel() {
-        JPanel panel = ModelerSession.getComponentFactoryService().createPanel();
-        panel.setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
-
-        panel.setLayout(new FormLayout(
-                "pref:grow",
-                "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
-        ));
-        final CellConstraints cellConstraints = new CellConstraints();
-
-        return panel;
-    }
-
+    
     private JPanel createBasicsPanel() {
         JPanel panel = ModelerSession.getComponentFactoryService().createPanel();
         panel.setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
         
         panel.setLayout(new FormLayout(
                 "pref:grow",
-                "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
+                "pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
         ));
         final CellConstraints cellConstraints = new CellConstraints();
         panel.add(addActorButton, cellConstraints.xy(1,1));
@@ -119,8 +81,9 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
         panel.add(addSelectMssButton, cellConstraints.xy(1,9));
         panel.add(addStepButton, cellConstraints.xy(1,11));
         panel.add(addIncludeUcButton, cellConstraints.xy(1,13));
-        panel.add(addControlFlowLineButton, cellConstraints.xy(1,15));
-        panel.add(addIncludeFlowLineButton, cellConstraints.xy(1,17));
+        panel.add(new JLabel("____________________________________________"), cellConstraints.xy(1,14));
+        panel.add(addControlFlowLineButton, cellConstraints.xy(1,16));
+        panel.add(addIncludeFlowLineButton, cellConstraints.xy(1,18));
 
         return panel;
     }
