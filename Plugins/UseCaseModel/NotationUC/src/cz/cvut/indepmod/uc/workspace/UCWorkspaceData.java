@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.workspace.tabs.UCGraph;
+import cz.cvut.indepmod.uc.workspace.tabs.UCTabParent;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.jgraph.JGraph;
@@ -25,7 +26,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
     private static JGraph graph;
     private static UCWorkspace workspace;
-    private static HashMap<UUID, JScrollPane> tabs = new HashMap<UUID, JScrollPane>();
+    private static HashMap<UUID, UCTabParent> tabs = new HashMap<UUID, UCTabParent>();
 
     private final ValueModel selectedToolModel;
     private final ValueModel gridModel;
@@ -135,7 +136,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         return graph;
     }
 
-    public static HashMap<UUID, JScrollPane> getTabs() {
+    public static HashMap<UUID, UCTabParent> getTabs() {
         return tabs;
     }
 

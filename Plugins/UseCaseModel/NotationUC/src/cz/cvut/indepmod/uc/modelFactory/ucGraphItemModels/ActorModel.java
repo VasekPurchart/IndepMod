@@ -30,16 +30,12 @@ public class ActorModel extends UCEditableVertex {
     public ActorModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
-        
-        model = factory.createEmptyUseCaseModel();
     }
 
     public ActorModel(final ActorModel actorModel, final String name){
         setName(name);
         uuid = actorModel.getUuid();
         setNote(actorModel.getNote());
-        
-        model = factory.createEmptyUseCaseModel();
     }
 
     public DiagramModel getModel() {

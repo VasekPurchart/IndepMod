@@ -1,22 +1,59 @@
 package cz.cvut.indepmod.uc.workspace.tabs;
 
+import cz.cvut.indepmod.uc.UCNotationModel;
+import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
+import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
-import org.apache.log4j.Logger;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
+import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChange;
 import org.jgraph.JGraph;
+import org.jgraph.event.GraphModelEvent;
+import org.jgraph.event.GraphModelListener;
 
-import javax.swing.*;
 import java.util.Map;
+import java.util.UUID;
 
-public class UCUseCaseTab extends JScrollPane {
-    private static final Logger LOG = Logger.getLogger(UCGraph.class);
-    private static final int GET_PORTVIEW_TOLERANCE = 2;
-    final Map<String, ProModAction> actions;
-    private final JGraph graph;
+public class UCUseCaseTab extends UCTabParent {
+    private UCDiagramModel actualUCDiagramModel = null;
+    private ProjectDiagram actualProjectDiagram = null;
+    private final GraphModelListener graphModelListener;
+    private UUID uuid;
 
-    public UCUseCaseTab(final JGraph graph, final Map<String, ProModAction> actions) {
-        super(graph);
-        this.graph = graph;
-        this.actions = actions;
+    public UCUseCaseTab(final JGraph graph, final Map<String, ProModAction> actions, UUID uuid) {
+        super(graph, actions);
+        this.uuid = uuid;
+
+        graphModelListener = new GraphModelListener() {
+            public void graphChanged(GraphModelEvent e) {
+                final Object[] selectedCells = graph.getSelectionModel().getSelectionCells();
+                graph.getSelectionModel().clearSelection();
+                graph.getSelectionModel().setSelectionCells(selectedCells);
+
+            }
+        };
     }
 
+    public void changePerformed(final ProjectDiagramChange change) {
+        if (ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
+                && change.getChangeValue() instanceof Boolean
+                && Boolean.FALSE.equals(change.getChangeValue())) {
+
+            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
+
+            return;
+        }
+
+        actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
+    }
+
+    /**
+     * Used when the context is switched. Installs the undoMa
+     */
+    public void update() {
+        super.update();
+
+        actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+        actualUCDiagramModel = (UCDiagramModel) actualProjectDiagram.getDiagramModel();
+        graph.setGraphLayoutCache(actualUCDiagramModel.getGraphLayoutCacheUseCase(this.uuid));
+    }
 }

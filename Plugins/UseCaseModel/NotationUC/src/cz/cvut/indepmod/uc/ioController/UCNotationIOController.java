@@ -1,7 +1,6 @@
 package cz.cvut.indepmod.uc.ioController;
 
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
-import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramUseCaseModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
@@ -164,8 +163,7 @@ public class UCNotationIOController implements NotationLocalIOController {
 
         // diagram model
         encoder.setPersistenceDelegate(UCDiagramModel.class, new DefaultPersistenceDelegate(new String[] {LAYOUT_CACHE_PROPERTY}));
-        encoder.setPersistenceDelegate(UCDiagramUseCaseModel.class, new DefaultPersistenceDelegate(new String[] {LAYOUT_CACHE_PROPERTY}));
-
+      
         // vertex
         encoder.setPersistenceDelegate(UCVertexView.class, new DefaultPersistenceDelegate(new String[] {CELL_PROPERTY}));
         encoder.setPersistenceDelegate(DefaultGraphCell.class, new DefaultPersistenceDelegate( new String[] {USER_OBJECT_PROPERTY}));

@@ -2,10 +2,10 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
-import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
 import cz.cvut.indepmod.uc.workspace.tabs.UCDefaultTab;
 import cz.cvut.indepmod.uc.workspace.tabs.UCGraphUseCase;
+import cz.cvut.indepmod.uc.workspace.tabs.UCTabParent;
 import cz.cvut.indepmod.uc.workspace.tabs.UCUseCaseTab;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.workspace.UpdatableWorkspaceComponent;
 import cz.cvut.promod.services.ModelerSession;
@@ -13,13 +13,14 @@ import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChange;
 import cz.cvut.promod.services.projectService.treeProjectNode.listener.ProjectDiagramListener;
-import cz.cvut.promod.services.projectService.utils.ProjectServiceUtils;
 import org.apache.log4j.Logger;
 import org.jgraph.JGraph;
 import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,19 +38,21 @@ import java.util.UUID;
  */
 public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener, MouseListener {
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
-    private UCDiagramModel actualUCDiagramModel = null;
-    private ProjectDiagram actualProjectDiagram = null;
-    private final JGraph graph;
     private Map<UUID, JGraph> tabGraphs = new HashMap<UUID, JGraph>();
+    protected ProjectDiagram actualProjectDiagram = null;
+
+    private final JGraph graph;
     final Map<String, ProModAction> actions;
     private final GraphModelListener graphModelListener;
     private ValueModel selectedToolModel;
     private JPopupMenu popupMenu;
+    private int previousTab = 0;
 
     public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions) {
         this.graph = graph;
         this.actions = actions;
-        this.add(new UCDefaultTab(graph, actions));
+        UCTabParent defaultTab = new UCDefaultTab(graph, actions);
+        this.add(defaultTab);
         addMouseListener(this);
 
         graphModelListener = new GraphModelListener() {
@@ -60,6 +63,15 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
             }
         };
+
+        this.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                UCWorkspace pane = (UCWorkspace) e.getSource();
+                ((UCTabParent) pane.getComponent(pane.getSelectedIndex())).update();
+                ((UCTabParent) pane.getComponent(pane.getPreviousTab())).over();
+                pane.setPreviousTab();
+            }
+        });
     }
 
     public UCWorkspace(final JGraph graph,
@@ -80,7 +92,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
                 tabGraphs.put(uuid, new UCGraphUseCase(this.selectedToolModel, this.popupMenu, actions));
             }
             JGraph tabGraph = tabGraphs.get(uuid);
-            JScrollPane tab = new JScrollPane(new UCUseCaseTab(tabGraph, actions));
+            UCTabParent tab = (new UCUseCaseTab(tabGraph, actions, uuid));
             this.addTab(name, new CloseTabIcon(), tab);
 
             UCWorkspaceData.getTabs().put(uuid, tab);
@@ -93,38 +105,9 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
      * Used when the context is switched. Installs the undoMa
      */
     public void update() {
-        try {
-            actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
-            actualUCDiagramModel = (UCDiagramModel) actualProjectDiagram.getDiagramModel();
-            actualUCDiagramModel.getGraphLayoutCache().getModel().addGraphModelListener(graphModelListener);
-            this.setTitleAt(0, actualProjectDiagram.getDisplayName());
-
-            graph.setGraphLayoutCache(actualUCDiagramModel.getGraphLayoutCache());
-
-            actualUCDiagramModel.installUndoActions(
-                    actions.get(UCNotationModel.UNDO_ACTION_KEY), actions.get(UCNotationModel.REDO_ACTION_KEY)
-            );
-
-            actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canUndo());
-            actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canRedo());
-
-            final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
-            projectDiagram.addChangeListener(this);
-            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
-
-            // sets the frame's title
-            ModelerSession.setFrameTitleText(ProjectServiceUtils.getFileSystemPathToProjectItem(
-                    ModelerSession.getProjectService().getSelectedTreePath()
-            ));
-
-            // forces all ports are repainted, even when the graph has just been loaded
-            graph.getGraphLayoutCache().update();
-
-        } catch (ClassCastException exception) {
-            LOG.error("Unable to cast selected diagram model to UCDiagramModel class.", exception);
-        } catch (Exception exception) {
-            LOG.error("An error has occurred during context switch.", exception);
-        }
+        actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+        this.setTitleAt(0, actualProjectDiagram.getDisplayName());
+        ((UCTabParent) this.getComponent(0)).update();
     }
 
     /**
@@ -134,28 +117,6 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
      * the actualUCDiagramModel variable null (actual UC notation diagram is none).
      */
     public void over() {
-        if (actualUCDiagramModel != null) {
-            actualUCDiagramModel.uninstallUndoActions();
-        } else {
-            LOG.error("over() method of UC notation workspace has been invoked, but there hasn't been set any" +
-                    "actual UC notation diagram before.");
-        }
-
-        if (actualProjectDiagram != null) {
-            actualProjectDiagram.removeChangeListener(this);
-        }
-
-        actualUCDiagramModel.getGraphLayoutCache().getModel().removeGraphModelListener(graphModelListener);
-
-        actualUCDiagramModel = null;
-        actualProjectDiagram = null;
-
-        actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(false);
-        actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(false);
-
-        ModelerSession.clearFrameTitleText();
-
-        graph.getSelectionModel().clearSelection();
     }
 
     public void changePerformed(final ProjectDiagramChange change) {
@@ -174,7 +135,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     public void mouseClicked(MouseEvent e) {
         int tabNumber = getUI().tabForCoordinate(this, e.getX(), e.getY());
         if (tabNumber < 0) return;
-        if(!(getIconAt(tabNumber) instanceof CloseTabIcon)) {
+        if (!(getIconAt(tabNumber) instanceof CloseTabIcon)) {
             return;
         }
         Rectangle rect = ((CloseTabIcon) getIconAt(tabNumber)).getBounds();
@@ -183,10 +144,10 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
             this.getComponent(tabNumber);
 
             Iterator iterator = (UCWorkspaceData.getTabs().keySet()).iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 UUID key = (UUID) iterator.next();
                 JScrollPane tab = UCWorkspaceData.getTabs().get(key);
-                if(tab.equals(this.getComponent(tabNumber))) {
+                if (tab.equals(this.getComponent(tabNumber))) {
                     LOG.info("Removing tab: " + key);
                     UCWorkspaceData.getTabs().remove(key);
                 }
@@ -196,19 +157,27 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     }
 
     public void mousePressed(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        return;
     }
 
     public void mouseReleased(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        return;
     }
 
     public void mouseEntered(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        return;
     }
 
     public void mouseExited(MouseEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        return;
+    }
+
+    public int getPreviousTab() {
+        return this.previousTab;
+    }
+
+    public void setPreviousTab() {
+        this.previousTab = this.getSelectedIndex();
     }
 
 }
