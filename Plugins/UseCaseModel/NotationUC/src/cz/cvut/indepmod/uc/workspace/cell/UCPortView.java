@@ -1,7 +1,7 @@
 package cz.cvut.indepmod.uc.workspace.cell;
 
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.resources.Resources;
-import cz.cvut.indepmod.uc.workspace.cell.UCPortRenderer;
 import org.jgraph.graph.CellViewRenderer;
 import org.jgraph.graph.PortRenderer;
 import org.jgraph.graph.PortView;
@@ -22,10 +22,17 @@ public class UCPortView extends PortView {
     private static PortRenderer RENDERER = null;
 
     private static ImageIcon portIcon = Resources.getIcon(Resources.PORTS + Resources.PORT_BLUE);
-
+    private boolean isSystemBorder;
 
     public UCPortView(final Object cell){
         super(cell);
+
+        org.jgraph.graph.DefaultPort model = (org.jgraph.graph.DefaultPort) cell;
+        org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
+        if(graphCell.getUserObject() instanceof SystemBorderModel)
+            isSystemBorder = true;
+        else
+            isSystemBorder = false;
 
         RENDERER = new UCPortRenderer(portIcon);
     }
@@ -46,7 +53,14 @@ public class UCPortView extends PortView {
                 y = pointClone.getY() - height / 2;
             }
 
-            bounds.setFrame(x, y, width, height);
+
+            if(isSystemBorder)
+            {
+                 // out of universe
+                  bounds.setFrame(-100, -100, 1, 1);
+            } else {
+                  bounds.setFrame(x, y, width, height);
+            }
 
             return bounds;
 		}

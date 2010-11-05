@@ -1,9 +1,6 @@
 package cz.cvut.indepmod.uc.workspace.cell;
 
-import cz.cvut.indepmod.uc.workspace.cell.UCPortView;
-import cz.cvut.indepmod.uc.workspace.cell.UCVertexView;
 import org.jgraph.graph.DefaultCellViewFactory;
-import org.jgraph.graph.EdgeView;
 import org.jgraph.graph.PortView;
 import org.jgraph.graph.VertexView;
 

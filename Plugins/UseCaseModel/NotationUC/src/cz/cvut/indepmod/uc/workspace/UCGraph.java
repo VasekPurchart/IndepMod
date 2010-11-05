@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
@@ -120,6 +121,15 @@ public class UCGraph extends JGraph {
         PortView result;
         try{
             result = getPortViewAt(point.getX(), point.getY(), GET_PORTVIEW_TOLERANCE);
+
+            // System Border cant be connected
+            if(result != null)
+            {
+                org.jgraph.graph.DefaultPort model = (org.jgraph.graph.DefaultPort) result.getCell();
+                org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
+                if(graphCell.getUserObject() instanceof SystemBorderModel)
+                    result = null;
+            }
         }
         catch (Exception exception){
             LOG.error("Couldn't locate the portview.");
@@ -132,7 +142,19 @@ public class UCGraph extends JGraph {
     }
 
     public PortView getTargetPortAt(final Point2D point) {
-        return getPortViewAt(point.getX(), point.getY()); // default port can be used
+
+        PortView result = getPortViewAt(point.getX(), point.getY());
+
+        // System Border cant be connected
+        if(result != null)
+        {
+            org.jgraph.graph.DefaultPort model = (org.jgraph.graph.DefaultPort) result.getCell();
+            org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
+            if(graphCell.getUserObject() instanceof SystemBorderModel)
+                result = null;
+        }
+        
+        return result;
     }
 
     /**
