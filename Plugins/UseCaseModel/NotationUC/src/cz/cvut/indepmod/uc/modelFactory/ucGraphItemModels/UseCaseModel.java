@@ -8,10 +8,7 @@ import org.jgraph.graph.GraphConstants;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -56,7 +53,7 @@ public class UseCaseModel extends UCEditableVertex {
 
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 200, 20)); // velikost 200*20
         // GraphConstants.setResize(map, true); !!! Toto je nutne odebrat, aby se velikost zmenila
-        GraphConstants.setBorderColor(map, Color.black);
+        GraphConstants.setBorderColor(map, Color.red);
         GraphConstants.setOpaque(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
 

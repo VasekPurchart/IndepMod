@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class UCUseCaseTab extends UCTabParent {
-    private UCDiagramModel actualUCDiagramModel = null;
-    private ProjectDiagram actualProjectDiagram = null;
     private final GraphModelListener graphModelListener;
     private UUID uuid;
 
@@ -52,8 +50,8 @@ public class UCUseCaseTab extends UCTabParent {
     public void update() {
         super.update();
 
-        actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
-        actualUCDiagramModel = (UCDiagramModel) actualProjectDiagram.getDiagramModel();
+        ProjectDiagram actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+        UCDiagramModel actualUCDiagramModel = (UCDiagramModel) actualProjectDiagram.getDiagramModel();
         graph.setGraphLayoutCache(actualUCDiagramModel.getGraphLayoutCacheUseCase(this.uuid));
     }
 }

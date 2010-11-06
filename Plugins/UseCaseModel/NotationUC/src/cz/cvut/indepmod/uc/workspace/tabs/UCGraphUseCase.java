@@ -184,6 +184,7 @@ public class UCGraphUseCase extends JGraph {
     public void insert(final Point2D point) {
         DefaultGraphCell vertex = createVertex(point);
 
+        LOG.debug(getGraphLayoutCache());
         getGraphLayoutCache().insert(vertex);
         selectedToolModel.setValue(ToolChooserModel.Tool.CONTROL);
     }

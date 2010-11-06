@@ -1,7 +1,6 @@
 package cz.cvut.indepmod.uc.workspace.tabs;
 
 import cz.cvut.indepmod.uc.UCNotationModel;
-import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChange;
 import org.jgraph.JGraph;
@@ -18,7 +17,6 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class UCDefaultTab extends UCTabParent {
-    private UCDiagramModel actualUCDiagramModel = null;
     private final GraphModelListener graphModelListener;
 
     public UCDefaultTab(final JGraph graph, final Map<String, ProModAction> actions) {
