@@ -59,7 +59,7 @@ public class ScenarioModel extends UCEditableVertex {
          GraphConstants.setVerticalAlignment(map, SwingConstants.CENTER);
         GraphConstants.setMoveable(map, true);
         GraphConstants.setResize(map, false);
-        GraphConstants.setEditable(map, false);
+        GraphConstants.setEditable(map, true);
         GraphConstants.setConnectable(map, false);
         GraphConstants.setSelectable(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
