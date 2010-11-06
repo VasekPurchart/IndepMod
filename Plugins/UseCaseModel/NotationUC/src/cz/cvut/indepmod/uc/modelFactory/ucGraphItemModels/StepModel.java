@@ -4,6 +4,7 @@ import com.jgraph.components.labels.CellConstants;
 import com.jgraph.components.labels.MultiLineVertexRenderer;
 import org.jgraph.graph.GraphConstants;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -13,15 +14,15 @@ import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Alena Varko?ková
+ * User: Alena Varkockova
  * Date: 2.11.2010
  * Time: 15:00:23
  * To change this template use File | Settings | File Templates.
  */
 public class StepModel extends UCEditableVertex {
-    private static final String DEFAULT_LABEL = "STEP";// Resources.getResources().getString("uc.vertex.actor");
+    private static final String DEFAULT_LABEL = "Step";// Resources.getResources().getString("uc.vertex.actor");
     private final UUID uuid;
-    public static final int DEFAULT_INSET = 6;
+    public static final int DEFAULT_INSET = 1;
 
     public StepModel(UUID uuid) {
         this.uuid = uuid;
@@ -34,6 +35,11 @@ public class StepModel extends UCEditableVertex {
         setNote(stepModel.getNote());
     }
 
+    @Override
+    public String toString(){
+        return name;
+    }
+
      /**
     /**
      * Initialize new vertex attributes.
@@ -44,13 +50,20 @@ public class StepModel extends UCEditableVertex {
     public static Map installAttributes(final Point2D point) {
         final Map map = new Hashtable();
 
-        map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);
+        map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_ROUNDED);
 
-        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 200, 20)); // velikost 200*20
-        // GraphConstants.setResize(map, true); !!! Toto je nutne odebrat, aby se velikost zmenila
+        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 300, 50)); // velikost 200*20
         GraphConstants.setBorderColor(map, Color.black);
         GraphConstants.setOpaque(map, true);
+         GraphConstants.setVerticalAlignment(map, SwingConstants.CENTER);
+        GraphConstants.setMoveable(map, true);
+        GraphConstants.setResize(map, false);
+        GraphConstants.setEditable(map, false);
+        GraphConstants.setConnectable(map, false);
+        GraphConstants.setSelectable(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
+        GraphConstants.setDisconnectable(map, false);
+        GraphConstants.setBendable(map, false);
 
         return map;
     }
