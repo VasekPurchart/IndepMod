@@ -26,6 +26,7 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
      */
 
     public static final int SHAPE_UC_ACTOR = -1;
+    public static final int SHAPE_UC_SCENARIO = -2;
 
     @Override
     protected void paintBackground(Graphics g) {
@@ -57,6 +58,15 @@ public class UCVertexRenderer extends MultiLineVertexRenderer{
             */
             
             g.setColor(originColor);
+        } else if(shape == SHAPE_UC_SCENARIO){
+           final Color originColor = g.getColor();
+           int scenarioH = 300, scenarioW = 50;
+
+           int borderH = (scenarioH < height) ? (height - scenarioH) / 2 : 0;
+            int borderW = (scenarioW < width) ? (width - scenarioW) : 0;
+            g.setColor(getForeground());
+
+            g.drawArc(borderW / 2 + scenarioW / 4, 0 , scenarioW / 2, scenarioH / 4, 0, 360);
         } else {
             super.paintBackground(g);
         }
