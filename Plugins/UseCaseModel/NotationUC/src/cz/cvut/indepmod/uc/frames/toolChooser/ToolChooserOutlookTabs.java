@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * The OutlookTabbedPane implementation for the View component of the ToolChooser dockable frame.
  */
-public class ToolChooserOutlookTabs extends OutlookTabbedPane{
+public class ToolChooserOutlookTabs extends JPanel{
 
     private final String BASICS_LABEL = Resources.getResources().getString("uc.frame.tools.cat.basics");
 
@@ -62,7 +62,7 @@ public class ToolChooserOutlookTabs extends OutlookTabbedPane{
     }
 
     private void initTabPane() {
-        addTab(BASICS_LABEL, createBasicsPanel());
+        createBasicsPanel();
     }
     
     private JPanel createBasicsPanel() {
