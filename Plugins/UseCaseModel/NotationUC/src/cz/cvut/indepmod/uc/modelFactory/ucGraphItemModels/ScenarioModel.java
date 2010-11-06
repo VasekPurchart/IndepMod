@@ -15,7 +15,7 @@ import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Viktor
+ * User: Alena Varkockova
  * Date: 2.11.2010
  * Time: 15:00:23
  * To change this template use File | Settings | File Templates.
