@@ -22,7 +22,7 @@ import java.util.UUID;
 public class StepModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = "Step";// Resources.getResources().getString("uc.vertex.actor");
     private final UUID uuid;
-    public static final int DEFAULT_INSET = 1;
+    public static final int DEFAULT_INSET = 6;
 
     public StepModel(UUID uuid) {
         this.uuid = uuid;
