@@ -11,7 +11,7 @@ import org.jgraph.graph.VertexRenderer;
  * Alena Varkockova
  * User: Viktor Bohuslav Bohdal
  * Date: 22:41:01, 6.12.2009
- * <p/>
+ *
  * Special implementation of the MultiLineVertexView for the UCNotation plugin.
  */
 public class UCVertexView extends MultiLineVertexView {
@@ -20,13 +20,12 @@ public class UCVertexView extends MultiLineVertexView {
 
     /**
      * UCGraphCellEditor class overrides getCellEditorValue() method. For details
-     *
      * @see cz.cvut.indepmod.uc.workspace.cell.UCGraphCellEditor
      */
     private static final GraphCellEditor ucCellEditor = new UCGraphCellEditor();
 
 
-    public UCVertexView(final Object cell) {
+    public UCVertexView(final Object cell){
         super(cell);
     }
 

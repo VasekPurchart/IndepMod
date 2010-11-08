@@ -2,7 +2,6 @@ package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 import com.jgraph.components.labels.CellConstants;
 import com.jgraph.components.labels.MultiLineVertexRenderer;
-import cz.cvut.indepmod.uc.resources.Resources;
 import org.jgraph.graph.GraphConstants;
 
 import javax.swing.*;
@@ -20,20 +19,20 @@ import java.util.UUID;
  * Time: 15:00:23
  * To change this template use File | Settings | File Templates.
  */
-public class ScenarioModel extends UCEditableVertex {
-    private static final String DEFAULT_LABEL = "Scenario";// Resources.getResources().getString("uc.vertex.actor");
+public class StepModel extends UCEditableVertex {
+    private static final String DEFAULT_LABEL = "Step";// Resources.getResources().getString("uc.vertex.actor");
     private final UUID uuid;
     public static final int DEFAULT_INSET = 6;
 
-    public ScenarioModel(UUID uuid) {
+    public StepModel(UUID uuid) {
         this.uuid = uuid;
         this.setName(DEFAULT_LABEL);
     }
 
-        public ScenarioModel(final ScenarioModel scenModel, final String name){
+     public StepModel(final StepModel stepModel, final String name){
         setName(name);
-        uuid = scenModel.getUuid();
-        setNote(scenModel.getNote());
+        uuid = stepModel.getUuid();
+        setNote(stepModel.getNote());
     }
 
     @Override

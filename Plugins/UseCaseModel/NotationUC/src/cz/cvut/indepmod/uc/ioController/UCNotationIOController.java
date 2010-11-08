@@ -4,9 +4,10 @@ import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphModel.UCGraphModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphModel.UCGraphUseCaseModel;
 import cz.cvut.indepmod.uc.workspace.cell.UCPortView;
 import cz.cvut.indepmod.uc.workspace.cell.UCVertexView;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.localIOController.NotationLocalIOController;
@@ -163,12 +164,14 @@ public class UCNotationIOController implements NotationLocalIOController {
 
         // diagram model
         encoder.setPersistenceDelegate(UCDiagramModel.class, new DefaultPersistenceDelegate(new String[] {LAYOUT_CACHE_PROPERTY}));
-      
+
         // vertex
         encoder.setPersistenceDelegate(UCVertexView.class, new DefaultPersistenceDelegate(new String[] {CELL_PROPERTY}));
         encoder.setPersistenceDelegate(DefaultGraphCell.class, new DefaultPersistenceDelegate( new String[] {USER_OBJECT_PROPERTY}));
 
         // vertex models
+        encoder.setPersistenceDelegate(ScenarioModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
+        encoder.setPersistenceDelegate(StepModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(UseCaseModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(ActorModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(SystemBorderModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
@@ -192,7 +195,6 @@ public class UCNotationIOController implements NotationLocalIOController {
         // graph models
         encoder.setPersistenceDelegate(DefaultGraphModel.class, new DefaultPersistenceDelegate(new String[] {ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));
         encoder.setPersistenceDelegate(UCGraphModel.class, new DefaultPersistenceDelegate(new String[] {ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));
-        encoder.setPersistenceDelegate(UCGraphUseCaseModel.class, new DefaultPersistenceDelegate(new String[] {ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));
 
         // graph layout cache
         encoder.setPersistenceDelegate(GraphLayoutCache.class, new DefaultPersistenceDelegate(

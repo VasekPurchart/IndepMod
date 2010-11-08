@@ -2,6 +2,8 @@ package cz.cvut.indepmod.uc.workspace.factory;
 
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
@@ -18,10 +20,10 @@ import java.util.UUID;
 
 /**
  * ProMod, master thesis project
- * <p/>
+ * 
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- * <p/>
+ *
  * UCCellFactory is responsible for creating a new vertexes in the UCNotation plugin.
  */
 public class UCCellFactory {
@@ -40,16 +42,16 @@ public class UCCellFactory {
     private static final int DOT_AND_DASH_SEGMENT_4 = 4;
 
     /**
-     * Creates the required vertex.
+     *  Creates the required vertex.
      *
      * @param point is the point to be the vertex positioned
-     * @param tool  is the selected tool - vertex type
+     * @param tool is the selected tool - vertex type
      * @return required vertex in form of graph cell
      */
     public static DefaultGraphCell createVertex(final Point2D point, final ToolChooserModel.Tool tool) {
         final DefaultGraphCell cell = new DefaultGraphCell();
         
-        switch (tool) {
+        switch (tool){
             case ADD_USE_CASE:
                 cell.setUserObject(new UseCaseModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(UseCaseModel.installAttributes(point));
@@ -57,6 +59,14 @@ public class UCCellFactory {
             case ADD_ACTOR:
                 cell.setUserObject(new ActorModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(ActorModel.installAttributes(point));
+                break;
+             case ADD_STEP:
+                cell.setUserObject(new StepModel(UUID.randomUUID()));
+                cell.getAttributes().applyMap(StepModel.installAttributes(point));
+                break;
+            case ADD_SCENARIO:
+                cell.setUserObject(new ScenarioModel(UUID.randomUUID()));
+                cell.getAttributes().applyMap(ScenarioModel.installAttributes(point));
                 break;
             case ADD_SYSTEM_BORDER:
                 cell.setUserObject(new SystemBorderModel(UUID.randomUUID()));
@@ -69,7 +79,7 @@ public class UCCellFactory {
 
         final DefaultPort defaultPort = new DefaultPort();
         cell.add(defaultPort);
-
+        
         return cell;
     }
 
@@ -77,27 +87,19 @@ public class UCCellFactory {
      * Creates required edge.
      *
      * @param tool is the selected tool - edge type
+     * 
      * @return an edge
      */
     public static DefaultEdge createEdge(final ToolChooserModel.Tool tool) {
         final DefaultEdge edge = new DefaultEdge();
 
         final EdgeModel.EdgeType edgeType;
-        switch (tool) {
+        switch (tool){
             case ADD_CONTROL_FLOW_LINE:
                 edgeType = EdgeModel.EdgeType.CONTROL_FLOW;
                 break;
-            case ADD_MATERIAL_OUTPUT_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.MATERIAL_FLOW;
-                break;
-            case ADD_INFORMATION_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.INFORMATION_FLOW;
-                break;
-            case ADD_ORGANIZATION_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.ORGANIZATION_FLOW;
-                break;
-            case ADD_INFORMATION_SERVICE_FLOW_LINE:
-                edgeType = EdgeModel.EdgeType.INFORMATION_SERVICES_FLOW;
+            case ADD_INCLUDE_FLOW_LINE:
+                edgeType = EdgeModel.EdgeType.INCLUDE_FLOW;
                 break;
             default:
                 // should never happened, testing & developing purposes
@@ -105,10 +107,12 @@ public class UCCellFactory {
                 return null;
         }
 
-        edge.setUserObject(new EdgeModel(edgeType));
+        EdgeModel edgeModel = new EdgeModel(edgeType);
+        if(edgeType == EdgeModel.EdgeType.INCLUDE_FLOW)
+            edgeModel.setName("<< include >>");
+        edge.setUserObject(edgeModel);
 
         edge.getAttributes().applyMap(createEdgeAttributes(tool));
-
         return edge;
     }
 
@@ -117,37 +121,30 @@ public class UCCellFactory {
      * Creates attributes for a uc graph edges
      *
      * @param tool selected uc tool
+     *
      * @return the map with relevant attributes for the edge
      */
-    private static Map createEdgeAttributes(final ToolChooserModel.Tool tool) {
-        final Map map = new Hashtable();
+    private static  Map createEdgeAttributes(final ToolChooserModel.Tool tool) {
+		final Map map = new Hashtable();
 
-        if (!ToolChooserModel.Tool.ADD_ORGANIZATION_FLOW_LINE.equals(tool)) {
-            GraphConstants.setLineEnd(map, GraphConstants.ARROW_SIMPLE);
-        }
+        GraphConstants.setLineEnd(map, GraphConstants.ARROW_SIMPLE);
 
+        
         GraphConstants.setEndFill(map, true);
         GraphConstants.setLineStyle(map, GraphConstants.STYLE_ORTHOGONAL);
-        GraphConstants.setLabelAlongEdge(map, false);
+		GraphConstants.setLabelAlongEdge(map, false);
         GraphConstants.setEditable(map, true);
         GraphConstants.setMoveable(map, true);
         GraphConstants.setDisconnectable(map, false);
 
-        if (ToolChooserModel.Tool.ADD_INFORMATION_SERVICE_FLOW_LINE.equals(tool)) {
+        if(ToolChooserModel.Tool.ADD_INCLUDE_FLOW_LINE.equals(tool)){
+            GraphConstants.setEditable(map, false);
             // make dashed line
-            GraphConstants.setDashPattern(map, new float[]{DASH_LINE_SEGMENT_LENGTH, DASH_SPACE_SEGMENT_LENGTH});
-
-        } else if (ToolChooserModel.Tool.ADD_INFORMATION_FLOW_LINE.equals(tool)) {
-            // make dotted line
-            GraphConstants.setDashPattern(map, new float[]{DOTTED_LINE_SEGMENT_LENGTH, DOTTED_SPACE_SEGMENT_LENGTH});
-
-        } else if (ToolChooserModel.Tool.ADD_MATERIAL_OUTPUT_FLOW_LINE.equals(tool)) {
-            // make dot-and-dash line
-            GraphConstants.setDashPattern(map, new float[]{
-                    DOT_AND_DASH_SEGMENT_1, DOT_AND_DASH_SEGMENT_2,
-                    DOT_AND_DASH_SEGMENT_3, DOT_AND_DASH_SEGMENT_4});
+            //GraphConstants.setDashPattern(map, new float[] {DASH_LINE_SEGMENT_LENGTH, DASH_SPACE_SEGMENT_LENGTH});
+        } else {
+            GraphConstants.setLineEnd(map, GraphConstants.ARROW_NONE);
         }
 
-        return map;
-    }
+		return map;
+	}
 }

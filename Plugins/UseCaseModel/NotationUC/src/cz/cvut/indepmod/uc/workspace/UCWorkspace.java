@@ -27,14 +27,13 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- * <p/>
- * UCWorkspace encapsulate the UCGraph component.
+ *
+ * UCWorkspace encapsulate the UCGraph component. 
  */
 public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener, MouseListener {
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
@@ -43,14 +42,28 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
     private final JGraph graph;
     final Map<String, ProModAction> actions;
+
+    /** holds the actual diagram model of a UC notation diagram */
+    private UCDiagramModel actualUCDiagramModel = null;
+
+    /** holds the actual project diagram of a UC notation diagram */
+    private ProjectDiagram actualProjectDiaram = null;
+
     private final GraphModelListener graphModelListener;
     private ValueModel selectedToolModel;
     private JPopupMenu popupMenu;
     private int previousTab = 0;
 
-    public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions) {
+
+    public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions){
+        super(graph);
+
         this.graph = graph;
         this.actions = actions;
+
+        /**
+         * Whenever an vertex is updated, this forces VertexInfo frame to update as well.
+         */
         UCTabParent defaultTab = new UCDefaultTab(graph, actions);
         this.add(defaultTab);
         addMouseListener(this);
@@ -112,7 +125,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
     /**
      * {@inheritDoc}
-     * <p/>
+     *
      * Un-install the last UC notation diagram's listeners, sets the UNDO & REDO action as disable and makes
      * the actualUCDiagramModel variable null (actual UC notation diagram is none).
      */
@@ -120,9 +133,9 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     }
 
     public void changePerformed(final ProjectDiagramChange change) {
-        if (ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
-                && change.getChangeValue() instanceof Boolean
-                && Boolean.FALSE.equals(change.getChangeValue())) {
+        if(ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
+            && change.getChangeValue() instanceof Boolean
+                && Boolean.FALSE.equals(change.getChangeValue())){
 
             actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
 

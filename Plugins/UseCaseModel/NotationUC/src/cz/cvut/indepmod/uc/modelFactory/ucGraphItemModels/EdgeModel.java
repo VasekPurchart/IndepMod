@@ -13,10 +13,7 @@ public class EdgeModel extends UCEditableVertex {
 
     public static enum EdgeType {
         CONTROL_FLOW,
-        ORGANIZATION_FLOW,
-        INFORMATION_FLOW,
-        INFORMATION_SERVICES_FLOW,
-        MATERIAL_FLOW
+        INCLUDE_FLOW
     }
 
     private final EdgeType edgeType;
@@ -25,8 +22,9 @@ public class EdgeModel extends UCEditableVertex {
         this.edgeType = edgeType;
     }
 
-    public EdgeModel(final EdgeModel edgeModel, final String newName){
+    public EdgeModel(final EdgeModel edgeModel, String newName){
         this.edgeType = edgeModel.getEdgeType();
+
         setName(newName);
         setNote(edgeModel.getNote());
     }

@@ -8,8 +8,9 @@ import org.jgraph.graph.GraphConstants;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.*;
-import java.util.List;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * User: Viktor Bohuslav Bohdal, bohdavik@fel.cvut.cz
@@ -17,7 +18,6 @@ import java.util.List;
  */
 public class UseCaseModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.uc");
-    private List<ScenarioModel> scenarios = new ArrayList<ScenarioModel>();
 
     public static final int DEFAULT_INSET = 6;
 
@@ -51,7 +51,7 @@ public class UseCaseModel extends UCEditableVertex {
 
         map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);
 
-        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 200, 20)); // velikost 200*20
+        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 200, 80)); // velikost 200*20
         // GraphConstants.setResize(map, true); !!! Toto je nutne odebrat, aby se velikost zmenila
         GraphConstants.setBorderColor(map, Color.red);
         GraphConstants.setOpaque(map, true);
@@ -59,7 +59,7 @@ public class UseCaseModel extends UCEditableVertex {
 
         return map;
     }
-
+    
     public UUID getUuid() {
         return this.uuid;  
     }

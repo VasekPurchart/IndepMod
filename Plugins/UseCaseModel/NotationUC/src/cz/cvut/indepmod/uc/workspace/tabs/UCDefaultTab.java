@@ -1,11 +1,8 @@
 package cz.cvut.indepmod.uc.workspace.tabs;
 
-import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChange;
 import org.jgraph.JGraph;
-import org.jgraph.event.GraphModelEvent;
-import org.jgraph.event.GraphModelListener;
 
 import java.util.Map;
 

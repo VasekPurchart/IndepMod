@@ -16,7 +16,7 @@ import java.awt.geom.Point2D;
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- * <p/>
+ * 
  * Implementation of MarqueeHandler for UC notation.
  */
 public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
@@ -34,9 +34,9 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
     final JPopupMenu popupMenu;
 
     public UCWorkspaceMarqueeHandler(final UCGraph graph,
-                                     final ValueModel selectedToolModel,
-                                     final JPopupMenu popupMenu
-    ) {
+                                      final ValueModel selectedToolModel,
+                                      final JPopupMenu popupMenu
+    ){
         this.graph = graph;
         this.selectedToolModel = selectedToolModel;
         this.popupMenu = popupMenu;
@@ -50,17 +50,16 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      */
     @Override
     public boolean isForceMarqueeEvent(MouseEvent e) {
-        if (e.isShiftDown()) {
+        if(e.isShiftDown()){
             return false; // when one pressed shift and right button, there will be added a new point on the edge
         }
 
-        if (SwingUtilities.isRightMouseButton(e) || addingVertex(e) || deletingVertex(e)) {
+        if (SwingUtilities.isRightMouseButton(e) || addingVertex(e)  ){
             return true; //don't use any other handler
         }
 
         currentPort = graph.getSourcePortAt(e.getPoint());
         return (currentPort != null && graph.isPortsVisible()) || super.isForceMarqueeEvent(e);
-
     }
 
     /**
@@ -69,21 +68,16 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mousePressed(final MouseEvent e) {
-        if (SwingUtilities.isRightMouseButton(e)) {
+
+        if(SwingUtilities.isRightMouseButton(e)){
             // show the popup menu
             popupMenu.show(graph, e.getX(), e.getY());
 
-        } else if (deletingVertex(e)) {
-            // delete selected vertexes
-            final Object cell = graph.getFirstCellForLocation(e.getX(), e.getY());
-            graph.getSelectionModel().setSelectionCell(cell);
-            graph.getRemoveAction().actionPerformed(null);
-
-        } else if (addingVertex(e)) {
+        }  else if(addingVertex(e)){
             // insert new cell
             graph.insert(e.getPoint());
 
-        } else if ((currentPort != null) && (graph.isPortsVisible())) {
+        } else if((currentPort != null) && (graph.isPortsVisible())){
             // prepare for edge painting
             startingPort = currentPort;
             startingPoint = graph.toScreen(currentPort.getLocation());
@@ -102,11 +96,11 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         if (startingPoint != null) { // starting point has been set <=> painting edge            
             final PortView newPort = graph.getTargetPortAt(e.getPoint());
 
-            if (newPort == null || newPort != currentPort) {
+            if (newPort == null || newPort != currentPort){
                 paintConnector(Color.black, graph.getBackground());
                 currentPort = newPort;
 
-                if (currentPort != null) {
+                if (currentPort != null){
                     point = graph.toScreen(currentPort.getLocation()); // target port found
                 } else {
                     point = graph.snap(e.getPoint()); // no target port defined, find current point of mouse on graph
@@ -125,7 +119,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param foreground is the line color
      * @param background is the graph background color
      */
-    protected void paintConnector(final Color foreground, final Color background) {
+    protected void paintConnector(final Color foreground, final Color background){
         final Graphics graphics = graph.getGraphics();
 
         if (graph.isXorEnabled()) {
@@ -158,12 +152,12 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
     }
 
     /**
-     * Defines actions for mouse release event.
+     * Defines actions for mouse release event. 
      *
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mouseReleased(MouseEvent e) {
-        if (e != null && currentPort != null && startingPort != null /* startingPort != currentPort allow self-loops */) {
+        if (e != null && currentPort != null && startingPort != null /* startingPort != currentPort allow self-loops */ ) {
             // connect source and target vertexes
             graph.connectVertexes((Port) startingPort.getCell(), (Port) currentPort.getCell());
             e.consume();
@@ -176,27 +170,18 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         startingPoint = null;
         point = null;
 
-        /**
-         * Consume event when deleting cells using Delete tool. This prevents before NullPointerException
-         * occurring when graph repaints handles of already deleted edges.
-         */
-        if (e != null && ToolChooserModel.Tool.DELETE.equals(selectedToolModel.getValue())) {
-            e.consume();
-        }
-
         super.mouseReleased(e);
-
+                      
     }
 
     /**
      * Show CROSSHAIR_CURSOR cursor when the mouse is over any portview.
-     *
      * @param event is the MouseEvent that has occurred
      */
     public void mouseMoved(MouseEvent event) {
-        if ((event != null) && (graph.isPortsVisible()) && (graph.getSourcePortAt(event.getPoint()) != null)) {
+        if ((event != null) && (graph.isPortsVisible()) && (graph.getSourcePortAt(event.getPoint()) != null)){
             // isPortsVisible(), ports are visible only when the AddEdge tool is selected
-
+            
             graph.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
             event.consume(); // do not let BasicGraphUI make any other changes
 
@@ -211,18 +196,20 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is the current mouse event
      * @return true if user is adding new vertex, false otherwise
      */
-    private boolean addingVertex(final MouseEvent e) {
+    private boolean addingVertex(final MouseEvent e){
         final ToolChooserModel.Tool tool;
-        try {
+        try{
             tool = (ToolChooserModel.Tool) selectedToolModel.getValue();
-        } catch (ClassCastException exception) {
+        } catch (ClassCastException exception){
             return false;
         }
 
         final boolean addingTool;
-        switch (tool) {
+        switch (tool){
             case ADD_ACTOR:
             case ADD_USE_CASE:
+            case ADD_STEP:
+            case ADD_SCENARIO:
             case ADD_SYSTEM_BORDER:
                 addingTool = true;
                 break;
@@ -232,22 +219,5 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         }
 
         return (SwingUtilities.isLeftMouseButton(e) && addingTool);
-    }
-
-    /**
-     * Decides whether the user is deleting an existing vertex or no.
-     *
-     * @param e is the current mouse event
-     * @return true if user is removing vertex, false otherwise
-     */
-    private boolean deletingVertex(final MouseEvent e) {
-        final ToolChooserModel.Tool tool;
-        try {
-            tool = (ToolChooserModel.Tool) selectedToolModel.getValue();
-        } catch (ClassCastException exception) {
-            return false;
-        }
-
-        return (SwingUtilities.isLeftMouseButton(e) && ToolChooserModel.Tool.DELETE.equals(tool));
     }
 }

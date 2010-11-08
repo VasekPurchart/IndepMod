@@ -15,9 +15,9 @@ import java.awt.event.ActionEvent;
  * Represents basic ProMod action. This kind of actions is supposed to be
  * used with the ActionService.
  *
- * @see cz.cvut.promod.services.actionService.ActionService
+ * @see cz.cvut.promod.services.actionService.ActionService 
  */
-public abstract class ProModAction extends AbstractAction {
+public abstract class ProModAction extends AbstractAction{
 
     private String actionIdentifier = null;
 
@@ -27,11 +27,11 @@ public abstract class ProModAction extends AbstractAction {
 
     public ProModAction(final String displayName,
                         final Icon icon,
-                        final KeyStroke keyStroke) {
+                        final KeyStroke keyStroke){
 
         super(displayName, icon);
 
-        putValue(ACCELERATOR_KEY, keyStroke);
+        putValue(ACCELERATOR_KEY, keyStroke);       
 
         /**
          * All instances of ProModAction class are initially disabled. Action is enabled when the
@@ -46,15 +46,15 @@ public abstract class ProModAction extends AbstractAction {
         setEnabled(false);
     }
 
-    public void updateActionVisibility(final String notationIdentifier) {
-        if (ModelerModel.MODELER_IDENTIFIER.equals(this.notationIdentifier)) {
+    public void updateActionVisibility(final String notationIdentifier){
+        if(ModelerModel.MODELER_IDENTIFIER.equals(this.notationIdentifier)){
             return;
         }
 
-        if (this.notationIdentifier.equals(notationIdentifier)) {
+        if(this.notationIdentifier.equals(notationIdentifier)){
             setEnabled(true);
         } else {
-            setEnabled(false);
+            setEnabled(false);            
         }
     }
 
@@ -63,15 +63,16 @@ public abstract class ProModAction extends AbstractAction {
      * by the programmer. Only ActionService uses this method to initialize this service.
      *
      * @param notationIdentifier required notation identifier
-     * @param moduleIdentifier   is the identifier of a module
-     * @param actionIdentifier   is the identifier of a action
+     * @param moduleIdentifier is the identifier of a module
+     * @param actionIdentifier is the identifier of a action
+     *
      * @return true if notation identifier has been set, false otherwise
      */
     public boolean initAction(final String notationIdentifier,
                               final String moduleIdentifier,
-                              final String actionIdentifier) {
+                              final String actionIdentifier){
 
-        if (this.notationIdentifier == null && this.moduleIdentifier == null && this.actionIdentifier == null) {
+        if(this.notationIdentifier == null && this.moduleIdentifier == null && this.actionIdentifier == null){
             this.notationIdentifier = notationIdentifier;
             this.moduleIdentifier = moduleIdentifier;
             this.actionIdentifier = actionIdentifier;

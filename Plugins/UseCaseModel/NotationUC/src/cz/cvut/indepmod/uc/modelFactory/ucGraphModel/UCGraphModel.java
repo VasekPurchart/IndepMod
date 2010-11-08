@@ -1,9 +1,16 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphModel;
 
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.resources.Resources;
+import cz.cvut.promod.services.ModelerSession;
 import org.jgraph.graph.*;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -15,16 +22,10 @@ import java.util.List;
  */
 public class UCGraphModel extends DefaultGraphModel{       
 
-    private final static String ERROR_TITLE_LABEL = Resources.getResources().getString("uc.menu.uc.notation");
-    private final static String ERROR_EVENTS_LABEL = Resources.getResources().getString("uc.conn.error.events");
-    private final static String ERROR_FUNCTIONS_LABEL = Resources.getResources().getString("uc.conn.error.functions");
-    private final static String ERROR_MULTIPLE_CONTROL_FLOW_LABEL =
-            Resources.getResources().getString("uc.conn.error.multiple.ctr.flow");
-    private final static String ERROR_LOGICS_ILLEGAL_FLOW_LABEL =
-            Resources.getResources().getString("uc.conn.error.logics.illegal.flow");
-    private final static String ERROR_LOGICS_ILLEGAL_NEIGHBOUR_LABEL =
-            Resources.getResources().getString("uc.conn.error.logics.illegal.neig");
-
+    private final static String ERROR_TITLE_LABEL = Resources.getResources().getString("uc.conn.error.title");
+    private final static String ERROR_SYSTEM_BORDER_LABEL = Resources.getResources().getString("uc.conn.error.system_border");
+    private final static String ERROR_INCLUDE_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.include.flow");
+    private final static String ERROR_CONTROL_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.control.flow");
 
     public UCGraphModel(){
         super(null, null);
@@ -77,16 +78,37 @@ public class UCGraphModel extends DefaultGraphModel{
         final Object targetUserObject = targetCell.getUserObject();
         final Object sourceUserObject = sourceCell.getUserObject();
 
-        // No function can be connected directly with another event.
-        /*
-        if(sourceCell.getUserObject() instanceof FunctionModel && targetCell.getUserObject() instanceof FunctionModel){
+        // System border cant be connected with anything
+        if(sourceCell.getUserObject() instanceof SystemBorderModel || targetCell.getUserObject() instanceof SystemBorderModel){
             JOptionPane.showMessageDialog(
                     ModelerSession.getFrame(),
-                    ERROR_FUNCTIONS_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
+                    ERROR_SYSTEM_BORDER_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
 
             return false;
         }
-        */
+
+        // Include flow can be used only between two Use Case instances
+        if(cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel.EdgeType.INCLUDE_FLOW.equals(edgeModel.getEdgeType())){
+            if( !(sourceCell.getUserObject() instanceof UseCaseModel) || !(targetCell.getUserObject() instanceof UseCaseModel)){
+                JOptionPane.showMessageDialog(
+                    ModelerSession.getFrame(),
+                    ERROR_INCLUDE_FLOW_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
+
+                return false;
+            }
+        }
+
+        // Control flow can be used only between Use Case and Actor
+        if(cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel.EdgeType.CONTROL_FLOW.equals(edgeModel.getEdgeType())){
+            if( !((sourceCell.getUserObject() instanceof UseCaseModel && targetCell.getUserObject() instanceof ActorModel) ||
+                  (targetCell.getUserObject() instanceof UseCaseModel && sourceCell.getUserObject() instanceof ActorModel))){
+                    JOptionPane.showMessageDialog(
+                    ModelerSession.getFrame(),
+                    ERROR_CONTROL_FLOW_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
+
+                return false;
+            }
+        }
 
         return super.acceptsSource(edge, targetPort);
     }

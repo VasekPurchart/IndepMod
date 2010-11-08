@@ -11,16 +11,14 @@ import org.jgraph.JGraph;
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- * <p/>
- * UCWorkspaceData represents the NotationWorkspaceData interface implementation for the UCNotation plugin.
+ *
+ * UCWorkspaceData represents the NotationWorkspaceData interface implementation for the UCNotation plugin.  
  */
 public class UCWorkspaceData implements NotationWorkspaceData {
 
@@ -39,14 +37,14 @@ public class UCWorkspaceData implements NotationWorkspaceData {
     public static final String PROPERTY_SELECTED_CELL = "selectedCell";
 
     public UCWorkspaceData(final ValueModel selectedToolModel,
-                           final ValueModel gridModel,
-                           final ValueModel lockModel,
-                           final ValueModel viewGridModel,
-                           final ValueModel cellSizeModel,
-                           final ValueModel scaleModel,
-                           final ValueModel movableBelowZeroModel,
-                           final Map<String, ProModAction> actions,
-                           final JPopupMenu popupMenu) {
+                            final ValueModel gridModel,
+                            final ValueModel lockModel,
+                            final ValueModel viewGridModel,
+                            final ValueModel cellSizeModel,
+                            final ValueModel scaleModel,
+                            final ValueModel movableBelowZeroModel,
+                            final Map<String, ProModAction> actions,
+                            final JPopupMenu popupMenu) {
 
         this.selectedToolModel = selectedToolModel;
 
@@ -89,7 +87,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
                 graph.setGridSize(gridCellSize.doubleValue());
                 graph.refresh();
             }
-        });
+        });        
 
         selectedToolModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -97,12 +95,9 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
                 boolean portsVisible = false;
 
-                switch (selectedTool) {
+                switch(selectedTool){
                     case ADD_CONTROL_FLOW_LINE:
-                    case ADD_INFORMATION_SERVICE_FLOW_LINE:
-                    case ADD_ORGANIZATION_FLOW_LINE:
-                    case ADD_MATERIAL_OUTPUT_FLOW_LINE:
-                    case ADD_INFORMATION_FLOW_LINE:
+                    case ADD_INCLUDE_FLOW_LINE:
                         portsVisible = true;
                 }
 
@@ -110,15 +105,15 @@ public class UCWorkspaceData implements NotationWorkspaceData {
             }
         });
 
-        scaleModel.addValueChangeListener(new PropertyChangeListener() {
+        scaleModel.addValueChangeListener(new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent evt) {
                 final double scaleMultiplicator = (((Integer) evt.getNewValue()).doubleValue()) / 100.0;
-
+                
                 graph.setScale(scaleMultiplicator);
             }
         });
 
-        movableBelowZeroModel.addValueChangeListener(new PropertyChangeListener() {
+        movableBelowZeroModel.addValueChangeListener(new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent evt) {
                 graph.setMoveBelowZero((Boolean) evt.getNewValue());
             }
@@ -126,9 +121,6 @@ public class UCWorkspaceData implements NotationWorkspaceData {
     }
 
     public JComponent getWorkspaceComponentSingleton() {
-        return workspace;
-    }
-    public static JComponent getWorkspaceComponentSingletonStatic() {
         return workspace;
     }
 

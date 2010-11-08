@@ -20,6 +20,15 @@
     <orderEntry type="library" name="jgoodies binding" level="project" />
     <orderEntry type="library" name="jgoodies form" level="project" />
     <orderEntry type="library" name="jgraph" level="project" />
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

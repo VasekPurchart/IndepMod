@@ -1,6 +1,5 @@
 package cz.cvut.indepmod.uc.workspace.tabs;
 
-import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
@@ -11,7 +10,6 @@ import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 
 import java.util.Map;
-import java.util.UUID;
 
 public class UCUseCaseTab extends UCTabParent {
     private final GraphModelListener graphModelListener;

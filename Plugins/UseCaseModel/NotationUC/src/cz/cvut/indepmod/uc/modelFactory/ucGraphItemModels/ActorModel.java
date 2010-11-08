@@ -1,10 +1,8 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 import com.jgraph.components.labels.CellConstants;
-import cz.cvut.indepmod.uc.modelFactory.UCNotationModelFactory;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.cell.UCVertexRenderer;
-import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.model.DiagramModel;
 import org.jgraph.graph.GraphConstants;
 
 import javax.swing.*;
@@ -24,8 +22,6 @@ public class ActorModel extends UCEditableVertex {
     public static final int DEFAULT_INSET = 6;
 
     private final UUID uuid;
-    private UCNotationModelFactory factory = new UCNotationModelFactory();
-    private DiagramModel model;
 
     public ActorModel(final UUID uuid){
         this.uuid = uuid;
@@ -36,10 +32,6 @@ public class ActorModel extends UCEditableVertex {
         setName(name);
         uuid = actorModel.getUuid();
         setNote(actorModel.getNote());
-    }
-
-    public DiagramModel getModel() {
-        return this.model;
     }
 
     @Override

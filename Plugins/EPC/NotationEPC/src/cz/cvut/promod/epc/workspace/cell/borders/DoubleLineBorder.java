@@ -8,7 +8,7 @@ import java.awt.*;
  * User: Petr Zverina, petr.zverina@gmail.com
  * Date: 19:13:11, 7.12.2009
  *
- * The special border for Material Input/Output epc element.
+ * The special borders for Material Input/Output epc element.
  */
 public class DoubleLineBorder extends AbstractBorder {
 
