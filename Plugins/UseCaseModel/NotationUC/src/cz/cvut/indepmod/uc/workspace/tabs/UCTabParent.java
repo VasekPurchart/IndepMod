@@ -55,27 +55,6 @@ public abstract class UCTabParent extends JScrollPane implements UpdatableWorksp
      * the actualUCDiagramModel variable null (actual UC notation diagram is none).
      */
     public void over() {
-        if (actualUCDiagramModel != null) {
-            actualUCDiagramModel.uninstallUndoActions();
-        } else {
-            LOG.error("over() method of UC notation workspace has been invoked, but there hasn't been set any" +
-                    "actual UC notation diagram before.");
-        }
-
-        if (actualProjectDiagram != null) {
-            actualProjectDiagram.removeChangeListener(this);
-        }
-
-        actualUCDiagramModel.getGraphLayoutCache().getModel().removeGraphModelListener(graphModelListener);
-
-        actualUCDiagramModel = null;
-        actualProjectDiagram = null;
-
-        actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(false);
-        actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(false);
-
-        ModelerSession.clearFrameTitleText();
-
         graph.getSelectionModel().clearSelection();
     }
 
@@ -90,18 +69,6 @@ public abstract class UCTabParent extends JScrollPane implements UpdatableWorksp
             actualUCDiagramModel.getGraphLayoutCache().getModel().addGraphModelListener(graphModelListener);
 
             graph.setGraphLayoutCache(actualUCDiagramModel.getGraphLayoutCache());
-
-            actualUCDiagramModel.installUndoActions(
-                    actions.get(UCNotationModel.UNDO_ACTION_KEY), actions.get(UCNotationModel.REDO_ACTION_KEY)
-            );
-
-            actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canUndo());
-            actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canRedo());
-
-            final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
-            projectDiagram.addChangeListener(this);
-            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
-
             // sets the frame's title
             ModelerSession.setFrameTitleText(ProjectServiceUtils.getFileSystemPathToProjectItem(
                     ModelerSession.getProjectService().getSelectedTreePath()
@@ -115,5 +82,9 @@ public abstract class UCTabParent extends JScrollPane implements UpdatableWorksp
         } catch (Exception exception) {
             LOG.error("An error has occurred during context switch.", exception);
         }
+    }
+
+    public JGraph getGraph() {
+        return this.graph;
     }
 }

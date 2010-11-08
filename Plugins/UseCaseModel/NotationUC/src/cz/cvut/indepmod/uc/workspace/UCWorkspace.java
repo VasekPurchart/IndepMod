@@ -2,6 +2,7 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
+import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
 import cz.cvut.indepmod.uc.workspace.tabs.UCDefaultTab;
 import cz.cvut.indepmod.uc.workspace.tabs.UCGraphUseCase;
@@ -27,6 +28,7 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
@@ -56,8 +58,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
 
     public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions){
-        super(graph);
-
+        
         this.graph = graph;
         this.actions = actions;
 
@@ -118,7 +119,27 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
      * Used when the context is switched. Installs the undoMa
      */
     public void update() {
-        actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+        try {
+            actualProjectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+            actualUCDiagramModel = (UCDiagramModel) actualProjectDiagram.getDiagramModel();
+            actualUCDiagramModel.installUndoActions(
+                    actions.get(UCNotationModel.UNDO_ACTION_KEY), actions.get(UCNotationModel.REDO_ACTION_KEY)
+            );
+
+            actions.get(UCNotationModel.UNDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canUndo());
+            actions.get(UCNotationModel.REDO_ACTION_KEY).setEnabled(actualUCDiagramModel.getUndoManager().canRedo());
+
+            final ProjectDiagram projectDiagram = ModelerSession.getProjectService().getSelectedDiagram();
+            projectDiagram.addChangeListener(this);
+            actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(projectDiagram.isChanged());
+
+
+        } catch (ClassCastException exception) {
+            LOG.error("Unable to cast selected diagram model to UCDiagramModel class.", exception);
+        } catch (Exception exception) {
+            LOG.error("An error has occurred during context switch.", exception);
+        }
+
         this.setTitleAt(0, actualProjectDiagram.getDisplayName());
         ((UCTabParent) this.getComponent(0)).update();
     }
@@ -130,6 +151,16 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
      * the actualUCDiagramModel variable null (actual UC notation diagram is none).
      */
     public void over() {
+        if (actualUCDiagramModel != null) {
+            actualUCDiagramModel.uninstallUndoActions();
+        } else {
+            LOG.error("over() method of UC notation workspace has been invoked, but there hasn't been set any" +
+                    "actual UC notation diagram before.");
+        }
+
+        if (actualProjectDiagram != null) {
+            actualProjectDiagram.removeChangeListener(this);
+        }
     }
 
     public void changePerformed(final ProjectDiagramChange change) {

@@ -11,7 +11,9 @@ import org.jgraph.JGraph;
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * UseCase plugin - SI2/3 school project
@@ -65,18 +67,27 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         lockModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setEditable((Boolean) propertyChangeEvent.getNewValue());
+                for(UCTabParent tab : tabs.values()) {
+                    tab.getGraph().setEditable((Boolean) propertyChangeEvent.getNewValue());
+                }
             }
         });
 
         gridModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setGridEnabled((Boolean) propertyChangeEvent.getNewValue());
+                for(UCTabParent tab : tabs.values()) {
+                    tab.getGraph().setGridEnabled((Boolean) propertyChangeEvent.getNewValue());
+                }
             }
         });
 
         viewGridModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setGridVisible((Boolean) propertyChangeEvent.getNewValue());
+                for(UCTabParent tab : tabs.values()) {
+                    tab.getGraph().setGridVisible((Boolean) propertyChangeEvent.getNewValue());
+                }
             }
         });
 
@@ -86,8 +97,12 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
                 graph.setGridSize(gridCellSize.doubleValue());
                 graph.refresh();
+                for(UCTabParent tab : tabs.values()) {
+                    tab.getGraph().setGridSize(gridCellSize.doubleValue());
+                    tab.getGraph().refresh();
+                }
             }
-        });        
+        });
 
         selectedToolModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -95,7 +110,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
                 boolean portsVisible = false;
 
-                switch(selectedTool){
+                switch (selectedTool) {
                     case ADD_CONTROL_FLOW_LINE:
                     case ADD_INCLUDE_FLOW_LINE:
                         portsVisible = true;
@@ -105,17 +120,24 @@ public class UCWorkspaceData implements NotationWorkspaceData {
             }
         });
 
-        scaleModel.addValueChangeListener(new PropertyChangeListener(){
+        scaleModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 final double scaleMultiplicator = (((Integer) evt.getNewValue()).doubleValue()) / 100.0;
-                
+
                 graph.setScale(scaleMultiplicator);
+                for(UCTabParent tab : tabs.values()) {
+                    tab.getGraph().setScale(scaleMultiplicator);
+                }
             }
         });
 
-        movableBelowZeroModel.addValueChangeListener(new PropertyChangeListener(){
+        movableBelowZeroModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 graph.setMoveBelowZero((Boolean) evt.getNewValue());
+
+                for(UCTabParent tab : tabs.values()) {
+                    tab.getGraph().setMoveBelowZero((Boolean) evt.getNewValue());
+                }
             }
         });
     }
@@ -132,4 +154,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         return tabs;
     }
 
+    public static JComponent getWorkspaceComponentSingletonStatic() {
+        return workspace;
+    }
 }
