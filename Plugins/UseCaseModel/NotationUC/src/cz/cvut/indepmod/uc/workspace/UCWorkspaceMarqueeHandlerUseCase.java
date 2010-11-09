@@ -207,9 +207,7 @@ public class UCWorkspaceMarqueeHandlerUseCase extends BasicMarqueeHandler {
 
         final boolean addingTool;
         switch (tool) {
-            case ADD_ACTOR:
-            case ADD_USE_CASE:
-            case ADD_SYSTEM_BORDER:
+            case ADD_SCENARIO:
                 addingTool = true;
                 break;
             default:

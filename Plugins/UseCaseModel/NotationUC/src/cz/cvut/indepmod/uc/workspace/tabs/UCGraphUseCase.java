@@ -6,8 +6,6 @@ import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.resources.Resources;
-import cz.cvut.indepmod.uc.workspace.UCWorkspace;
-import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceMarqueeHandlerUseCase;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
@@ -172,9 +170,9 @@ public class UCGraphUseCase extends JGraph {
     public void insert(final Point2D point) {
         DefaultGraphCell vertex = createVertex(point);
 
-        LOG.debug(getGraphLayoutCache());
         getGraphLayoutCache().insert(vertex);
         selectedToolModel.setValue(ToolChooserModel.Tool.CONTROL);
+        getGraphLayoutCache().reload();
     }
 
     /**
