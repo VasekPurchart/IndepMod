@@ -57,7 +57,6 @@ public class StepModel extends UCEditableVertex {
         GraphConstants.setOpaque(map, true);
         GraphConstants.setHorizontalAlignment(map, SwingConstants.LEFT);
         GraphConstants.setVerticalAlignment(map, SwingConstants.CENTER);
-        GraphConstants.set
         GraphConstants.setMoveable(map, true);
         GraphConstants.setResize(map, false);
         GraphConstants.setEditable(map, true);
