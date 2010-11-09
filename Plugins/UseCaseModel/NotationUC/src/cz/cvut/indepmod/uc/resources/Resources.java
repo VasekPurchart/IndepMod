@@ -14,6 +14,9 @@ public class Resources extends AbstractResources {
     public static final String PREVIEW = "uc_preview.png";
     public static final String SAVE = "uc_save.png";
 
+    public static final String UC_ICON = "usecasemodel.png";
+    public static final String ACTOR_ICON = "actormodel.png";
+
     public static final String RESOURCES_FILE = "uc";
 
     public static final String PORTS = "ports/";

@@ -2,6 +2,7 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.resources.Resources;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
@@ -25,8 +26,14 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
 
     private Point2D startingPoint;
     private Point2D point;
+    private Point2D lastMovePoint;
 
     private final UCGraph graph;
+
+    private int mouseMoved = 0;
+
+    private static ImageIcon actorIcon   = Resources.getIcon(Resources.ICONS + Resources.ACTOR_ICON);
+    private static ImageIcon usecaseIcon = Resources.getIcon(Resources.ICONS + Resources.UC_ICON);
 
     final ValueModel selectedToolModel;
 
@@ -178,6 +185,14 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param event is the MouseEvent that has occurred
      */
     public void mouseMoved(MouseEvent event) {
+
+        //graph.drawImage
+        //graph.checkImage(actorIcon.getImage(), actorIcon.getImageObserver())  ;
+        //graph.setBackgroundImage(actorIcon);
+        //graph.
+        //graph.imageUpdate(actorIcon.getImage(), 0, 0, 0, 50, 50);
+        //actorIcon.paintIcon(null, graph.getGraphics(), event.getX(), event.getY());
+
         if ((event != null) && (graph.isPortsVisible()) && (graph.getSourcePortAt(event.getPoint()) != null)){
             // isPortsVisible(), ports are visible only when the AddEdge tool is selected
             
@@ -187,6 +202,45 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         } else {
             super.mouseMoved(event);
         }
+
+        ImageIcon  icon = actorIcon;
+
+        Rectangle clearRect;
+        int borderWidth = 50;
+        Graphics g = graph.getGraphics();
+        //g.setColor(Color.black);
+        //g.setXORMode(Color.white);
+
+        int actorH = 120, actorW = 40;
+        int borderH = 0;
+        int borderW = 0;
+        int x = event.getX();
+        int y = event.getY();
+
+        g.drawLine(x + borderW / 2, y + actorH - 20, x + borderW / 2 + actorW / 2, y + actorH - actorH / 3);
+        g.drawLine(x + borderW / 2 + actorW, y + actorH - 20, x + borderW / 2 + actorW / 2, y + actorH - actorH / 3);
+
+        g.drawLine(x + borderW / 2 + actorW / 2, y + actorH - actorH / 3, x + borderW / 2 + actorW / 2, y + actorH / 4);
+        g.drawLine(x + borderW / 2, y + actorH / 3, x + borderW / 2 + actorW, y + actorH / 3);
+        g.drawArc(x + borderW / 2 + actorW / 4, y + 0 , actorW / 2, actorH / 4, 0, 360); 
+
+
+        //actorIcon.paintIcon(null, graph.getGraphics(), event.getX(), event.getY());
+        /*
+        clearRect = new Rectangle(event.getX() - borderWidth, event.getY() - borderWidth,
+                                  borderWidth, icon.getIconHeight() + borderWidth * 2);
+        graph.repaint(clearRect);
+        clearRect = new Rectangle(event.getX() + icon.getIconWidth(), event.getY() - borderWidth,
+                                  borderWidth, icon.getIconHeight() + borderWidth * 2);
+        graph.repaint(clearRect);
+        clearRect = new Rectangle(event.getX(), event.getY() - borderWidth,
+                                  icon.getIconWidth(), borderWidth);
+        graph.repaint(clearRect);
+        clearRect = new Rectangle(event.getX(), event.getY() + icon.getIconHeight(),
+                                  icon.getIconWidth(), borderWidth);
+        graph.repaint(clearRect);     */
+
+        lastMovePoint = event.getPoint();
     }
 
     /**
