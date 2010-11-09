@@ -55,7 +55,8 @@ public class StepModel extends UCEditableVertex {
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 300, 50)); // velikost 200*20
         GraphConstants.setBorderColor(map, Color.black);
         GraphConstants.setOpaque(map, true);
-         GraphConstants.setVerticalAlignment(map, SwingConstants.CENTER);
+        GraphConstants.setHorizontalAlignment(map, SwingConstants.LEFT);
+        GraphConstants.setVerticalAlignment(map, SwingConstants.CENTER);
         GraphConstants.setMoveable(map, true);
         GraphConstants.setResize(map, false);
         GraphConstants.setEditable(map, true);
