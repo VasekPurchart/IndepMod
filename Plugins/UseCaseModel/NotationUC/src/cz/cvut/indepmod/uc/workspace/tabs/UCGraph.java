@@ -5,6 +5,7 @@ import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCEditableVertex;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.UCWorkspace;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
@@ -106,7 +107,9 @@ public class UCGraph extends JGraph {
                         }
                         if (name != null && uuid != null) {
                             UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
-                            workspace.openTab(uuid, name);
+                            if(object instanceof UseCaseModel) {
+                                workspace.openTab(uuid, name);
+                            }
                         }
                     }
                 }
