@@ -2,7 +2,6 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
-import cz.cvut.indepmod.uc.resources.Resources;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
@@ -27,15 +26,14 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
     private Point2D startingPoint;
     private Point2D point;
     private Point2D lastMovePoint;
+    private Point2D newMovePoint;
+    private boolean firstClick;
+    private boolean shouldRedrawComponentPreview = false;
 
     private final UCGraph graph;
 
-    private int mouseMoved = 0;
-
-    private static ImageIcon actorIcon   = Resources.getIcon(Resources.ICONS + Resources.ACTOR_ICON);
-    private static ImageIcon usecaseIcon = Resources.getIcon(Resources.ICONS + Resources.UC_ICON);
-
     final ValueModel selectedToolModel;
+    String toolString;
 
     final JPopupMenu popupMenu;
 
@@ -46,6 +44,8 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         this.graph = graph;
         this.selectedToolModel = selectedToolModel;
         this.popupMenu = popupMenu;
+        firstClick = false;
+        toolString = selectedToolModel.getValue().toString();
     }
 
     /**
@@ -56,6 +56,11 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      */
     @Override
     public boolean isForceMarqueeEvent(MouseEvent e) {
+        //graph.getGraphics().drawImage(actorIcon.getImage(), (int) e.getPoint().getX(), (int) e.getPoint().getY(), null);
+
+        //Cursor c = graph.getToolkit().createCustomCursor(actorIcon.getImage(), new Point(0,0), "Actor");
+        //graph.setCursor(c);
+
         if(e.isShiftDown()){
             return false; // when one pressed shift and right button, there will be added a new point on the edge
         }
@@ -74,6 +79,8 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mousePressed(final MouseEvent e) {
+        shouldRedrawComponentPreview = false;
+        firstClick = true;
 
         if(SwingUtilities.isRightMouseButton(e)){
             // show the popup menu
@@ -146,6 +153,49 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         }
     }
 
+    protected void drawSystemBorder(Graphics g, Point2D point)
+    {
+        g.drawRect((int) point.getX(), (int) point.getY(), 400, 800);
+    }
+    protected void drawUseCase(Graphics g, Point2D point)
+    {
+        g.drawArc((int) point.getX(), (int) point.getY(), 200, 20, 0, 360);
+    }
+
+    protected void drawActor(Graphics g, Point2D point)
+    {
+        int actorH = 120, actorW = 40;
+        int borderH = 0;
+        int borderW = 0;
+        
+        int x = (int) point.getX();
+        int y = (int) point.getY();
+
+        g.drawLine(x + borderW / 2, y + actorH - 20, x + borderW / 2 + actorW / 2, y + actorH - actorH / 3);
+        g.drawLine(x + borderW / 2 + actorW, y + actorH - 20, x + borderW / 2 + actorW / 2, y + actorH - actorH / 3);
+
+        g.drawLine(x + borderW / 2 + actorW / 2, y + actorH - actorH / 3, x + borderW / 2 + actorW / 2, y + actorH / 4);
+        g.drawLine(x + borderW / 2, y + actorH / 3, x + borderW / 2 + actorW, y + actorH / 3);
+        g.drawArc(x + borderW / 2 + actorW / 4, y + 0 , actorW / 2, actorH / 4, 0, 360);
+    }
+    protected void paintDiagramComponent(String tool, final Color foreground, final Color background, Point2D point)
+    {
+        final Graphics graphics = graph.getGraphics();
+
+        if (graph.isXorEnabled()) {
+            graphics.setColor(foreground);
+            graphics.setXORMode(background);
+            //String tool = selectedToolModel.getValue().toString();
+            if(tool.compareTo("ADD_ACTOR") == 0) {
+                drawActor(graphics, point);
+            } else if(tool.compareTo("ADD_USE_CASE") == 0) {
+                drawUseCase(graphics, point);
+            } else if(tool.compareTo("ADD_SYSTEM_BORDER") == 0) {
+                drawSystemBorder(graphics, point);
+            }
+        }
+    }
+
     /**
      * Draws the temporary line from source port to the current location of mouse.
      *
@@ -163,6 +213,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mouseReleased(MouseEvent e) {
+        
         if (e != null && currentPort != null && startingPort != null /* startingPort != currentPort allow self-loops */ ) {
             // connect source and target vertexes
             graph.connectVertexes((Port) startingPort.getCell(), (Port) currentPort.getCell());
@@ -186,13 +237,6 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      */
     public void mouseMoved(MouseEvent event) {
 
-        //graph.drawImage
-        //graph.checkImage(actorIcon.getImage(), actorIcon.getImageObserver())  ;
-        //graph.setBackgroundImage(actorIcon);
-        //graph.
-        //graph.imageUpdate(actorIcon.getImage(), 0, 0, 0, 50, 50);
-        //actorIcon.paintIcon(null, graph.getGraphics(), event.getX(), event.getY());
-
         if ((event != null) && (graph.isPortsVisible()) && (graph.getSourcePortAt(event.getPoint()) != null)){
             // isPortsVisible(), ports are visible only when the AddEdge tool is selected
             
@@ -203,44 +247,25 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             super.mouseMoved(event);
         }
 
-        ImageIcon  icon = actorIcon;
+        newMovePoint = event.getPoint();
+        if(lastMovePoint != null && lastMovePoint != newMovePoint)
+        {
+            if(shouldRedrawComponentPreview || !firstClick)
+                paintDiagramComponent(toolString, Color.black, graph.getBackground(), lastMovePoint);
 
-        Rectangle clearRect;
-        int borderWidth = 50;
-        Graphics g = graph.getGraphics();
-        //g.setColor(Color.black);
-        //g.setXORMode(Color.white);
-
-        int actorH = 120, actorW = 40;
-        int borderH = 0;
-        int borderW = 0;
-        int x = event.getX();
-        int y = event.getY();
-
-        g.drawLine(x + borderW / 2, y + actorH - 20, x + borderW / 2 + actorW / 2, y + actorH - actorH / 3);
-        g.drawLine(x + borderW / 2 + actorW, y + actorH - 20, x + borderW / 2 + actorW / 2, y + actorH - actorH / 3);
-
-        g.drawLine(x + borderW / 2 + actorW / 2, y + actorH - actorH / 3, x + borderW / 2 + actorW / 2, y + actorH / 4);
-        g.drawLine(x + borderW / 2, y + actorH / 3, x + borderW / 2 + actorW, y + actorH / 3);
-        g.drawArc(x + borderW / 2 + actorW / 4, y + 0 , actorW / 2, actorH / 4, 0, 360); 
+            toolString = selectedToolModel.getValue().toString();
+            paintDiagramComponent(toolString, graph.getBackground(), Color.black, newMovePoint);
 
 
-        //actorIcon.paintIcon(null, graph.getGraphics(), event.getX(), event.getY());
-        /*
-        clearRect = new Rectangle(event.getX() - borderWidth, event.getY() - borderWidth,
-                                  borderWidth, icon.getIconHeight() + borderWidth * 2);
-        graph.repaint(clearRect);
-        clearRect = new Rectangle(event.getX() + icon.getIconWidth(), event.getY() - borderWidth,
-                                  borderWidth, icon.getIconHeight() + borderWidth * 2);
-        graph.repaint(clearRect);
-        clearRect = new Rectangle(event.getX(), event.getY() - borderWidth,
-                                  icon.getIconWidth(), borderWidth);
-        graph.repaint(clearRect);
-        clearRect = new Rectangle(event.getX(), event.getY() + icon.getIconHeight(),
-                                  icon.getIconWidth(), borderWidth);
-        graph.repaint(clearRect);     */
-
-        lastMovePoint = event.getPoint();
+            if(firstClick)
+            {
+                if(toolString.compareTo("CONTROL") == 0) {
+                    shouldRedrawComponentPreview = false;
+                } else
+                    shouldRedrawComponentPreview = true;
+            }
+        }
+        lastMovePoint = newMovePoint;
     }
 
     /**
