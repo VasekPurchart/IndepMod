@@ -53,9 +53,9 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
         initEventHandling();
 
-        outlookTabbedPane.setChevronVisible(false);
+        //outlookTabbedPane.setChevronVisible(false);
 
-        outlookTabbedPane.setIconAt(0, Resources.getIcon(Resources.ICONS + Resources.ELEMENT));
+        //outlookTabbedPane.setIconAt(0, Resources.getIcon(Resources.ICONS + Resources.ELEMENT));
 
         controlButton.doClick(); // initial tool is "control"
     }
@@ -63,15 +63,15 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
     private void initButtonGroup() {
         buttonGroup.add(controlButton);
 
-        buttonGroup.add(outlookTabbedPane.getAddActorButton());
-        buttonGroup.add(outlookTabbedPane.getAddScenarioButton());
-        buttonGroup.add(outlookTabbedPane.getAddSelectMssButton());
-        buttonGroup.add(outlookTabbedPane.getAddStepButton());
-        buttonGroup.add(outlookTabbedPane.getAddIncludeUcButton());
-        buttonGroup.add(outlookTabbedPane.getAddUseCaseButton());
-        buttonGroup.add(outlookTabbedPane.getAddSystemBorderButton());
-        buttonGroup.add(outlookTabbedPane.getAddControlFlowLineButton());
-        buttonGroup.add(outlookTabbedPane.getAddIncludeFlowLineButton());
+        buttonGroup.add(getAddActorButton());
+        buttonGroup.add(getAddScenarioButton());
+        buttonGroup.add(getAddSelectMssButton());
+        buttonGroup.add(getAddStepButton());
+        buttonGroup.add(getAddIncludeUcButton());
+        buttonGroup.add(getAddUseCaseButton());
+        buttonGroup.add(getAddSystemBorderButton());
+        buttonGroup.add(getAddControlFlowLineButton());
+        buttonGroup.add(getAddIncludeFlowLineButton());
         
     }
 
@@ -83,63 +83,63 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
             }
         });
 
-        outlookTabbedPane.getAddActorButton().addActionListener(new ActionListener() {
+        getAddActorButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_ACTOR);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.ACTOR_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddScenarioButton().addActionListener(new ActionListener() {
+        getAddScenarioButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_SCENARIO);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.SCENARIO_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddSelectMssButton().addActionListener(new ActionListener() {
+        getAddSelectMssButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.SELECT_MSS);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.SELECT_MSS_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddStepButton().addActionListener(new ActionListener() {
+        getAddStepButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_STEP);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.STEP_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddIncludeUcButton().addActionListener(new ActionListener() {
+        getAddIncludeUcButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.INCLUDE_UC);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.INCLUDE_UC_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddSystemBorderButton().addActionListener(new ActionListener() {
+        getAddSystemBorderButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_SYSTEM_BORDER);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.SYSTEM_BORDER_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddUseCaseButton().addActionListener(new ActionListener() {
+        getAddUseCaseButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_USE_CASE);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.USE_CASE_TOOL_RES);
             }
         });
        
-        outlookTabbedPane.getAddControlFlowLineButton().addActionListener(new ActionListener(){
+        getAddControlFlowLineButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_CONTROL_FLOW_LINE);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.CONTROL_FLOW_LINE_TOOL_RES);
             }
         });
 
-        outlookTabbedPane.getAddIncludeFlowLineButton().addActionListener(new ActionListener(){
+        getAddIncludeFlowLineButton().addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_INCLUDE_FLOW_LINE);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.INCLUDE_FLOW_LINE_TOOL_RES);
@@ -155,31 +155,31 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                         controlButton.doClick();
                         break;
                     case ADD_ACTOR:
-                        outlookTabbedPane.getAddActorButton().doClick();
+                        getAddActorButton().doClick();
                         break;
                     case ADD_SCENARIO:
-                        outlookTabbedPane.getAddScenarioButton().doClick();
+                        getAddScenarioButton().doClick();
                         break;
                     case SELECT_MSS:
-                        outlookTabbedPane.getAddSelectMssButton().doClick();
+                        getAddSelectMssButton().doClick();
                         break;
                     case ADD_STEP:
-                        outlookTabbedPane.getAddStepButton().doClick();
+                        getAddStepButton().doClick();
                         break;
                     case INCLUDE_UC:
-                        outlookTabbedPane.getAddIncludeUcButton().doClick();
+                        getAddIncludeUcButton().doClick();
                         break;
                     case ADD_USE_CASE:
-                        outlookTabbedPane.getAddUseCaseButton().doClick();
+                        getAddUseCaseButton().doClick();
                         break;
                     case ADD_SYSTEM_BORDER:
-                        outlookTabbedPane.getAddSystemBorderButton().doClick();
+                        getAddSystemBorderButton().doClick();
                         break;
                     case ADD_CONTROL_FLOW_LINE:
-                        outlookTabbedPane.getAddControlFlowLineButton().doClick();
+                        getAddControlFlowLineButton().doClick();
                         break;
                     case ADD_INCLUDE_FLOW_LINE:
-                        outlookTabbedPane.getAddIncludeFlowLineButton().doClick();
+                        getAddIncludeFlowLineButton().doClick();
                         break;
                     default:
                         LOG.error("No such a tool in UC notation.");

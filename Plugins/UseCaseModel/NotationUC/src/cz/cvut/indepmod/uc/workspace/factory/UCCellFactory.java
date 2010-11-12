@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace.factory;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
@@ -62,6 +63,10 @@ public class UCCellFactory {
              case ADD_STEP:
                 cell.setUserObject(new StepModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(StepModel.installAttributes(point));
+                break;
+            case ADD_SCENARIO:
+                cell.setUserObject(new ScenarioModel(UUID.randomUUID()));
+                cell.getAttributes().applyMap(ScenarioModel.installAttributes(point));
                 break;
             case ADD_SYSTEM_BORDER:
                 cell.setUserObject(new SystemBorderModel(UUID.randomUUID()));

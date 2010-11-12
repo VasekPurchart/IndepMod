@@ -5,6 +5,7 @@ import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphModel.UCGraphModel;
 import cz.cvut.indepmod.uc.workspace.cell.UCPortView;
@@ -169,6 +170,7 @@ public class UCNotationIOController implements NotationLocalIOController {
         encoder.setPersistenceDelegate(DefaultGraphCell.class, new DefaultPersistenceDelegate( new String[] {USER_OBJECT_PROPERTY}));
 
         // vertex models
+        encoder.setPersistenceDelegate(ScenarioModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(StepModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(UseCaseModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
         encoder.setPersistenceDelegate(ActorModel.class, new DefaultPersistenceDelegate(new String[] {UUID_PROPERTY}));
