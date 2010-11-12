@@ -2,6 +2,7 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
@@ -25,15 +26,16 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
 
     private Point2D startingPoint;
     private Point2D point;
+
+    private Point2D previewDrawPosition;    // where was painted?
+    private String previewDrawName;         // was preview component painted?
     private Point2D lastMovePoint;
     private Point2D newMovePoint;
-    private boolean firstClick;
-    private boolean shouldRedrawComponentPreview = false;
+    final private String NO_COMPONENT = "NO COMPONENT";
 
     private final UCGraph graph;
 
     final ValueModel selectedToolModel;
-    String toolString;
 
     final JPopupMenu popupMenu;
 
@@ -44,8 +46,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         this.graph = graph;
         this.selectedToolModel = selectedToolModel;
         this.popupMenu = popupMenu;
-        firstClick = false;
-        toolString = selectedToolModel.getValue().toString();
+        previewDrawName = NO_COMPONENT;
     }
 
     /**
@@ -79,9 +80,8 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mousePressed(final MouseEvent e) {
-        shouldRedrawComponentPreview = false;
-        firstClick = true;
-
+        previewDrawName = NO_COMPONENT;
+        
         if(SwingUtilities.isRightMouseButton(e)){
             // show the popup menu
             popupMenu.show(graph, e.getX(), e.getY());
@@ -159,7 +159,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
     }
     protected void drawUseCase(Graphics g, Point2D point)
     {
-        g.drawArc((int) point.getX(), (int) point.getY(), 200, 20, 0, 360);
+        g.drawArc((int) point.getX(), (int) point.getY(), UseCaseModel.USE_CASE_WIDTH, UseCaseModel.USE_CASE_HEIGHT, 0, 360);
     }
 
     protected void drawActor(Graphics g, Point2D point)
@@ -248,21 +248,21 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         }
 
         newMovePoint = event.getPoint();
-        if(lastMovePoint != null && lastMovePoint != newMovePoint)
+        if(lastMovePoint != null && newMovePoint != lastMovePoint)
         {
-            if(shouldRedrawComponentPreview || !firstClick)
-                paintDiagramComponent(toolString, Color.black, graph.getBackground(), lastMovePoint);
-
-            toolString = selectedToolModel.getValue().toString();
-            paintDiagramComponent(toolString, graph.getBackground(), Color.black, newMovePoint);
-
-
-            if(firstClick)
+            if(previewDrawName.compareTo(NO_COMPONENT) != 0)
             {
-                if(toolString.compareTo("CONTROL") == 0) {
-                    shouldRedrawComponentPreview = false;
-                } else
-                    shouldRedrawComponentPreview = true;
+                paintDiagramComponent(previewDrawName, Color.black, graph.getBackground(), previewDrawPosition);
+                previewDrawName = NO_COMPONENT;
+            }
+            String toolString = selectedToolModel.getValue().toString();
+            if(toolString.compareTo("ADD_ACTOR") == 0 ||
+               toolString.compareTo("ADD_USE_CASE") == 0 ||
+               toolString.compareTo("ADD_SYSTEM_BORDER") == 0)
+            {
+                paintDiagramComponent(toolString, graph.getBackground(), Color.black, event.getPoint());
+                previewDrawName = toolString;
+                previewDrawPosition = event.getPoint();
             }
         }
         lastMovePoint = newMovePoint;

@@ -21,6 +21,9 @@ public class UseCaseModel extends UCEditableVertex {
 
     public static final int DEFAULT_INSET = 6;
 
+    public static final int USE_CASE_WIDTH = 200;
+    public static final int USE_CASE_HEIGHT = 80;
+
     private UUID uuid;
 
     public UseCaseModel(final UUID uuid){
@@ -51,7 +54,7 @@ public class UseCaseModel extends UCEditableVertex {
 
         map.put(CellConstants.VERTEXSHAPE, MultiLineVertexRenderer.SHAPE_CIRCLE);
 
-        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), 200, 80)); // velikost 200*20
+        GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), USE_CASE_WIDTH, USE_CASE_HEIGHT)); // velikost 200*20
         // GraphConstants.setResize(map, true); !!! Toto je nutne odebrat, aby se velikost zmenila
         GraphConstants.setBorderColor(map, Color.black);
         GraphConstants.setOpaque(map, true);
