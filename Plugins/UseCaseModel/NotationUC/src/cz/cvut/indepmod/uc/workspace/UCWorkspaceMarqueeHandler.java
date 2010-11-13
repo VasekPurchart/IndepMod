@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
+import org.jgraph.JGraph;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
@@ -49,6 +50,10 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         previewDrawName = NO_COMPONENT;
     }
 
+    public void paint(JGraph graph, Graphics g) {
+          previewDrawName = NO_COMPONENT;
+    }
+
     /**
      * Decides whether this handler is supposed to be preferred before others.
      *
@@ -80,8 +85,6 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mousePressed(final MouseEvent e) {
-        previewDrawName = NO_COMPONENT;
-        
         if(SwingUtilities.isRightMouseButton(e)){
             // show the popup menu
             popupMenu.show(graph, e.getX(), e.getY());
