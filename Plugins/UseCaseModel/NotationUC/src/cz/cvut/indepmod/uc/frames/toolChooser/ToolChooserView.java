@@ -86,7 +86,7 @@ public class ToolChooserView extends JPanel {
         builder.add(addSelectMssButton, cellConstraints.xy(1,13));
         builder.add(addStepButton, cellConstraints.xy(1,15));
         builder.add(addIncludeUcButton, cellConstraints.xy(1,17));
-        builder.add(new JLabel("____________________________________________"), cellConstraints.xy(1,18));
+        builder.add(new JLabel("   "), cellConstraints.xy(1,18));
         builder.add(addControlFlowLineButton, cellConstraints.xy(1,20));
         builder.add(addIncludeFlowLineButton, cellConstraints.xy(1,22));
         
