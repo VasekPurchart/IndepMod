@@ -8,10 +8,7 @@ import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChange;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -55,29 +52,37 @@ public class UCUseCaseTab extends UCTabParent {
             public void mouseClicked(MouseEvent e) {
                 final ToolChooserModel.Tool tool = ((ToolChooserModel.Tool) ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().getValue());
 
-                System.out.println(tool);
-
                 DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 MutableTreeNode newNode;
                 switch (tool) {
                     case ADD_SCENARIO:
-                        System.out.println(node.getDepth());
-                        newNode = new UCTreeNode("Scenario");
-
-                        model.insertNodeInto(newNode, node, node.getChildCount());
-
+                        if (!(node instanceof UCTreeNode)) {
+                            newNode = new UCTreeNode("Scenario");
+                            model.insertNodeInto(newNode, node, node.getChildCount());
+                        }
                         break;
                     case ADD_STEP:
-                        newNode = new DefaultMutableTreeNode("Step");
-                        model.insertNodeInto(newNode, node, node.getChildCount());
-
+                        if (node instanceof UCTreeNode) {
+                            newNode = new DefaultMutableTreeNode("Step");
+                            model.insertNodeInto(newNode, node, node.getChildCount());
+                        }
                         break;
                     case SELECT_MSS:
-                        System.out.println(tree.getLastSelectedPathComponent().getClass().getCanonicalName());
-                        if(tree.getLastSelectedPathComponent() instanceof UCTreeNode) {
+                        if (!(tree.getLastSelectedPathComponent() instanceof UCTreeNode)) {
+                            break;
+                        }
+                        TreeNode root = (TreeNode) tree.getModel().getRoot();
+                        for(int a = 0; a < root.getChildCount(); a++) {
+                            if(root.getChildAt(a) instanceof UCTreeNode) {
+                                ((UCTreeNode) root.getChildAt(a)).setMain(false);
+                            }
+                        }
+
+                        if (tree.getLastSelectedPathComponent() instanceof UCTreeNode) {
                             ((UCTreeNode) tree.getLastSelectedPathComponent()).setMain(true);
                         }
+
                         tree.repaint();
                         break;
                 }
@@ -99,7 +104,7 @@ public class UCUseCaseTab extends UCTabParent {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
         });
-        
+
         this.getViewport().add(tree);
     }
 
