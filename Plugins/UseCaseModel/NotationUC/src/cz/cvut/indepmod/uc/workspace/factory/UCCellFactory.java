@@ -1,12 +1,7 @@
 package cz.cvut.indepmod.uc.workspace.factory;
 
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.*;
 import org.apache.log4j.Logger;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
@@ -65,8 +60,9 @@ public class UCCellFactory {
                 cell.getAttributes().applyMap(StepModel.installAttributes(point));
                 break;
             case ADD_SCENARIO:
-                cell.setUserObject(new ScenarioModel(UUID.randomUUID()));
-                cell.getAttributes().applyMap(ScenarioModel.installAttributes(point));
+                
+                //cell.setUserObject(new ScenarioModel(UUID.randomUUID()));
+                //cell.getAttributes().applyMap(ScenarioModel.installAttributes(point));
                 break;
             case ADD_SYSTEM_BORDER:
                 cell.setUserObject(new SystemBorderModel(UUID.randomUUID()));

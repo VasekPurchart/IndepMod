@@ -19,8 +19,8 @@ import java.util.UUID;
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- *
- * UCWorkspaceData represents the NotationWorkspaceData interface implementation for the UCNotation plugin.  
+ * <p/>
+ * UCWorkspaceData represents the NotationWorkspaceData interface implementation for the UCNotation plugin.
  */
 public class UCWorkspaceData implements NotationWorkspaceData {
 
@@ -39,14 +39,14 @@ public class UCWorkspaceData implements NotationWorkspaceData {
     public static final String PROPERTY_SELECTED_CELL = "selectedCell";
 
     public UCWorkspaceData(final ValueModel selectedToolModel,
-                            final ValueModel gridModel,
-                            final ValueModel lockModel,
-                            final ValueModel viewGridModel,
-                            final ValueModel cellSizeModel,
-                            final ValueModel scaleModel,
-                            final ValueModel movableBelowZeroModel,
-                            final Map<String, ProModAction> actions,
-                            final JPopupMenu popupMenu) {
+                           final ValueModel gridModel,
+                           final ValueModel lockModel,
+                           final ValueModel viewGridModel,
+                           final ValueModel cellSizeModel,
+                           final ValueModel scaleModel,
+                           final ValueModel movableBelowZeroModel,
+                           final Map<String, ProModAction> actions,
+                           final JPopupMenu popupMenu) {
 
         this.selectedToolModel = selectedToolModel;
 
@@ -67,27 +67,21 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         lockModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setEditable((Boolean) propertyChangeEvent.getNewValue());
-                for(UCTabParent tab : tabs.values()) {
-                    tab.getGraph().setEditable((Boolean) propertyChangeEvent.getNewValue());
-                }
+
             }
         });
 
         gridModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setGridEnabled((Boolean) propertyChangeEvent.getNewValue());
-                for(UCTabParent tab : tabs.values()) {
-                    tab.getGraph().setGridEnabled((Boolean) propertyChangeEvent.getNewValue());
-                }
+
             }
         });
 
         viewGridModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 graph.setGridVisible((Boolean) propertyChangeEvent.getNewValue());
-                for(UCTabParent tab : tabs.values()) {
-                    tab.getGraph().setGridVisible((Boolean) propertyChangeEvent.getNewValue());
-                }
+
             }
         });
 
@@ -97,10 +91,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
                 graph.setGridSize(gridCellSize.doubleValue());
                 graph.refresh();
-                for(UCTabParent tab : tabs.values()) {
-                    tab.getGraph().setGridSize(gridCellSize.doubleValue());
-                    tab.getGraph().refresh();
-                }
+
             }
         });
 
@@ -125,9 +116,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
                 final double scaleMultiplicator = (((Integer) evt.getNewValue()).doubleValue()) / 100.0;
 
                 graph.setScale(scaleMultiplicator);
-                for(UCTabParent tab : tabs.values()) {
-                    tab.getGraph().setScale(scaleMultiplicator);
-                }
+
             }
         });
 
@@ -135,9 +124,7 @@ public class UCWorkspaceData implements NotationWorkspaceData {
             public void propertyChange(PropertyChangeEvent evt) {
                 graph.setMoveBelowZero((Boolean) evt.getNewValue());
 
-                for(UCTabParent tab : tabs.values()) {
-                    tab.getGraph().setMoveBelowZero((Boolean) evt.getNewValue());
-                }
+
             }
         });
     }

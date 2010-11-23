@@ -8,6 +8,7 @@ import org.jgraph.graph.GraphConstants;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
@@ -18,6 +19,7 @@ import java.util.UUID;
  */
 public class UseCaseModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.uc");
+    private Map<Integer, ScenarioModel> scenarios = new HashMap<Integer, ScenarioModel>();
 
     public static final int DEFAULT_INSET = 6;
 
@@ -62,6 +64,16 @@ public class UseCaseModel extends UCEditableVertex {
     
     public UUID getUuid() {
         return this.uuid;  
+    }
+
+    public Map<Integer, ScenarioModel> getScenarios() {
+        return this.scenarios;
+    }
+    public ScenarioModel getScenario(Integer id) {
+        return this.scenarios.get(id);
+    }
+    public void addScenario(Integer id, ScenarioModel scenario) {
+        this.scenarios.put(id, scenario);
     }
 
 }

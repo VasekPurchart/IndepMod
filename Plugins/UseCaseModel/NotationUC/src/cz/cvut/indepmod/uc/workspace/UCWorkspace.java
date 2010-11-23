@@ -190,7 +190,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
             Iterator iterator = (UCWorkspaceData.getTabs().keySet()).iterator();
             while (iterator.hasNext()) {
                 UUID key = (UUID) iterator.next();
-                JScrollPane tab = UCWorkspaceData.getTabs().get(key);
+                Component tab = UCWorkspaceData.getTabs().get(key);
                 if (tab.equals(this.getComponent(tabNumber))) {
                     LOG.info("Removing tab: " + key);
                     UCWorkspaceData.getTabs().remove(key);
