@@ -5,9 +5,8 @@ import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
 import cz.cvut.indepmod.uc.workspace.tabs.UCDefaultTab;
-import cz.cvut.indepmod.uc.workspace.tabs.UCGraphUseCase;
 import cz.cvut.indepmod.uc.workspace.tabs.UCTabParent;
-import cz.cvut.indepmod.uc.workspace.tabs.UCUseCaseTab;
+import cz.cvut.indepmod.uc.workspace.tabs.usecase.UCUseCaseTab;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.workspace.UpdatableWorkspaceComponent;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
@@ -25,7 +24,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
@@ -39,7 +37,6 @@ import java.util.UUID;
  */
 public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener, MouseListener {
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
-    private Map<UUID, JGraph> tabGraphs = new HashMap<UUID, JGraph>();
     protected ProjectDiagram actualProjectDiagram = null;
 
     private final JGraph graph;
@@ -102,11 +99,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
             int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
             this.setSelectedIndex(index);
         } else {
-            if (!tabGraphs.containsKey(uuid)) {
-                tabGraphs.put(uuid, new UCGraphUseCase(this.selectedToolModel, this.popupMenu, actions));
-            }
-            JGraph tabGraph = tabGraphs.get(uuid);
-            UCTabParent tab = (new UCUseCaseTab(tabGraph, actions, uuid));
+            UCTabParent tab = (new UCUseCaseTab(actions, uuid));
             this.addTab(name, new CloseTabIcon(), tab);
 
             UCWorkspaceData.getTabs().put(uuid, tab);
@@ -222,6 +215,14 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
     public void setPreviousTab() {
         this.previousTab = this.getSelectedIndex();
+    }
+
+    public UCDiagramModel getDiagramModel() {
+        return this.actualUCDiagramModel;
+    }
+
+    public ValueModel getSelectedToolModel() {
+        return this.selectedToolModel;
     }
 
 }

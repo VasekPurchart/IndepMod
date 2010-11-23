@@ -144,4 +144,5 @@ public class UCWorkspaceData implements NotationWorkspaceData {
     public static JComponent getWorkspaceComponentSingletonStatic() {
         return workspace;
     }
+
 }

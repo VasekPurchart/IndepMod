@@ -8,6 +8,7 @@ import org.jgraph.graph.GraphUndoManager;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.*;
 
 /**
@@ -20,7 +21,7 @@ import java.util.*;
 public class UCDiagramModel implements DiagramModel {
 
     private final GraphLayoutCache graphLayoutCache;
-    private Map<UUID, GraphLayoutCache> userCaseCaches = new HashMap<UUID, GraphLayoutCache>();
+    private Map<UUID, JTree> useCaseTrees = new HashMap<UUID, JTree>();
 
     private final transient GraphUndoManager undoManager;
 
@@ -62,11 +63,12 @@ public class UCDiagramModel implements DiagramModel {
         return graphLayoutCache;
     }
 
-    public GraphLayoutCache getGraphLayoutCacheUseCase(UUID uuid) {
-        if(!this.userCaseCaches.containsKey(uuid)) {
-            this.userCaseCaches.put(uuid, new GraphLayoutCache());
+    public JTree getJTree(UUID uuid) {
+        if(!this.useCaseTrees.containsKey(uuid)) {
+            DefaultMutableTreeNode top = new DefaultMutableTreeNode("TOP");
+            this.useCaseTrees.put(uuid, new JTree(top));
         }
-        return this.userCaseCaches.get(uuid);
+        return this.useCaseTrees.get(uuid);
     }
 
     /**
