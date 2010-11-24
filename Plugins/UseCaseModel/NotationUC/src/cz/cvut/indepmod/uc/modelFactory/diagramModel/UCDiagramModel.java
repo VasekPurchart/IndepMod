@@ -8,8 +8,8 @@ import org.jgraph.graph.GraphUndoManager;
 
 import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
-import java.util.HashSet;
-import java.util.Set;
+import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.*;
 
 /**
  * UseCase plugin - SI2/3 school project
@@ -21,6 +21,7 @@ import java.util.Set;
 public class UCDiagramModel implements DiagramModel {
 
     private final GraphLayoutCache graphLayoutCache;
+    private Map<UUID, JTree> useCaseTrees = new HashMap<UUID, JTree>();
 
     private final transient GraphUndoManager undoManager;
 
@@ -60,6 +61,14 @@ public class UCDiagramModel implements DiagramModel {
 
     public GraphLayoutCache getGraphLayoutCache() {
         return graphLayoutCache;
+    }
+
+    public JTree getJTree(UUID uuid) {
+        if(!this.useCaseTrees.containsKey(uuid)) {
+            DefaultMutableTreeNode top = new DefaultMutableTreeNode("TOP");
+            this.useCaseTrees.put(uuid, new JTree(top));
+        }
+        return this.useCaseTrees.get(uuid);
     }
 
     /**

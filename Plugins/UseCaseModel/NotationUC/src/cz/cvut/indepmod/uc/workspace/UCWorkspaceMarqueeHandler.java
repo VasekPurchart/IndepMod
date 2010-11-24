@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
+import cz.cvut.indepmod.uc.workspace.tabs.UCGraph;
 import org.jgraph.JGraph;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.Port;
