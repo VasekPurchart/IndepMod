@@ -1,8 +1,6 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphModel;
 
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.StepModel;
-import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ScenarioModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.EdgeModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
@@ -21,11 +19,12 @@ import java.util.List;
  * Represents an implementation of common GraphModel for UC notation diagrams.
  */
 public class UCGraphModel extends DefaultGraphModel{       
-
     private final static String ERROR_TITLE_LABEL = Resources.getResources().getString("uc.conn.error.title");
     private final static String ERROR_SYSTEM_BORDER_LABEL = Resources.getResources().getString("uc.conn.error.system_border");
     private final static String ERROR_INCLUDE_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.include.flow");
     private final static String ERROR_CONTROL_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.control.flow");
+    private final static String ERROR_ONE_CONTROL_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.one_control.flow");
+    private final static String ERROR_ONE_INCLUDE_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.one_include.flow");
 
     public UCGraphModel(){
         super(null, null);
@@ -107,6 +106,68 @@ public class UCGraphModel extends DefaultGraphModel{
                     ERROR_CONTROL_FLOW_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
 
                 return false;
+            }
+        }
+
+
+        // Between two same object cant be more than one control flow
+        if(EdgeModel.EdgeType.INCLUDE_FLOW.equals(edgeModel.getEdgeType())){
+            for(Object portEdge : targetPort.getEdges()){
+                final DefaultEdge testingEdge = (DefaultEdge) portEdge;
+                final EdgeModel testingEdgeModel = (EdgeModel) testingEdge.getUserObject();
+
+                if(edge != testingEdge){ // when a new 'line breaking' point is added, the graph behaves like a new edge would be added
+
+                    if(EdgeModel.EdgeType.INCLUDE_FLOW.equals(testingEdgeModel.getEdgeType())){
+                        if(testingEdge.getTarget() == targetPort)
+                        {
+                            final DefaultPort testingPortSource = (DefaultPort) testingEdge.getSource();
+                            final DefaultGraphCell testingCellSource = (DefaultGraphCell) testingPortSource.getParent();
+                            final DefaultPort testingPortTarget = (DefaultPort) testingEdge.getTarget();
+                            final DefaultGraphCell testingCellTarget = (DefaultGraphCell) testingPortTarget.getParent();
+                            if(testingCellSource.getUserObject().equals(targetUserObject) ||
+                               testingCellSource.getUserObject().equals(sourceUserObject) ||
+                               testingCellTarget.getUserObject().equals(targetUserObject) ||
+                               testingCellTarget.getUserObject().equals(sourceUserObject)) {
+                                JOptionPane.showMessageDialog(ModelerSession.getFrame(),
+                                ERROR_ONE_INCLUDE_FLOW_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
+
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Between two same object cant be more than one control flow
+        if(EdgeModel.EdgeType.CONTROL_FLOW.equals(edgeModel.getEdgeType())){
+            for(Object portEdge : targetPort.getEdges()){
+                final DefaultEdge testingEdge = (DefaultEdge) portEdge;
+                final EdgeModel testingEdgeModel = (EdgeModel) testingEdge.getUserObject();
+
+                if(edge != testingEdge){ // when a new 'line breaking' point is added, the graph behaves like a new edge would be added
+
+                    if(EdgeModel.EdgeType.CONTROL_FLOW.equals(testingEdgeModel.getEdgeType())){
+                        if(testingEdge.getTarget() == targetPort ||
+                           testingEdge.getSource() == targetPort)
+                        {
+                            final DefaultPort testingPortSource = (DefaultPort) testingEdge.getSource();
+                            final DefaultGraphCell testingCellSource = (DefaultGraphCell) testingPortSource.getParent();
+                            final DefaultPort testingPortTarget = (DefaultPort) testingEdge.getTarget();
+                            final DefaultGraphCell testingCellTarget = (DefaultGraphCell) testingPortTarget.getParent();
+                            if(testingCellSource.getUserObject().equals(targetUserObject) ||
+                               testingCellSource.getUserObject().equals(sourceUserObject) ||
+                               testingCellTarget.getUserObject().equals(targetUserObject) ||
+                               testingCellTarget.getUserObject().equals(sourceUserObject)) {
+                                JOptionPane.showMessageDialog(ModelerSession.getFrame(),
+                                ERROR_ONE_CONTROL_FLOW_LABEL, ERROR_TITLE_LABEL, JOptionPane.ERROR_MESSAGE);
+
+                                return false;
+                            }
+                        }
+                    }
+                }
             }
         }
 

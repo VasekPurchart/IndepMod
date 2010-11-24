@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace.tabs;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.SystemBorderModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCEditableVertex;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UCIdentifiableVertex;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
@@ -168,7 +169,25 @@ public class UCGraph extends JGraph {
     }
 
     public PortView getTargetPortAt(final Point2D point) {
-        return getPortViewAt(point.getX(), point.getY()); // default port can be used
+
+        PortView result = getPortViewAt(point.getX(), point.getY());
+
+        // System Border cant be connected
+        if(result != null)
+        {
+            org.jgraph.graph.DefaultPort model = (org.jgraph.graph.DefaultPort) result.getCell();
+            org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
+            if(graphCell.getUserObject() instanceof SystemBorderModel)
+                result = null;
+
+            /*  This works but view part doesnt work - Lukas
+            if(graphCell.getUserObject() instanceof ActorModel &&           
+               (UCWorkspaceMarqueeHandler.getStartingPortComponentType() == UCGraphModel.TYPE_ACTOR ||
+                UCWorkspaceMarqueeHandler.getEdgeType() == EdgeModel.EdgeType.INCLUDE_FLOW))
+                result = null; */
+        }
+        
+        return result;
     }
 
     /**
