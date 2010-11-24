@@ -152,6 +152,12 @@ public class UCGraph extends JGraph {
             org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
             if(graphCell.getUserObject() instanceof SystemBorderModel)
                 result = null;
+
+            /*  This works but view part doesnt work - Lukas
+            if(graphCell.getUserObject() instanceof ActorModel &&           
+               (UCWorkspaceMarqueeHandler.getStartingPortComponentType() == UCGraphModel.TYPE_ACTOR ||
+                UCWorkspaceMarqueeHandler.getEdgeType() == EdgeModel.EdgeType.INCLUDE_FLOW))
+                result = null; */
         }
         
         return result;
