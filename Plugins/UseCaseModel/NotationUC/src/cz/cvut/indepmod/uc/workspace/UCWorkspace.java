@@ -88,10 +88,10 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     public UCWorkspace(final JGraph graph,
                        final Map<String, ProModAction> actions,
                        final ValueModel selectedToolModel,
-                       final JPopupMenu popupMenu) {
+                       final JPopupMenu popupMenuActor) {
         this(graph, actions);
         this.selectedToolModel = selectedToolModel;
-        this.popupMenu = popupMenu;
+        this.popupMenu = popupMenuActor;
     }
 
     public void openTab(UUID uuid, String name) {

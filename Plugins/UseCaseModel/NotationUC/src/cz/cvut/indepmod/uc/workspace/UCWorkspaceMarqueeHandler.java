@@ -2,10 +2,12 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.workspace.tabs.UCGraph;
 import org.jgraph.JGraph;
 import org.jgraph.graph.BasicMarqueeHandler;
+import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
 
@@ -22,7 +24,6 @@ import java.awt.geom.Point2D;
  * Implementation of MarqueeHandler for UC notation.
  */
 public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
-
     private PortView currentPort = null;
     private PortView startingPort = null;
 
@@ -39,15 +40,18 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
 
     final ValueModel selectedToolModel;
 
-    final JPopupMenu popupMenu;
+    final JPopupMenu popupMenuActor;
+    final JPopupMenu popupMenuUC;
 
     public UCWorkspaceMarqueeHandler(final UCGraph graph,
                                       final ValueModel selectedToolModel,
-                                      final JPopupMenu popupMenu
+                                      final JPopupMenu popupMenuActor,
+                                      final JPopupMenu popupMenuUC
     ){
         this.graph = graph;
         this.selectedToolModel = selectedToolModel;
-        this.popupMenu = popupMenu;
+        this.popupMenuActor = popupMenuActor;
+        this.popupMenuUC = popupMenuUC;
         previewDrawName = NO_COMPONENT;
     }
 
@@ -88,8 +92,17 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
     public void mousePressed(final MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e)){
             // show the popup menu
-            popupMenu.show(graph, e.getX(), e.getY());
-
+            //switch(currentPort.getCell())
+            //Component c = graph.getSourcePortAt()
+            //if(currentPort != null)
+            DefaultGraphCell defaultCell = (DefaultGraphCell) graph.getSelectionCellAt(e.getPoint());
+            if(defaultCell != null)
+            {
+                if(defaultCell.getUserObject() instanceof UseCaseModel)
+                    popupMenuUC.show(graph, e.getX(), e.getY());
+                else if(defaultCell.getUserObject() instanceof ActorModel)
+                    popupMenuActor.show(graph, e.getX(), e.getY());
+            }
         }  else if(addingVertex(e)){
             // insert new cell
             graph.insert(e.getPoint());

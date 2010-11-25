@@ -42,7 +42,8 @@ public class UCGraph extends JGraph {
     private ProModAction removeAction; //never change this action once has been instantiated
 
     public UCGraph(final ValueModel selectedToolModel,
-                   final JPopupMenu popupMenu,
+                   final JPopupMenu popupMenuActor,
+                   final JPopupMenu popupMenuUC,
                    Map<String, ProModAction> actions) {
 
         this.selectedToolModel = selectedToolModel;
@@ -52,7 +53,7 @@ public class UCGraph extends JGraph {
 
         initActions(actions);
 
-        setMarqueeHandler(new UCWorkspaceMarqueeHandler(this, selectedToolModel, popupMenu));
+        setMarqueeHandler(new UCWorkspaceMarqueeHandler(this, selectedToolModel, popupMenuActor, popupMenuUC));
     }
 
     protected void processKeyEvent(KeyEvent e) {

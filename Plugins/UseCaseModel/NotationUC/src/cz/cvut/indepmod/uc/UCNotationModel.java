@@ -63,8 +63,8 @@ public class UCNotationModel {
 
     private final Map<String, ProModAction> actions;
 
-    private final  JPopupMenu popupMenu = ModelerSession.getComponentFactoryService().createPopupMenu();
-
+    private final  JPopupMenu popupMenuActor = ModelerSession.getComponentFactoryService().createPopupMenu();
+    private final  JPopupMenu popupMenuUC = ModelerSession.getComponentFactoryService().createPopupMenu();
 
     /**
      * Constructs a new UCNotationModel.
@@ -105,13 +105,14 @@ public class UCNotationModel {
                 graphOptions.getScaleModel(),
                 graphOptions.getMovableBelowZeroModel(),
                 actions,
-                popupMenu
+                popupMenuActor,
+                popupMenuUC
         );
 
         // frames event handling
         vertexInfo.initCellSelectionListener(workspace.getGraph());
         graphOptions.initEventHandling(actions);
-        initPopupMenu();
+        initPopupMenus();
     }
 
     private void initActions() {
@@ -188,18 +189,19 @@ public class UCNotationModel {
         );
     }
 
-    private void initPopupMenu() {
+    private void initPopupMenus() {
         final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
-        popupMenu.add(deleteAction);
-
+        popupMenuActor.add(deleteAction);
+        popupMenuUC.add(deleteAction);
+        
         final Action detailAction = getAction(DETAIL_ACTION_KEY);
         detailAction.setEnabled(true);
-        popupMenu.add(detailAction);
+        popupMenuUC.add(detailAction);
     }
 
     public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable)  {
-        return ModelerSession.getMenuService().insertAction(null, popupMenu, proModAction, menuSeparator, menuItemPosition, checkable);
+        return ModelerSession.getMenuService().insertAction(null, popupMenuActor, proModAction, menuSeparator, menuItemPosition, checkable);
     }
 
     private void checkProperties() throws InstantiationException{
