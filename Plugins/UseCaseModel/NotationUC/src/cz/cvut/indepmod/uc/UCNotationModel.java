@@ -105,6 +105,7 @@ public class UCNotationModel {
                 graphOptions.getScaleModel(),
                 graphOptions.getMovableBelowZeroModel(),
                 actions,
+                toolChooser,
                 popupMenuActor,
                 popupMenuUC
         );

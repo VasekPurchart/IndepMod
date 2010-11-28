@@ -1,15 +1,13 @@
 package cz.cvut.indepmod.uc.frames.toolChooser;
 
-import com.jgoodies.forms.factories.Borders;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.builder.PanelBuilder;
-
-import javax.swing.*;
-
+import com.jgoodies.forms.factories.Borders;
+import com.jgoodies.forms.layout.CellConstraints;
+import com.jgoodies.forms.layout.FormLayout;
 import cz.cvut.promod.services.ModelerSession;
 import cz.cvut.promod.services.componentFactoryService.ComponentFactoryService;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -67,6 +65,9 @@ public class ToolChooserView extends JPanel {
         initLayout();       
     }
 
+    private PanelBuilder builderUC;
+    private PanelBuilder builderDetail;
+
     private void initLayout() {
         setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
 
@@ -75,24 +76,40 @@ public class ToolChooserView extends JPanel {
                 /* rows */ "pref, 3dlu, pref, 10dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
         );
 
-        final PanelBuilder builder = new PanelBuilder(layout);
+        builderUC = new PanelBuilder(layout);
+        builderDetail = new PanelBuilder(layout);
         final CellConstraints cellConstraints = new CellConstraints();
 
-        builder.add(controlButton, cellConstraints.xy(1,1));
-        builder.add(addActorButton, cellConstraints.xy(1,5));
-        builder.add(addUseCaseButton, cellConstraints.xy(1,7));
-        builder.add(addSystemBorderButton, cellConstraints.xy(1,9));
-        builder.add(addScenarioButton, cellConstraints.xy(1,11));
-        builder.add(addSelectMssButton, cellConstraints.xy(1,13));
-        builder.add(addStepButton, cellConstraints.xy(1,15));
-        builder.add(addIncludeUcButton, cellConstraints.xy(1,17));
-        builder.add(new JLabel("   "), cellConstraints.xy(1,18));
-        builder.add(addControlFlowLineButton, cellConstraints.xy(1,20));
-        builder.add(addIncludeFlowLineButton, cellConstraints.xy(1,22));
+        builderUC.add(controlButton, cellConstraints.xy(1,1));
+        builderUC.add(addActorButton, cellConstraints.xy(1,5));
+        builderUC.add(addUseCaseButton, cellConstraints.xy(1,7));
+        builderUC.add(addSystemBorderButton, cellConstraints.xy(1,9));
+        builderDetail.add(addScenarioButton, cellConstraints.xy(1,1));
+        builderDetail.add(addSelectMssButton, cellConstraints.xy(1,3));
+        builderDetail.add(addStepButton, cellConstraints.xy(1,5));
+        builderDetail.add(addIncludeUcButton, cellConstraints.xy(1,7));
+        builderUC.add(new JLabel("   "), cellConstraints.xy(1,12));
+        builderUC.add(addControlFlowLineButton, cellConstraints.xy(1,13));
+        builderUC.add(addIncludeFlowLineButton, cellConstraints.xy(1,15));
         
         setLayout(new BorderLayout());
+        add(builderUC.getPanel(), BorderLayout.NORTH);
+    }
 
-        add(builder.getPanel(), BorderLayout.NORTH);
+    public void ChangePanel(String panelName)
+    {
+        removeAll();
+        setLayout(new BorderLayout());
+        if(panelName.compareTo("UC") == 0)
+        {
+            add(builderUC.getPanel(), BorderLayout.NORTH);
+        }
+        else
+        {
+            add(builderDetail.getPanel(), BorderLayout.NORTH);
+        }
+        //this.requestFocus();
+        repaint();
     }
 
     public JToggleButton getAddControlFlowLineButton() {

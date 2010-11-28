@@ -1,6 +1,7 @@
 package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
+import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooser;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.workspace.tabs.UCGraph;
 import cz.cvut.indepmod.uc.workspace.tabs.UCTabParent;
@@ -46,13 +47,14 @@ public class UCWorkspaceData implements NotationWorkspaceData {
                            final ValueModel scaleModel,
                            final ValueModel movableBelowZeroModel,
                            final Map<String, ProModAction> actions,
+                           final ToolChooser toolChooser,
                            final JPopupMenu popupMenuActor,
                            final JPopupMenu popupMenuUC) {
 
         this.selectedToolModel = selectedToolModel;
 
         graph = new UCGraph(selectedToolModel, popupMenuActor, popupMenuUC, actions);
-        workspace = new UCWorkspace(graph, actions, selectedToolModel, popupMenuActor);
+        workspace = new UCWorkspace(graph, actions, selectedToolModel, popupMenuActor, toolChooser);
 
         this.gridModel = gridModel;
         this.lockModel = lockModel;
