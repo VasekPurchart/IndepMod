@@ -51,6 +51,7 @@ public class UCUseCaseTab extends UCTabParent {
             }
         });
         final int oldToggleClickCount = tree.getToggleClickCount();
+       // tree.setEditable(true);
         tree.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
 
@@ -59,7 +60,7 @@ public class UCUseCaseTab extends UCTabParent {
                 DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 MutableTreeNode newNode;
-               
+
                 switch (tool) {
                     case ADD_SCENARIO:
                         if (!(node instanceof UCScenarioNode)) {
@@ -95,6 +96,15 @@ public class UCUseCaseTab extends UCTabParent {
 
                         tree.repaint();
                         //((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
+                        break;
+                    case CONTROL:
+                        if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode || tree.getLastSelectedPathComponent() instanceof UCStepNode) {
+                            tree.setToggleClickCount(oldToggleClickCount);
+                            tree.setEditable(true);
+                        } else {
+                            tree.setToggleClickCount(0);
+                            tree.setEditable(false);
+                        }
                         break;
                     default:
                         tree.setToggleClickCount(oldToggleClickCount);

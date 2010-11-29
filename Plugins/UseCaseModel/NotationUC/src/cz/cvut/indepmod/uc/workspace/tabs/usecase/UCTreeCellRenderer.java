@@ -30,6 +30,7 @@ public class UCTreeCellRenderer implements TreeCellRenderer {
             renderer.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
             renderer.setPreferredSize(new Dimension(200, 40));
             
+            
         }
         if (value.equals(tree.getModel().getRoot())) {
             font = new Font("SansSerif", Font.BOLD, 30);
