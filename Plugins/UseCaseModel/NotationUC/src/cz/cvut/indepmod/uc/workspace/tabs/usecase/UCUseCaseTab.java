@@ -24,9 +24,9 @@ public class UCUseCaseTab extends UCTabParent {
         this.uuid = uuid;
 
         final JTree tree = new JTree(((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getJTree(uuid));
-                
+
         tree.putClientProperty("JTree.lineStyle", "None");
-        
+
         tree.setCellRenderer(new UCTreeCellRenderer());
         tree.addKeyListener(new KeyListener() {
 
@@ -50,14 +50,16 @@ public class UCUseCaseTab extends UCTabParent {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
         });
+        final int oldToggleClickCount = tree.getToggleClickCount();
         tree.addMouseListener(new MouseListener() {
-
             public void mouseClicked(MouseEvent e) {
+
                 final ToolChooserModel.Tool tool = ((ToolChooserModel.Tool) ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().getValue());
 
                 DefaultTreeModel model = (DefaultTreeModel) tree.getModel();
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 MutableTreeNode newNode;
+               
                 switch (tool) {
                     case ADD_SCENARIO:
                         if (!(node instanceof UCScenarioNode)) {
@@ -76,14 +78,13 @@ public class UCUseCaseTab extends UCTabParent {
                         ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
                         break;
                     case SELECT_MSS:
-                        int oldToggleClickCount = tree.getToggleClickCount();
                         tree.setToggleClickCount(0);
                         if (!(tree.getLastSelectedPathComponent() instanceof UCScenarioNode)) {
                             break;
                         }
                         TreeNode root = (TreeNode) tree.getModel().getRoot();
-                        for(int a = 0; a < root.getChildCount(); a++) {
-                            if(root.getChildAt(a) instanceof UCScenarioNode) {
+                        for (int a = 0; a < root.getChildCount(); a++) {
+                            if (root.getChildAt(a) instanceof UCScenarioNode) {
                                 ((UCScenarioNode) root.getChildAt(a)).setMain(false);
                             }
                         }
@@ -93,9 +94,10 @@ public class UCUseCaseTab extends UCTabParent {
                         }
 
                         tree.repaint();
-                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
-                        tree.setToggleClickCount(oldToggleClickCount);
+                        //((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
                         break;
+                    default:
+                        tree.setToggleClickCount(oldToggleClickCount);
                 }
             }
 
