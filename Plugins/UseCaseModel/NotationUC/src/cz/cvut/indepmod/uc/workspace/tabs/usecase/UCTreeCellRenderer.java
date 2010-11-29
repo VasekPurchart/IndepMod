@@ -17,6 +17,7 @@ public class UCTreeCellRenderer implements TreeCellRenderer {
 
         renderer.setBorder(null);
         renderer.setIcon(null);
+        renderer.setClosedIcon(null);
 
         Font font = new Font("SansSerif", Font.PLAIN, 20);
         if (value instanceof UCScenarioNode) {

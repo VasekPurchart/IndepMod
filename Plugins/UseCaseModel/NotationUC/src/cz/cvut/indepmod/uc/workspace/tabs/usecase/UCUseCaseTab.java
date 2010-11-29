@@ -65,6 +65,7 @@ public class UCUseCaseTab extends UCTabParent {
                             model.insertNodeInto(newNode, node, node.getChildCount());
                         }
                         tree.expandRow(tree.getLeadSelectionRow());
+                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
                         break;
                     case ADD_STEP:
                         if (node instanceof UCScenarioNode) {
@@ -72,8 +73,11 @@ public class UCUseCaseTab extends UCTabParent {
                             model.insertNodeInto(newNode, node, node.getChildCount());
                         }
                         tree.expandRow(tree.getLeadSelectionRow());
+                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
                         break;
                     case SELECT_MSS:
+                        int oldToggleClickCount = tree.getToggleClickCount();
+                        tree.setToggleClickCount(0);
                         if (!(tree.getLastSelectedPathComponent() instanceof UCScenarioNode)) {
                             break;
                         }
@@ -89,6 +93,8 @@ public class UCUseCaseTab extends UCTabParent {
                         }
 
                         tree.repaint();
+                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
+                        tree.setToggleClickCount(oldToggleClickCount);
                         break;
                 }
             }
