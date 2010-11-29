@@ -3,6 +3,7 @@ package cz.cvut.indepmod.uc.workspace;
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
 import cz.cvut.indepmod.uc.workspace.tabs.UCDefaultTab;
 import cz.cvut.indepmod.uc.workspace.tabs.UCTabParent;
@@ -94,17 +95,24 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         this.popupMenu = popupMenu;
     }
 
-    public void openTab(UUID uuid, String name) {
+    public void openTab(UUID uuid, String name, UseCaseModel object) {
         if (UCWorkspaceData.getTabs().containsKey(uuid)) {
             int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
             this.setSelectedIndex(index);
         } else {
-            UCTabParent tab = (new UCUseCaseTab(actions, uuid));
+            UCTabParent tab = (new UCUseCaseTab(actions, uuid, name, object));
             this.addTab(name, new CloseTabIcon(), tab);
 
             UCWorkspaceData.getTabs().put(uuid, tab);
             int index = this.indexOfComponent(tab);
             this.setSelectedIndex(index);
+        }
+    }
+
+    public void setTabName(UUID uuid, String name) {
+         if (UCWorkspaceData.getTabs().containsKey(uuid)) {
+            int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
+            this.setTitleAt(index, name);
         }
     }
 

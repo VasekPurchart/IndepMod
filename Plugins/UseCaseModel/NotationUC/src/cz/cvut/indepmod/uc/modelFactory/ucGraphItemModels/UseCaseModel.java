@@ -3,12 +3,15 @@ package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 import com.jgraph.components.labels.CellConstants;
 import com.jgraph.components.labels.MultiLineVertexRenderer;
 import cz.cvut.indepmod.uc.resources.Resources;
+import cz.cvut.indepmod.uc.workspace.UCWorkspace;
+import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
 import org.jgraph.graph.GraphConstants;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
@@ -19,7 +22,7 @@ import java.util.UUID;
  */
 public class UseCaseModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.uc");
-    private Map<Integer, ScenarioModel> scenarios = new HashMap<Integer, ScenarioModel>();
+    private DefaultTreeModel model = new DefaultTreeModel(null);
 
     public static final int DEFAULT_INSET = 6;
 
@@ -28,24 +31,25 @@ public class UseCaseModel extends UCEditableVertex {
 
     private UUID uuid;
 
-    public UseCaseModel(final UUID uuid){
+    public UseCaseModel(final UUID uuid) {
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
     }
 
-    public UseCaseModel(final UseCaseModel useCaseModel, final String name){
+    public UseCaseModel(final UseCaseModel useCaseModel, final String name) {
         setName(name);
         uuid = useCaseModel.getUuid();
         setNote(useCaseModel.getNote());
+        model = useCaseModel.getModel();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 
     /**
-    /**
+     * /**
      * Initialize new vertex attributes.
      *
      * @param point is the point where new vertex is supposed to be inserted
@@ -64,19 +68,24 @@ public class UseCaseModel extends UCEditableVertex {
 
         return map;
     }
-    
+
     public UUID getUuid() {
-        return this.uuid;  
+        return this.uuid;
     }
 
-    public Map<Integer, ScenarioModel> getScenarios() {
-        return this.scenarios;
-    }
-    public ScenarioModel getScenario(Integer id) {
-        return this.scenarios.get(id);
-    }
-    public void addScenario(Integer id, ScenarioModel scenario) {
-        this.scenarios.put(id, scenario);
+    public void setName(final String name) {
+        if (this.model.getRoot() != null) {
+            ((DefaultMutableTreeNode )this.model.getRoot()).setUserObject(name);
+        }
+        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).setTabName(this.getUuid(), name);
+        this.name = name;
     }
 
+    public DefaultTreeModel getModel() {
+        return model;
+    }
+
+    public void setModel(DefaultTreeModel model) {
+        this.model = model;
+    }
 }

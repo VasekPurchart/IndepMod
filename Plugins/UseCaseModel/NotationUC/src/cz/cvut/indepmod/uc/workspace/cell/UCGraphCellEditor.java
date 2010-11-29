@@ -44,14 +44,12 @@ public class UCGraphCellEditor extends DefaultGraphCellEditor {
 
             } else if(oldUserObject instanceof UseCaseModel){
                 newUserObject = new UseCaseModel((UseCaseModel)oldUserObject, newName);
+                ((UseCaseModel) newUserObject).setName(newName);
+                System.out.println("");
             } else if(oldUserObject instanceof ActorModel) {
                 newUserObject = new ActorModel((ActorModel)oldUserObject, newName);
             } else if(oldUserObject instanceof SystemBorderModel) {
                 newUserObject = new SystemBorderModel((SystemBorderModel)oldUserObject, newName);
-            } else if(oldUserObject instanceof StepModel) {
-                newUserObject = new StepModel((StepModel)oldUserObject, newName);
-            } else if(oldUserObject instanceof ScenarioModel) {
-                newUserObject = new ScenarioModel((ScenarioModel)oldUserObject, newName);
             } else {
                 // should never happened, testing & debugging purposes
                 LOG.error("Unknown UC vertex model");
