@@ -9,9 +9,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * Time: 20:47:10
  * To change this template use File | Settings | File Templates.
  */
-public class UCTreeNode extends DefaultMutableTreeNode {
+public class UCScenarioNode extends DefaultMutableTreeNode {
     private boolean main = false;
-    public UCTreeNode(String str) {
+    public UCScenarioNode(String str) {
         super(str);       
     }
     public boolean getMain() {

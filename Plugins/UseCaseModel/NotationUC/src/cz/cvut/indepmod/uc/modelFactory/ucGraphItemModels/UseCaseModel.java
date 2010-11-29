@@ -58,7 +58,7 @@ public class UseCaseModel extends UCEditableVertex {
 
         GraphConstants.setBounds(map, new Rectangle2D.Double(point.getX(), point.getY(), USE_CASE_WIDTH, USE_CASE_HEIGHT)); // velikost 200*20
         // GraphConstants.setResize(map, true); !!! Toto je nutne odebrat, aby se velikost zmenila
-        GraphConstants.setBorderColor(map, Color.red);
+        GraphConstants.setBorderColor(map, Color.BLACK);
         GraphConstants.setOpaque(map, true);
         GraphConstants.setInset(map, DEFAULT_INSET);
 

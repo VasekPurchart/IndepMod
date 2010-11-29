@@ -23,7 +23,10 @@ public class UCUseCaseTab extends UCTabParent {
         super(null, actions);
         this.uuid = uuid;
 
-        final JTree tree = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getJTree(uuid);
+        final JTree tree = new JTree(((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getJTree(uuid));
+                
+        tree.putClientProperty("JTree.lineStyle", "None");
+        
         tree.setCellRenderer(new UCTreeCellRenderer());
         tree.addKeyListener(new KeyListener() {
 
@@ -57,30 +60,32 @@ public class UCUseCaseTab extends UCTabParent {
                 MutableTreeNode newNode;
                 switch (tool) {
                     case ADD_SCENARIO:
-                        if (!(node instanceof UCTreeNode)) {
-                            newNode = new UCTreeNode("Scenario");
+                        if (!(node instanceof UCScenarioNode)) {
+                            newNode = new UCScenarioNode("Scenario");
                             model.insertNodeInto(newNode, node, node.getChildCount());
                         }
+                        tree.expandRow(tree.getLeadSelectionRow());
                         break;
                     case ADD_STEP:
-                        if (node instanceof UCTreeNode) {
-                            newNode = new DefaultMutableTreeNode("Step");
+                        if (node instanceof UCScenarioNode) {
+                            newNode = new UCStepNode("Step");
                             model.insertNodeInto(newNode, node, node.getChildCount());
                         }
+                        tree.expandRow(tree.getLeadSelectionRow());
                         break;
                     case SELECT_MSS:
-                        if (!(tree.getLastSelectedPathComponent() instanceof UCTreeNode)) {
+                        if (!(tree.getLastSelectedPathComponent() instanceof UCScenarioNode)) {
                             break;
                         }
                         TreeNode root = (TreeNode) tree.getModel().getRoot();
                         for(int a = 0; a < root.getChildCount(); a++) {
-                            if(root.getChildAt(a) instanceof UCTreeNode) {
-                                ((UCTreeNode) root.getChildAt(a)).setMain(false);
+                            if(root.getChildAt(a) instanceof UCScenarioNode) {
+                                ((UCScenarioNode) root.getChildAt(a)).setMain(false);
                             }
                         }
 
-                        if (tree.getLastSelectedPathComponent() instanceof UCTreeNode) {
-                            ((UCTreeNode) tree.getLastSelectedPathComponent()).setMain(true);
+                        if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode) {
+                            ((UCScenarioNode) tree.getLastSelectedPathComponent()).setMain(true);
                         }
 
                         tree.repaint();
