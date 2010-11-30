@@ -22,7 +22,6 @@ import java.awt.geom.Point2D;
  * Implementation of MarqueeHandler for UC notation.
  */
 public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
-
     private PortView currentPort = null;
     private PortView startingPort = null;
 
@@ -39,15 +38,18 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
 
     final ValueModel selectedToolModel;
 
-    final JPopupMenu popupMenu;
+    final JPopupMenu popupMenuActor;
+    final JPopupMenu popupMenuUC;
 
     public UCWorkspaceMarqueeHandler(final UCGraph graph,
                                       final ValueModel selectedToolModel,
-                                      final JPopupMenu popupMenu
+                                      final JPopupMenu popupMenuActor,
+                                      final JPopupMenu popupMenuUC
     ){
         this.graph = graph;
         this.selectedToolModel = selectedToolModel;
-        this.popupMenu = popupMenu;
+        this.popupMenuActor = popupMenuActor;
+        this.popupMenuUC = popupMenuUC;
         previewDrawName = NO_COMPONENT;
     }
 
@@ -87,9 +89,16 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      */
     public void mousePressed(final MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e)){
-            // show the popup menu
-            popupMenu.show(graph, e.getX(), e.getY());
-
+            popupMenuUC.show(graph, e.getX(), e.getY());
+            /* NOT COMPLETED
+            DefaultGraphCell defaultCell = (DefaultGraphCell) graph.getSelectionCellAt(e.getPoint());
+            if(defaultCell != null)
+            {
+                if(defaultCell.getUserObject() instanceof UseCaseModel)
+                    popupMenuUC.show(graph, e.getX(), e.getY());
+                else if(defaultCell.getUserObject() instanceof ActorModel)
+                    popupMenuActor.show(graph, e.getX(), e.getY());
+            } */
         }  else if(addingVertex(e)){
             // insert new cell
             graph.insert(e.getPoint());
@@ -217,7 +226,10 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mouseReleased(MouseEvent e) {
-        
+        // NOT COMPLETED v
+        //popupMenuActor.setVisible(false);
+        //popupMenuUC.setVisible(false);
+
         if (e != null && currentPort != null && startingPort != null /* startingPort != currentPort allow self-loops */ ) {
             // connect source and target vertexes
             graph.connectVertexes((Port) startingPort.getCell(), (Port) currentPort.getCell());
@@ -232,7 +244,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         point = null;
 
         super.mouseReleased(e);
-                      
+
     }
 
     /**

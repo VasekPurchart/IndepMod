@@ -2,6 +2,7 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.UCNotationModel;
+import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooser;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.workspace.icons.CloseTabIcon;
@@ -49,6 +50,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     /** holds the actual project diagram of a UC notation diagram */
     private ProjectDiagram actualProjectDiaram = null;
 
+    private ToolChooser toolChooser;
     private final GraphModelListener graphModelListener;
     private ValueModel selectedToolModel;
     private JPopupMenu popupMenu;
@@ -82,6 +84,14 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
                 ((UCTabParent) pane.getComponent(pane.getSelectedIndex())).update();
                 ((UCTabParent) pane.getComponent(pane.getPreviousTab())).over();
                 pane.setPreviousTab();
+                if(pane.getComponent(pane.getSelectedIndex()) instanceof UCDefaultTab)
+                {
+                      toolChooser.ChangePanel("UC");
+                }
+                else if(pane.getComponent(pane.getSelectedIndex()) instanceof UCUseCaseTab)
+                {
+                      toolChooser.ChangePanel("Detail");  
+                }
             }
         });
     }
@@ -89,10 +99,12 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     public UCWorkspace(final JGraph graph,
                        final Map<String, ProModAction> actions,
                        final ValueModel selectedToolModel,
-                       final JPopupMenu popupMenu) {
+                       final JPopupMenu popupMenuActor,
+                       final ToolChooser toolChooser) {
         this(graph, actions);
         this.selectedToolModel = selectedToolModel;
-        this.popupMenu = popupMenu;
+        this.popupMenu = popupMenuActor;
+        this.toolChooser = toolChooser;
     }
 
     public void openTab(UUID uuid, String name, UseCaseModel object) {
