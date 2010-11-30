@@ -2,10 +2,12 @@ package cz.cvut.indepmod.uc.workspace;
 
 import com.jgoodies.binding.value.ValueModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.ActorModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
 import cz.cvut.indepmod.uc.workspace.tabs.UCGraph;
 import org.jgraph.JGraph;
 import org.jgraph.graph.BasicMarqueeHandler;
+import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
 
@@ -89,8 +91,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      */
     public void mousePressed(final MouseEvent e) {
         if(SwingUtilities.isRightMouseButton(e)){
-            popupMenuUC.show(graph, e.getX(), e.getY());
-            /* NOT COMPLETED
+            //popupMenuUC.show(graph, e.getX(), e.getY());
             DefaultGraphCell defaultCell = (DefaultGraphCell) graph.getSelectionCellAt(e.getPoint());
             if(defaultCell != null)
             {
@@ -98,7 +99,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
                     popupMenuUC.show(graph, e.getX(), e.getY());
                 else if(defaultCell.getUserObject() instanceof ActorModel)
                     popupMenuActor.show(graph, e.getX(), e.getY());
-            } */
+            }
         }  else if(addingVertex(e)){
             // insert new cell
             graph.insert(e.getPoint());
@@ -226,9 +227,8 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mouseReleased(MouseEvent e) {
-        // NOT COMPLETED v
-        //popupMenuActor.setVisible(false);
-        //popupMenuUC.setVisible(false);
+        popupMenuActor.setVisible(false);
+        popupMenuUC.setVisible(false);
 
         if (e != null && currentPort != null && startingPort != null /* startingPort != currentPort allow self-loops */ ) {
             // connect source and target vertexes
