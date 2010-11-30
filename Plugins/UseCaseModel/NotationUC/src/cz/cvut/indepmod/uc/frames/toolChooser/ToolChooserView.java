@@ -109,7 +109,8 @@ public class ToolChooserView extends JPanel {
             add(builderDetail.getPanel(), BorderLayout.NORTH);
         }
         //this.requestFocus();
-        repaint();
+        updateUI();
+        //repaint();
     }
 
     public JToggleButton getAddControlFlowLineButton() {

@@ -230,7 +230,9 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
      * @param e is an instance of MouseEvent that has occurred
      */
     public void mouseReleased(MouseEvent e) {
-        
+        popupMenuActor.setVisible(false);
+        popupMenuUC.setVisible(false);
+
         if (e != null && currentPort != null && startingPort != null /* startingPort != currentPort allow self-loops */ ) {
             // connect source and target vertexes
             graph.connectVertexes((Port) startingPort.getCell(), (Port) currentPort.getCell());
@@ -245,7 +247,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         point = null;
 
         super.mouseReleased(e);
-                      
+
     }
 
     /**
