@@ -110,7 +110,7 @@ public class UCGraph extends JGraph {
                         if (name != null && uuid != null) {
                             UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
                             if(object instanceof UseCaseModel) {
-                                workspace.openTab(uuid, name);
+                                workspace.openTab(uuid, name, (UseCaseModel) object);
                             }
                         }
                     }

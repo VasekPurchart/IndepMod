@@ -55,15 +55,6 @@ public class UCCellFactory {
                 cell.setUserObject(new ActorModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(ActorModel.installAttributes(point));
                 break;
-             case ADD_STEP:
-                cell.setUserObject(new StepModel(UUID.randomUUID()));
-                cell.getAttributes().applyMap(StepModel.installAttributes(point));
-                break;
-            case ADD_SCENARIO:
-                
-                //cell.setUserObject(new ScenarioModel(UUID.randomUUID()));
-                //cell.getAttributes().applyMap(ScenarioModel.installAttributes(point));
-                break;
             case ADD_SYSTEM_BORDER:
                 cell.setUserObject(new SystemBorderModel(UUID.randomUUID()));
                 cell.getAttributes().applyMap(SystemBorderModel.installAttributes(point));
