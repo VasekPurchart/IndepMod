@@ -29,7 +29,7 @@ public class UCPortView extends PortView {
 
         org.jgraph.graph.DefaultPort model = (org.jgraph.graph.DefaultPort) cell;
         org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
-        if(graphCell.getUserObject() instanceof SystemBorderModel)
+        if(graphCell != null && graphCell.getUserObject() instanceof SystemBorderModel)
             isSystemBorder = true;
         else
             isSystemBorder = false;
