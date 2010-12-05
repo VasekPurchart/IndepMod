@@ -22,14 +22,16 @@ public class UCTreeCellRenderer implements TreeCellRenderer {
         Font font = new Font("SansSerif", Font.PLAIN, 20);
         if (value instanceof UCScenarioNode) {
             if (((UCScenarioNode) value).getMain()) {
-                font = new Font("SansSerif", Font.BOLD, 20);
+                font = new Font("SansSerif", Font.BOLD, 25);
+                renderer.setPreferredSize(new Dimension(300, 30));
+            } else {
+                renderer.setPreferredSize(new Dimension(200, 25));
             }
-            renderer.setPreferredSize(new Dimension(200, 25));
         }
         if (value instanceof UCStepNode) {
-            renderer.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
-            renderer.setPreferredSize(new Dimension(200, 40));
-            
+            //renderer.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
+            renderer.setPreferredSize(new Dimension(400, 60));
+                        
             
         }
         if (value.equals(tree.getModel().getRoot())) {
