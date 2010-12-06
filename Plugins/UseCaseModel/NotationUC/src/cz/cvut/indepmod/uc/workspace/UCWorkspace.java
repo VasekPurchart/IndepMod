@@ -47,9 +47,6 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     /** holds the actual diagram model of a UC notation diagram */
     private UCDiagramModel actualUCDiagramModel = null;
 
-    /** holds the actual project diagram of a UC notation diagram */
-    private ProjectDiagram actualProjectDiaram = null;
-
     private ToolChooser toolChooser;
     private final GraphModelListener graphModelListener;
     private ValueModel selectedToolModel;
