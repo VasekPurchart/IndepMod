@@ -52,7 +52,6 @@ public class UCTreeCellRenderer implements TreeCellRenderer {
                     renderer.setText("<html><a href=\"\">" + included.getName() + "</a><br />" + renderer.getText() + "</html>");
                 }
             }
-            //renderer.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
             renderer.setPreferredSize(new Dimension(400, 60));
 
 

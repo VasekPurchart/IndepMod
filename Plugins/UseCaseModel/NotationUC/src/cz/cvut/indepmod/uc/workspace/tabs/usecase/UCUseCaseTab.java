@@ -11,10 +11,7 @@ import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChan
 import org.jgraph.graph.DefaultGraphCell;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Map;
@@ -28,6 +25,7 @@ public class UCUseCaseTab extends UCTabParent {
 
     private JPopupMenu popupMenuStep = new JPopupMenu();
     private JPopupMenu popupMenuScenario = new JPopupMenu();
+    private JPopupMenu popupMenuStepIncluded = new JPopupMenu();
 
     public UCUseCaseTab(final Map<String, ProModAction> actions, UUID uuid, String name, UseCaseModel ucModel) {
         super(null, actions);
@@ -77,7 +75,11 @@ public class UCUseCaseTab extends UCTabParent {
                     if (path == null) return;
                     tree.setSelectionPath(path);
                     if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
-                        popupMenuStep.show(tree, e.getX(), e.getY());
+                        if (((UCStepNode) tree.getLastSelectedPathComponent()).getInclude() != null) {
+                            popupMenuStepIncluded.show(tree, e.getX(), e.getY());
+                        } else {
+                            popupMenuStep.show(tree, e.getX(), e.getY());
+                        }
                     }
                     if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode) {
                         popupMenuScenario.show(tree, e.getX(), e.getY());
@@ -163,9 +165,21 @@ public class UCUseCaseTab extends UCTabParent {
         this.getViewport().add(tree);
     }
 
-    private void initPopupMenus() {
-        JMenuItem includeUC = new JMenuItem("Include UC");
-        includeUC.addActionListener(new ActionListener() {
+    private JMenuItem makeDeleteNodePopupItem() {
+        JMenuItem item = new JMenuItem("Delete");
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (tree.getLastSelectedPathComponent() instanceof MutableTreeNode) {
+                    ((DefaultTreeModel) tree.getModel()).removeNodeFromParent((MutableTreeNode) tree.getLastSelectedPathComponent());
+                }
+            }
+        });
+        return item;
+    }
+
+    private JMenuItem makeIncludeUCPopupItem() {
+        JMenuItem item = new JMenuItem("Include UC");
+        item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                     final UCStepNode node = (UCStepNode) tree.getLastSelectedPathComponent();
@@ -185,7 +199,7 @@ public class UCUseCaseTab extends UCTabParent {
                             if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
                                 UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
                                 combo.addItem(tmpUC);
-                                if(node.getInclude() != null && tmpUC.getUuid().compareTo(node.getInclude()) == 0) {
+                                if (node.getInclude() != null && tmpUC.getUuid().compareTo(node.getInclude()) == 0) {
                                     combo.setSelectedItem(tmpUC);
                                 }
                             }
@@ -215,19 +229,23 @@ public class UCUseCaseTab extends UCTabParent {
                 }
             }
         });
-
-        JMenuItem selectMSS = new JMenuItem("Select MSS");
-        selectMSS.addActionListener(this.getScenarioPopupMenuActionListener());
-        popupMenuScenario.add(selectMSS);
-
-        popupMenuStep.add(includeUC);
-
-        this.tree.add(popupMenuStep);
-        this.tree.add(popupMenuScenario);
+        return item;
     }
 
-    private ActionListener getScenarioPopupMenuActionListener() {
-        return new ActionListener() {
+    private JMenuItem makeShowIncludedUCPopupItem() {
+        JMenuItem showIncluded = new JMenuItem("Show Included UseCase");
+        showIncluded.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+        return showIncluded;
+    }
+
+    private JMenuItem makeSelectMSSPopupItem() {
+        JMenuItem selectMSS = new JMenuItem("Select MSS");
+        selectMSS.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode) {
                     TreeNode root = (TreeNode) tree.getModel().getRoot();
@@ -244,7 +262,24 @@ public class UCUseCaseTab extends UCTabParent {
                     tree.repaint();
                 }
             }
-        };
+        });
+        return selectMSS;
+    }
+
+    private void initPopupMenus() {
+        popupMenuScenario.add(this.makeDeleteNodePopupItem());
+        popupMenuScenario.add(this.makeSelectMSSPopupItem());
+
+        popupMenuStep.add(this.makeDeleteNodePopupItem());
+        popupMenuStep.add(this.makeIncludeUCPopupItem());
+
+        popupMenuStepIncluded.add(this.makeDeleteNodePopupItem());
+        popupMenuStepIncluded.add(this.makeIncludeUCPopupItem());
+        popupMenuStepIncluded.add(this.makeShowIncludedUCPopupItem());
+
+        this.tree.add(popupMenuStep);
+        this.tree.add(popupMenuStepIncluded);
+        this.tree.add(popupMenuScenario);
     }
 
     public void changePerformed(final ProjectDiagramChange change) {
