@@ -237,7 +237,22 @@ public class UCUseCaseTab extends UCTabParent {
         showIncluded.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
+                    final UCStepNode node = (UCStepNode) tree.getLastSelectedPathComponent();
+                    if (node.getInclude() != null) {
+                        Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
+                        for (Object obj : objects) {
+                            if (obj instanceof DefaultGraphCell) {
+                                if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
+                                    UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
+                                    if (node.getInclude() != null && tmpUC.getUuid().compareTo(node.getInclude()) == 0) {
+                                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).openTab(node.getInclude(), tmpUC.getName(), tmpUC);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
         return showIncluded;
