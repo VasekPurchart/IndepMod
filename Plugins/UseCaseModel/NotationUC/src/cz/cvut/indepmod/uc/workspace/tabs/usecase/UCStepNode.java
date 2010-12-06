@@ -11,6 +11,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class UCStepNode extends DefaultMutableTreeNode {
     public UCStepNode(String str) {
-        super(str);
+        super("<html><div style=\"padding: 5px; border: 2px solid #000000; margin: 10px 0 10px 0;\"><a href=\"nejakyodkaz.html\">Include</a><br /><strong>" + str + "</div>");
+        
     }
 }

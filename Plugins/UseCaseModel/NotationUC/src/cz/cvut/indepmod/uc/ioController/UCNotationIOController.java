@@ -17,11 +17,9 @@ import org.jgraph.graph.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.beans.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,16 +81,25 @@ public class UCNotationIOController implements NotationLocalIOController {
         }
 
         final XMLEncoder encoder;
+        final ObjectOutputStream xmlTreeEncoder;
         final String filePath = parentLocation + System.getProperty("file.separator") +
                 projectDiagram.getDisplayName() + ProjectService.FILE_EXTENSION_DELIMITER + extension;
+        final String filePathUC = parentLocation + System.getProperty("file.separator") +
+                projectDiagram.getDisplayName() + ProjectService.FILE_EXTENSION_DELIMITER + extension + "x";
 
         try {
             final File file = new File(filePath);
 
             encoder = new XMLEncoder(new FileOutputStream(file));
 
+            final File fileUC = new File(filePathUC);
+            xmlTreeEncoder = new ObjectOutputStream(new FileOutputStream(fileUC));
+
         } catch (FileNotFoundException e) {
             LOG.error("Unable to find the file to save the project diagram: " + projectDiagram.getDisplayName() + ", " + filePath, e);
+            return SaveResult.ERROR;
+        } catch (IOException e) {
+            LOG.error("Unable to open the file to save the project diagram: " + projectDiagram.getDisplayName() + ", " + filePathUC, e);
             return SaveResult.ERROR;
         }
 
@@ -111,6 +118,22 @@ public class UCNotationIOController implements NotationLocalIOController {
                 }
             });
 
+
+            Object[] objects = ((UCDiagramModel) projectDiagram.getDiagramModel()).getGraphLayoutCache().getCells(false, true, false, false);
+            for (Object obj : objects) {
+                if (obj instanceof DefaultGraphCell) {
+                    if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
+                        UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
+                        if (tmpUC.getModel() != null) {
+                            DefaultTreeModel model = tmpUC.getModel();
+                            UUID uuid = tmpUC.getUuid();
+                            UCSerializableUseCase serializableUC = new UCSerializableUseCase(model, uuid);
+
+                            xmlTreeEncoder.writeObject(serializableUC);
+                        }
+                    }
+                }
+            }
             encoder.writeObject(projectDiagram);
 
         } catch (Exception exception) {
@@ -118,6 +141,11 @@ public class UCNotationIOController implements NotationLocalIOController {
             error = true;
         } finally {
             encoder.close();
+            try {
+                xmlTreeEncoder.close();
+            } catch (Exception e) {
+
+            }
             ucDiagramModel.installUndoManager();
         }
 
@@ -216,6 +244,9 @@ public class UCNotationIOController implements NotationLocalIOController {
         }
 
         final File file = new File(diagramLocation);
+        System.out.println(diagramLocation + "x");
+        final File fileUC = new File(diagramLocation + "x");
+
 
         if (!file.exists()) {
             LOG.error("Unable to load file (file does NOT exist), " + diagramLocation);
@@ -227,6 +258,33 @@ public class UCNotationIOController implements NotationLocalIOController {
             final XMLDecoder decoder = new XMLDecoder(new FileInputStream(file));
 
             projectDiagram = (ProjectDiagram) decoder.readObject();
+            decoder.close();
+
+            final ObjectInputStream xmlTreeDecoder = new ObjectInputStream(new FileInputStream(fileUC));
+            Object obj;
+            HashMap<UUID, DefaultTreeModel> models = new HashMap<UUID, DefaultTreeModel>();
+            try {
+                while ((obj = xmlTreeDecoder.readObject()) != null) {
+                    if (obj instanceof UCSerializableUseCase) {
+                        UCSerializableUseCase uc = (UCSerializableUseCase) obj;
+                        models.put(uc.getUuid(), uc.getRoot());
+                    }
+                }
+            } catch (EOFException e) {
+
+            }
+            Object[] objects = ((UCDiagramModel) projectDiagram.getDiagramModel()).getGraphLayoutCache().getCells(false, true, false, false);
+            for (Object tmpObj : objects) {
+                if (tmpObj instanceof DefaultGraphCell) {
+                    if (((DefaultGraphCell) tmpObj).getUserObject() instanceof UseCaseModel) {
+                        if (models.containsKey(((UseCaseModel) ((DefaultGraphCell) tmpObj).getUserObject()).getUuid())) {
+                            ((UseCaseModel) ((DefaultGraphCell) tmpObj).getUserObject()).setModel(models.get(((UseCaseModel) ((DefaultGraphCell) tmpObj).getUserObject()).getUuid()));
+                        }
+                    }
+                }
+            }
+            xmlTreeDecoder.close();
+
         } catch (ClassCastException e) {
             LOG.error("Unable to cast the loaded object as ProjectDiagram class.", e);
             throw e;
