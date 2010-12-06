@@ -124,11 +124,13 @@ public class UCNotationIOController implements NotationLocalIOController {
                 if (obj instanceof DefaultGraphCell) {
                     if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
                         UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
-                        DefaultTreeModel model = tmpUC.getModel();
-                        UUID uuid = tmpUC.getUuid();
-                        UCSerializableUseCase serializableUC = new UCSerializableUseCase(model, uuid);
+                        if (tmpUC.getModel() != null) {
+                            DefaultTreeModel model = tmpUC.getModel();
+                            UUID uuid = tmpUC.getUuid();
+                            UCSerializableUseCase serializableUC = new UCSerializableUseCase(model, uuid);
 
-                        xmlTreeEncoder.writeObject(serializableUC);
+                            xmlTreeEncoder.writeObject(serializableUC);
+                        }
                     }
                 }
             }

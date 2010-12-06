@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 public class UseCaseModel extends UCEditableVertex {
     private static final String DEFAULT_LABEL = Resources.getResources().getString("uc.vertex.uc");
-    private DefaultTreeModel model = new DefaultTreeModel(null);
+    transient private DefaultTreeModel model = new DefaultTreeModel(null);
 
     public static final int DEFAULT_INSET = 6;
 
