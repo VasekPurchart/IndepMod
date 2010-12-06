@@ -1,5 +1,10 @@
 package cz.cvut.indepmod.uc.workspace.tabs.usecase;
 
+import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
+import cz.cvut.indepmod.uc.workspace.UCWorkspace;
+import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
+import org.jgraph.graph.DefaultGraphCell;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
@@ -29,10 +34,28 @@ public class UCTreeCellRenderer implements TreeCellRenderer {
             }
         }
         if (value instanceof UCStepNode) {
+            UseCaseModel included = null;
+            if (((UCStepNode) value).getInclude() != null) {
+                Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
+                for (Object obj : objects) {
+                    if (obj instanceof DefaultGraphCell) {
+                        if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
+                            UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
+                            if (((UCStepNode) value).getInclude().compareTo(tmpUC.getUuid()) == 0) {
+                                included = tmpUC;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (included != null) {
+                    renderer.setText("<html><a href=\"\">" + included.getName() + "</a><br />" + renderer.getText() + "</html>");
+                }
+            }
             //renderer.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
             renderer.setPreferredSize(new Dimension(400, 60));
-                        
-            
+
+
         }
         if (value.equals(tree.getModel().getRoot())) {
             font = new Font("SansSerif", Font.BOLD, 30);

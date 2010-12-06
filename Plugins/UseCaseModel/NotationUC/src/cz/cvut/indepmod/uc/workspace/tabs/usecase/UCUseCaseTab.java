@@ -26,7 +26,6 @@ public class UCUseCaseTab extends UCTabParent {
     final private UseCaseModel useCase;
     final Map<String, ProModAction> actions;
 
-
     private JPopupMenu popupMenuStep = new JPopupMenu();
     private JPopupMenu popupMenuScenario = new JPopupMenu();
 
@@ -178,6 +177,7 @@ public class UCUseCaseTab extends UCTabParent {
                     JLabel label = new JLabel("Select Use Case:");
 
                     final JComboBox combo = new JComboBox();
+                    combo.addItem("<< none >>");
 
                     Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
                     for (Object obj : objects) {
@@ -185,18 +185,22 @@ public class UCUseCaseTab extends UCTabParent {
                             if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
                                 UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
                                 combo.addItem(tmpUC);
+                                if(node.getInclude() != null && tmpUC.getUuid().compareTo(node.getInclude()) == 0) {
+                                    combo.setSelectedItem(tmpUC);
+                                }
                             }
                         }
                     }
 
                     JButton include = new JButton("Include");
                     include.addActionListener(new ActionListener() {
-
                         public void actionPerformed(ActionEvent e) {
-                            UseCaseModel tmpUC = (UseCaseModel) (UseCaseModel)combo.getSelectedItem();
-
-                            node.setUserObject(tmpUC.getUuid() + " x " + node.getUserObject());
-                            tree.repaint();
+                            UCStepNode ucNode = (UCStepNode) tree.getLastSelectedPathComponent();
+                            if (combo.getSelectedItem() instanceof UseCaseModel) {
+                                ucNode.setInclude(((UseCaseModel) combo.getSelectedItem()).getUuid());
+                            } else {
+                                ucNode.setInclude(null);
+                            }
                             dialog.setVisible(false);
                             dialog.dispose();
                         }

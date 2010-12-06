@@ -1,6 +1,7 @@
 package cz.cvut.indepmod.uc.workspace.tabs.usecase;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,9 +11,16 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * To change this template use File | Settings | File Templates.
  */
 public class UCStepNode extends DefaultMutableTreeNode {
+    private UUID include;
     
     public UCStepNode(String str) {
-        super("<html><div style=\"padding: 5px; border: 2px solid #000000; margin: 10px 0 10px 0;\"><a href=\"nejakyodkaz.html\">Include</a><br /><strong>" + str + "</div>");
-        
+        super(str);        
+    }
+
+    public void setInclude(UUID uuid) {
+        this.include = uuid;
+    }
+    public UUID getInclude() {
+        return this.include;
     }
 }
