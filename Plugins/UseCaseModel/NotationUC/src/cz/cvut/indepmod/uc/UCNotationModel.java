@@ -6,7 +6,6 @@ import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooser;
 import cz.cvut.indepmod.uc.modelFactory.diagramModel.UCDiagramModel;
 import cz.cvut.indepmod.uc.resources.Resources;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
-import cz.cvut.indepmod.uc.frames.vertexInfo.VertexInfo;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.DockableFrameData;
 import cz.cvut.promod.plugin.notationSpecificPlugIn.notation.NotationWorkspaceData;
 import cz.cvut.promod.services.ModelerSession;
@@ -27,16 +26,16 @@ import java.util.*;
  * UceCase plugin - SI2/3 school project
  * User: Alena Varkockova, varkockova.a@gmail.com
  * User: Viktor Bohuslav Bohdal, viktor.bohdal@gmail.com
- *
+ * <p/>
  * Date: 19:43:00, 5.12.2009
- *
+ * <p/>
  * A model component for the UCNotation plugin.
  */
 public class UCNotationModel {
 
     // actions
     public static final String SAVE_ACTION_KEY = "uc.action.save";
-    public static final String SAVE_ALL_ACTION_KEY = "uc.action.save.all";   
+    public static final String SAVE_ALL_ACTION_KEY = "uc.action.save.all";
     public static final String UNDO_ACTION_KEY = "uc.action.undo";
     public static final String REDO_ACTION_KEY = "uc.action.redo";
     public static final String DELETE_ACTION_KEY = "uc.action.delete";
@@ -63,18 +62,18 @@ public class UCNotationModel {
 
     private final Map<String, ProModAction> actions;
 
-    private final  JPopupMenu popupMenuActor = ModelerSession.getComponentFactoryService().createPopupMenu();
-    private final  JPopupMenu popupMenuUC = ModelerSession.getComponentFactoryService().createPopupMenu();
+    private final JPopupMenu popupMenuActor = ModelerSession.getComponentFactoryService().createPopupMenu();
+    private final JPopupMenu popupMenuUC = ModelerSession.getComponentFactoryService().createPopupMenu();
 
     /**
      * Constructs a new UCNotationModel.
      *
-     * @param properties are the required properties
+     * @param properties                are the required properties
      * @param selectedToolStatusBarItem is the status bat item holding the actual select tool
      * @throws InstantiationException when the initialization fail
      */
     public UCNotationModel(final Properties properties,
-                            final LabelStatusBarItem selectedToolStatusBarItem) throws InstantiationException{
+                           final LabelStatusBarItem selectedToolStatusBarItem) throws InstantiationException {
         this.properties = properties;
 
         actions = new HashMap<String, ProModAction>();
@@ -88,9 +87,6 @@ public class UCNotationModel {
 
         final ToolChooser toolChooser = new ToolChooser(selectedToolStatusBarItem);
         dockableFrames.add(toolChooser);
-
-        final VertexInfo vertexInfo = new VertexInfo();
-        dockableFrames.add(vertexInfo);
 
         final GraphOptions graphOptions = new GraphOptions();
         dockableFrames.add(graphOptions);
@@ -111,82 +107,81 @@ public class UCNotationModel {
         );
 
         // frames event handling
-        vertexInfo.initCellSelectionListener(workspace.getGraph());
         graphOptions.initEventHandling(actions);
         initPopupMenus();
     }
 
     private void initActions() {
         actions.put(SAVE_ALL_ACTION_KEY,
-            new ProModAction(Resources.getResources().getString(SAVE_ALL_ACTION_KEY), null, null){
-                public void actionPerformed(ActionEvent event) {
-                    final TreePath treePath = ModelerSession.getProjectService().getSelectedProjectPath();
+                new ProModAction(Resources.getResources().getString(SAVE_ALL_ACTION_KEY), null, null) {
+                    public void actionPerformed(ActionEvent event) {
+                        final TreePath treePath = ModelerSession.getProjectService().getSelectedProjectPath();
 
-                    if(treePath != null){
-                        ModelerSession.getProjectControlService().synchronize(
-                                treePath,
-                                true, true, false, false
-                        );
+                        if (treePath != null) {
+                            ModelerSession.getProjectControlService().synchronize(
+                                    treePath,
+                                    true, true, false, false
+                            );
+                        }
                     }
                 }
-            }
         );
 
         actions.put(SAVE_ACTION_KEY,
-            new ProModAction(Resources.getResources().getString(SAVE_ACTION_KEY), null, null){
-                public void actionPerformed(ActionEvent event) {
-                    final TreePath treePath = ModelerSession.getProjectService().getSelectedDiagramPath();
+                new ProModAction(Resources.getResources().getString(SAVE_ACTION_KEY), null, null) {
+                    public void actionPerformed(ActionEvent event) {
+                        final TreePath treePath = ModelerSession.getProjectService().getSelectedDiagramPath();
 
-                    if(treePath != null){
-                        ModelerSession.getProjectControlService().synchronize(
-                                treePath,
-                                true, true, false, false
-                        );
+                        if (treePath != null) {
+                            ModelerSession.getProjectControlService().synchronize(
+                                    treePath,
+                                    true, true, false, false
+                            );
+                        }
                     }
                 }
-            }
         );
 
         actions.put(REDO_ACTION_KEY,
-            new ProModAction(Resources.getResources().getString(REDO_ACTION_KEY), null, null){
-                public void actionPerformed(ActionEvent event) {
-                    final ProjectDiagram diagram = ModelerSession.getProjectService().getSelectedDiagram();
+                new ProModAction(Resources.getResources().getString(REDO_ACTION_KEY), null, null) {
+                    public void actionPerformed(ActionEvent event) {
+                        final ProjectDiagram diagram = ModelerSession.getProjectService().getSelectedDiagram();
 
-                    if(diagram.getDiagramModel() instanceof UCDiagramModel){
-                        final UCDiagramModel diagramModel = (UCDiagramModel) diagram.getDiagramModel();
+                        if (diagram.getDiagramModel() instanceof UCDiagramModel) {
+                            final UCDiagramModel diagramModel = (UCDiagramModel) diagram.getDiagramModel();
 
-                        final UndoManager undoManager = diagramModel.getUndoManager();
-                        undoManager.redo();
-                        setEnabled(undoManager.canRedo());
-                        actions.get(UNDO_ACTION_KEY).setEnabled(undoManager.canUndo()); // enables undo action
-                        actions.get(SAVE_ACTION_KEY).setEnabled(true);
+                            final UndoManager undoManager = diagramModel.getUndoManager();
+                            undoManager.redo();
+                            setEnabled(undoManager.canRedo());
+                            actions.get(UNDO_ACTION_KEY).setEnabled(undoManager.canUndo()); // enables undo action
+                            actions.get(SAVE_ACTION_KEY).setEnabled(true);
 
-                    } else {
-                        LOG.error("Unable to perform undo action, because of the casting problem.");
+                        } else {
+                            LOG.error("Unable to perform undo action, because of the casting problem.");
+                        }
                     }
                 }
-            }
         );
 
         actions.put(UNDO_ACTION_KEY,
-            new ProModAction(Resources.getResources().getString(UNDO_ACTION_KEY), null, null){
-                public void actionPerformed(ActionEvent event) {
-                    final ProjectDiagram diagram = ModelerSession.getProjectService().getSelectedDiagram();
+                new ProModAction(Resources.getResources().getString(UNDO_ACTION_KEY), null, null) {
+                    public void actionPerformed(ActionEvent event) {
+                        final ProjectDiagram diagram = ModelerSession.getProjectService().getSelectedDiagram();
 
-                    if(diagram.getDiagramModel() instanceof UCDiagramModel){
-                        final UCDiagramModel diagramModel = (UCDiagramModel) diagram.getDiagramModel();
+                        if (diagram.getDiagramModel() instanceof UCDiagramModel) {
+                            final UCDiagramModel diagramModel = (UCDiagramModel) diagram.getDiagramModel();
 
-                        final UndoManager undoManager = diagramModel.getUndoManager();
-                        undoManager.undo();
-                        setEnabled(undoManager.canUndo());
-                        actions.get(REDO_ACTION_KEY).setEnabled(undoManager.canRedo()); // enables redo action
-                        actions.get(SAVE_ACTION_KEY).setEnabled(true);
+                            final UndoManager undoManager = diagramModel.getUndoManager();
+                            undoManager.undo();
+                            setEnabled(undoManager.canUndo());
+                            actions.get(REDO_ACTION_KEY).setEnabled(undoManager.canRedo()); // enables redo action
+                            actions.get(SAVE_ACTION_KEY).setEnabled(true);
 
-                    } else {
-                        LOG.error("Unable to perform undo action, because of the casting problem.");
+                        } else {
+                            LOG.error("Unable to perform undo action, because of the casting problem.");
+                        }
                     }
                 }
-            }
         );
     }
 
@@ -195,54 +190,54 @@ public class UCNotationModel {
         deleteAction.setEnabled(true);
         popupMenuActor.add(deleteAction);
         popupMenuUC.add(deleteAction);
-        
+
         final Action detailAction = getAction(DETAIL_ACTION_KEY);
         detailAction.setEnabled(true);
         popupMenuUC.add(detailAction);
     }
 
-    public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition,final MenuService.MenuSeparator menuSeparator, final boolean checkable)  {
+    public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition, final MenuService.MenuSeparator menuSeparator, final boolean checkable) {
         return ModelerSession.getMenuService().insertAction(null, popupMenuActor, proModAction, menuSeparator, menuItemPosition, checkable);
     }
 
-    private void checkProperties() throws InstantiationException{
-        if(!properties.containsKey(UCNotationModel.FULL_NAME)) {
+    private void checkProperties() throws InstantiationException {
+        if (!properties.containsKey(UCNotationModel.FULL_NAME)) {
             LOG.error("Missing property " + UCNotationModel.FULL_NAME);
             throw new InstantiationException("Missing property " + UCNotationModel.FULL_NAME);
         }
-        if(!properties.containsKey(UCNotationModel.IDENTIFIER)){
+        if (!properties.containsKey(UCNotationModel.IDENTIFIER)) {
             LOG.error("Missing property " + UCNotationModel.IDENTIFIER);
             throw new InstantiationException("Missing property " + UCNotationModel.IDENTIFIER);
         }
-        if(!properties.containsKey(UCNotationModel.ABBREVIATION)){
+        if (!properties.containsKey(UCNotationModel.ABBREVIATION)) {
             LOG.error("Missing property " + UCNotationModel.ABBREVIATION);
             throw new InstantiationException("Missing property " + UCNotationModel.ABBREVIATION);
         }
-        if(!properties.containsKey(UCNotationModel.EXTENSION)){
+        if (!properties.containsKey(UCNotationModel.EXTENSION)) {
             LOG.error("Missing property " + UCNotationModel.EXTENSION);
             throw new InstantiationException("Missing property " + UCNotationModel.EXTENSION);
         }
-        if(!properties.containsKey(REFRESH_ACTION_KEY)){
+        if (!properties.containsKey(REFRESH_ACTION_KEY)) {
             LOG.error("Missing property " + UCNotationModel.REFRESH_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.REFRESH_ACTION_KEY);
         }
-        if(!properties.containsKey(DELETE_ACTION_KEY)){
+        if (!properties.containsKey(DELETE_ACTION_KEY)) {
             LOG.error("Missing property " + UCNotationModel.DELETE_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.DELETE_ACTION_KEY);
         }
-        if(!properties.containsKey(UNDO_ACTION_KEY)){
+        if (!properties.containsKey(UNDO_ACTION_KEY)) {
             LOG.error("Missing property " + UCNotationModel.UNDO_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.UNDO_ACTION_KEY);
         }
-        if(!properties.containsKey(REDO_ACTION_KEY)){
+        if (!properties.containsKey(REDO_ACTION_KEY)) {
             LOG.error("Missing property " + UCNotationModel.REDO_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.REDO_ACTION_KEY);
         }
-        if(!properties.containsKey(SAVE_ACTION_KEY)){
+        if (!properties.containsKey(SAVE_ACTION_KEY)) {
             LOG.error("Missing property " + UCNotationModel.SAVE_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.SAVE_ACTION_KEY);
         }
-        if(!properties.containsKey(SAVE_ALL_ACTION_KEY)){
+        if (!properties.containsKey(SAVE_ALL_ACTION_KEY)) {
             LOG.error(UCNotationModel.SAVE_ALL_ACTION_KEY);
             throw new InstantiationException("Missing property " + UCNotationModel.SAVE_ALL_ACTION_KEY);
         }
@@ -272,6 +267,7 @@ public class UCNotationModel {
     /*
      * @return notation's file extension
      */
+
     public String getExtension() {
         return properties.getProperty(UCNotationModel.EXTENSION);
     }
@@ -296,8 +292,8 @@ public class UCNotationModel {
      * @param key is the key of the action
      * @return the required action identifier, null if there is no such an action
      */
-    public String getActionIdentifier(final String key){
-        return properties.getProperty(key);        
+    public String getActionIdentifier(final String key) {
+        return properties.getProperty(key);
     }
 
 
@@ -307,8 +303,8 @@ public class UCNotationModel {
      * @param key is the key of the action
      * @return the required action, null if there is no such an action
      */
-    public ProModAction getAction(final String key){
-        if(actions.containsKey(key)){
+    public ProModAction getAction(final String key) {
+        if (actions.containsKey(key)) {
             return actions.get(key);
         }
 
