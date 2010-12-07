@@ -89,6 +89,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
                 {
                       toolChooser.ChangePanel("Detail");  
                 }
+                
             }
         });
     }

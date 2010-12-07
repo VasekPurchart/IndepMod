@@ -244,7 +244,6 @@ public class UCNotationIOController implements NotationLocalIOController {
         }
 
         final File file = new File(diagramLocation);
-        System.out.println(diagramLocation + "x");
         final File fileUC = new File(diagramLocation + "x");
 
         if (!file.exists()) {

@@ -44,6 +44,7 @@ public class UCUseCaseTab extends UCTabParent {
 
         tree.setEditable(false);
         tree.setCellRenderer(new UCTreeCellRenderer());
+
         tree.addKeyListener(new KeyListener() {
 
             public void keyTyped(KeyEvent e) {
@@ -315,5 +316,9 @@ public class UCUseCaseTab extends UCTabParent {
     }
 
     public void update() {
+    }
+
+    public JTree getTree() {
+        return this.tree;
     }
 }
