@@ -47,16 +47,8 @@ public class ToolChooserView extends JPanel {
             ToolChooserModel.SCENARIO_TOOL_RES, null
     );
 
-    protected final JToggleButton addSelectMssButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.SELECT_MSS_TOOL_RES, null
-    );
-
     protected final JToggleButton addStepButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.STEP_TOOL_RES, null
-    );
-
-    protected final JToggleButton addIncludeUcButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.INCLUDE_UC_TOOL_RES, null
     );
 
     public ToolChooserView(){
@@ -84,13 +76,12 @@ public class ToolChooserView extends JPanel {
         builderUC.add(addActorButton, cellConstraints.xy(1,5));
         builderUC.add(addUseCaseButton, cellConstraints.xy(1,7));
         builderUC.add(addSystemBorderButton, cellConstraints.xy(1,9));
-        builderDetail.add(addScenarioButton, cellConstraints.xy(1,1));
-        builderDetail.add(addSelectMssButton, cellConstraints.xy(1,3));
-        builderDetail.add(addStepButton, cellConstraints.xy(1,5));
-        builderDetail.add(addIncludeUcButton, cellConstraints.xy(1,7));
         builderUC.add(new JLabel("   "), cellConstraints.xy(1,12));
         builderUC.add(addControlFlowLineButton, cellConstraints.xy(1,13));
         builderUC.add(addIncludeFlowLineButton, cellConstraints.xy(1,15));
+
+        builderDetail.add(addScenarioButton, cellConstraints.xy(1,1));
+        builderDetail.add(addStepButton, cellConstraints.xy(1,3));
         
         setLayout(new BorderLayout());
         add(builderUC.getPanel(), BorderLayout.NORTH);
@@ -133,16 +124,8 @@ public class ToolChooserView extends JPanel {
         return addScenarioButton;
     }
 
-    public JToggleButton getAddSelectMssButton() {
-        return addSelectMssButton;
-    }
-
     public JToggleButton getAddStepButton() {
         return addStepButton;
-    }
-
-    public JToggleButton getAddIncludeUcButton() {
-        return addIncludeUcButton;
     }
 
     public JToggleButton getAddSystemBorderButton() {

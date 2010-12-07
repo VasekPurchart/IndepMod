@@ -22,12 +22,8 @@ public class ToolChooserModel extends Model {
             Resources.getResources().getString("uc.frame.tools.actor");
     public static final String SCENARIO_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.scenario");
-    public static final String SELECT_MSS_TOOL_RES =
-            Resources.getResources().getString("uc.frame.tools.selectmss");
     public static final String STEP_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.step");
-    public static final String INCLUDE_UC_TOOL_RES =
-            Resources.getResources().getString("uc.frame.tools.include");
     public static final String USE_CASE_TOOL_RES =
             Resources.getResources().getString("uc.frame.tools.use_case");
     public static final String SYSTEM_BORDER_TOOL_RES =
@@ -44,9 +40,7 @@ public class ToolChooserModel extends Model {
         CONTROL,
         ADD_ACTOR,
         ADD_SCENARIO,
-        SELECT_MSS,
         ADD_STEP,
-        INCLUDE_UC,
         ADD_USE_CASE,
         ADD_SYSTEM_BORDER,
         ADD_CONTROL_FLOW_LINE, //solid line with narrow

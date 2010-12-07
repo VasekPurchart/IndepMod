@@ -142,25 +142,6 @@ public class UCUseCaseTab extends UCTabParent {
                             }
                             tree.expandRow(tree.getLeadSelectionRow());
                             break;
-                        case SELECT_MSS:
-                            tree.setToggleClickCount(0);
-                            if (!(tree.getLastSelectedPathComponent() instanceof UCScenarioNode)) {
-                                break;
-                            }
-                            TreeNode root = (TreeNode) tree.getModel().getRoot();
-                            for (int a = 0; a < root.getChildCount(); a++) {
-                                if (root.getChildAt(a) instanceof UCScenarioNode) {
-                                    ((UCScenarioNode) root.getChildAt(a)).setMain(false);
-                                }
-                            }
-
-                            if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode) {
-                                ((UCScenarioNode) tree.getLastSelectedPathComponent()).setMain(true);
-                            }
-
-                            tree.repaint();
-                            //((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
-                            break;
                         /*
                         case CONTROL:
                             if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode || tree.getLastSelectedPathComponent() instanceof UCStepNode) {
