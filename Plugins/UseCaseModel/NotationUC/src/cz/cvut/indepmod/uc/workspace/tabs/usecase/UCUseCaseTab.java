@@ -11,6 +11,8 @@ import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagramChan
 import org.jgraph.graph.DefaultGraphCell;
 
 import javax.swing.*;
+import javax.swing.event.TreeModelEvent;
+import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,7 +29,7 @@ public class UCUseCaseTab extends UCTabParent {
     private JPopupMenu popupMenuScenario = new JPopupMenu();
     private JPopupMenu popupMenuStepIncluded = new JPopupMenu();
 
-    public UCUseCaseTab(final Map<String, ProModAction> actions, UUID uuid, String name, UseCaseModel ucModel) {
+    public UCUseCaseTab(final Map<String, ProModAction> actions, final UUID uuid, String name, UseCaseModel ucModel) {
         super(null, actions);
         this.uuid = uuid;
         this.actions = actions;
@@ -42,11 +44,39 @@ public class UCUseCaseTab extends UCTabParent {
 
         tree.putClientProperty("JTree.lineStyle", "None");
 
-        tree.setEditable(false);
+        tree.setEditable(true);
         tree.setCellRenderer(new UCTreeCellRenderer());
 
-        tree.addKeyListener(new KeyListener() {
 
+        ((DefaultTreeModel) tree.getModel()).addTreeModelListener(new TreeModelListener() {
+
+            public void treeNodesChanged(TreeModelEvent e) {
+                if (e.getSource() instanceof DefaultTreeModel) {
+                    DefaultTreeModel model = (DefaultTreeModel) e.getSource();
+                    if (model.getRoot().equals(tree.getLastSelectedPathComponent())) {
+                        if (getUseCaseByUUID(uuid) != null) {
+                            if (((DefaultMutableTreeNode) model.getRoot()).getUserObject() instanceof String) {
+                                getUseCaseByUUID(uuid).setName((String) ((DefaultMutableTreeNode) model.getRoot()).getUserObject());
+                            }
+                        }
+                    }
+                }
+            }
+
+            public void treeNodesInserted(TreeModelEvent e) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            public void treeNodesRemoved(TreeModelEvent e) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+
+            public void treeStructureChanged(TreeModelEvent e) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
+        tree.addKeyListener(new KeyListener() {
             public void keyTyped(KeyEvent e) {
                 //To change body of implemented methods use File | Settings | File Templates.
             }
@@ -131,6 +161,7 @@ public class UCUseCaseTab extends UCTabParent {
                             tree.repaint();
                             //((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
                             break;
+                        /*
                         case CONTROL:
                             if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode || tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                                 tree.setToggleClickCount(oldToggleClickCount);
@@ -140,6 +171,7 @@ public class UCUseCaseTab extends UCTabParent {
                                 tree.setEditable(false);
                             }
                             break;
+                         */
                         default:
                             tree.setToggleClickCount(oldToggleClickCount);
                     }
@@ -233,6 +265,19 @@ public class UCUseCaseTab extends UCTabParent {
         return item;
     }
 
+    private UseCaseModel getUseCaseByUUID(UUID uuid) {
+        Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
+        for (Object obj : objects) {
+            if (obj instanceof DefaultGraphCell) {
+                if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
+                    UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
+                    if (uuid.equals(tmpUC.getUuid())) return tmpUC;
+                }
+            }
+        }
+        return null;
+    }
+
     private JMenuItem makeShowIncludedUCPopupItem() {
         JMenuItem showIncluded = new JMenuItem("Show Included UseCase");
         showIncluded.addActionListener(new ActionListener() {
@@ -241,6 +286,10 @@ public class UCUseCaseTab extends UCTabParent {
                 if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                     final UCStepNode node = (UCStepNode) tree.getLastSelectedPathComponent();
                     if (node.getInclude() != null) {
+                        if (node.getInclude() != null && getUseCaseByUUID(node.getInclude()) != null) {
+                            ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).openTab(node.getInclude(), getUseCaseByUUID(node.getInclude()).getName(), getUseCaseByUUID(node.getInclude()));
+                        }
+                        /*
                         Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
                         for (Object obj : objects) {
                             if (obj instanceof DefaultGraphCell) {
@@ -252,6 +301,7 @@ public class UCUseCaseTab extends UCTabParent {
                                 }
                             }
                         }
+                        */
                     }
                 }
             }

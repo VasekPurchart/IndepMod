@@ -14,7 +14,6 @@ import cz.cvut.promod.services.projectService.treeProjectNode.ProjectDiagram;
 import org.apache.log4j.Logger;
 import org.jgraph.graph.*;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.beans.*;
 import java.io.*;
@@ -219,9 +218,7 @@ public class UCNotationIOController implements NotationLocalIOController {
                 return new Expression(oldInstance, GraphConstants.class, ROUNTING_DEFAULT_PROPERTY, null);
             }
         });
-        encoder.setPersistenceDelegate(DefaultTreeModel.class, new DefaultPersistenceDelegate(new String[]{"root"}));
-        encoder.setPersistenceDelegate(DefaultMutableTreeNode.class, new DefaultPersistenceDelegate());
-
+        
         // graph models
         encoder.setPersistenceDelegate(DefaultGraphModel.class, new DefaultPersistenceDelegate(new String[]{ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));
         encoder.setPersistenceDelegate(UCGraphModel.class, new DefaultPersistenceDelegate(new String[]{ROOTS_PROPERTY, ATTRIBUTES_PROPERTY}));

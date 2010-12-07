@@ -9,7 +9,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * Time: 12:03:11
  * To change this template use File | Settings | File Templates.
  */
-public class UCUseCaseNode extends DefaultMutableTreeNode {
+public class UCUseCaseNode extends DefaultMutableTreeNode  {
     public UCUseCaseNode(String str) {
         super(str);
     }

@@ -65,6 +65,7 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             this.setBorder(borderBlack);
         }
         if (value.equals(tree.getModel().getRoot())) {
+            
             font = new Font("SansSerif", Font.BOLD, 30);
             FontMetrics metrics = this.getFontMetrics(font);
             this.setPreferredSize(new Dimension(metrics.stringWidth(this.getText()) + 15, 40));
