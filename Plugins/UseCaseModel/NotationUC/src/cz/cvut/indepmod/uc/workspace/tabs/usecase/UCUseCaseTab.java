@@ -41,6 +41,7 @@ public class UCUseCaseTab extends UCTabParent {
 
         tree = new JTree(useCase.getModel());
         this.initPopupMenus();
+        tree.setToggleClickCount(1);
 
         tree.putClientProperty("JTree.lineStyle", "None");
 
@@ -101,6 +102,12 @@ public class UCUseCaseTab extends UCTabParent {
         // tree.setEditable(true);
         tree.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    if (e.getSource() instanceof JTree) {
+                        tree.startEditingAtPath(tree.getSelectionPath());//((DefaultMutableTreeNode) e.getSource()));
+                        return;
+                    }
+                }
                 if (e.isMetaDown()) {
                     TreePath path = tree.getPathForLocation(e.getX(), e.getY());
                     if (path == null) return;
@@ -142,6 +149,7 @@ public class UCUseCaseTab extends UCTabParent {
                             }
                             tree.expandRow(tree.getLeadSelectionRow());
                             break;
+                        /*
                         case SELECT_MSS:
                             tree.setToggleClickCount(0);
                             if (!(tree.getLastSelectedPathComponent() instanceof UCScenarioNode)) {
@@ -161,7 +169,6 @@ public class UCUseCaseTab extends UCTabParent {
                             tree.repaint();
                             //((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
                             break;
-                        /*
                         case CONTROL:
                             if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode || tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                                 tree.setToggleClickCount(oldToggleClickCount);
@@ -171,9 +178,9 @@ public class UCUseCaseTab extends UCTabParent {
                                 tree.setEditable(false);
                             }
                             break;
-                         */
                         default:
                             tree.setToggleClickCount(oldToggleClickCount);
+                         */
                     }
                 }
             }
