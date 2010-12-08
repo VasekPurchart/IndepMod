@@ -7,6 +7,8 @@ import org.jgraph.graph.DefaultGraphCell;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
@@ -37,35 +39,59 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             if (((UCStepNode) value).getInclude() != null) {
                 Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
                 for (Object obj : objects) {
-                    if (obj instanceof DefaultGraphCell) {
-                        if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
-                            UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
-                            if (((UCStepNode) value).getInclude().compareTo(tmpUC.getUuid()) == 0) {
-                                included = tmpUC;
-                                break;
-                            }
+                    if (obj instanceof DefaultGraphCell && ((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
+                        UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
+                        if (((UCStepNode) value).getInclude().compareTo(tmpUC.getUuid()) == 0) {
+                            included = tmpUC;
+                            break;
                         }
                     }
                 }
             }
 
-            if (included != null) {
-                this.setText("<html><body><div style=\"padding: 2px;\"><strong>Include </strong><a href=\"\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
-            } else {
-                this.setText("<html><body><div style=\"padding: 2px;\">" + this.getText() + "<br /></div></body></html>");
-            }
+            JComponent frame = new JPanel();
+            frame.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
+            frame.setBackground(null);
+            JTextPane node = new JTextPane();
+            node.setContentType("text/html");
+            node.setEditable(false);
+            node.setFont(font);
+            node.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 
             FontMetrics metrics = this.getFontMetrics(font);
             int w = 400;
             int h = (int) (Math.ceil((double) ((metrics.stringWidth(this.getText()) / w) + 1) * (metrics.getHeight() + 2)));
-            this.setPreferredSize(new Dimension(w, h));
-            this.setVerticalAlignment(SwingConstants.TOP);
+
+            if (included != null) {
+                node.setText("<html><body><div style=\"border: 1px; padding: 5px;\"><strong>Include </strong><a href=\"http://bohdal.net/\">bohdal</a><a href=\"" + included.getUuid() + "\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
+                h += 40;
+            } else {
+                node.setText("<html><body><div style=\"padding: 5px;\">" + this.getText() + "<br /></div></body></html>");
+            }
+
+            node.setPreferredSize(new Dimension(w, h));
+            node.setAlignmentY(TOP_ALIGNMENT);
+            node.setMargin(new Insets(100, 10, 10, 10));
 
             Border borderBlack = BorderFactory.createLineBorder(Color.BLACK, 2);
-            this.setBorder(borderBlack);
+
+            node.setBorder(borderBlack);
+            node.addHyperlinkListener(new HyperlinkListener() {
+                public void hyperlinkUpdate(HyperlinkEvent e) {
+                    System.out.println(e.getEventType());
+                    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+                        System.out.println("Click registered");
+                    }
+                    System.out.println(e.getURL().toString());
+                }
+            });
+
+            //return node;
+            frame.add(node);
+            return frame;
         }
         if (value.equals(tree.getModel().getRoot())) {
-            
+
             font = new Font("SansSerif", Font.BOLD, 30);
             FontMetrics metrics = this.getFontMetrics(font);
             this.setPreferredSize(new Dimension(metrics.stringWidth(this.getText()) + 15, 40));

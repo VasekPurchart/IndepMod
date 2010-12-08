@@ -14,7 +14,7 @@ public class UCStepNode extends DefaultMutableTreeNode {
     private UUID include;
     
     public UCStepNode(String str) {
-        super(str);        
+        super(str);
     }
 
     public void setInclude(UUID uuid) {

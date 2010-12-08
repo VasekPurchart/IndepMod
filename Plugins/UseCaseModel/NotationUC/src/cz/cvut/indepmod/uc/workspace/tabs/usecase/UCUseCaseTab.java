@@ -149,38 +149,6 @@ public class UCUseCaseTab extends UCTabParent {
                             }
                             tree.expandRow(tree.getLeadSelectionRow());
                             break;
-                        /*
-                        case SELECT_MSS:
-                            tree.setToggleClickCount(0);
-                            if (!(tree.getLastSelectedPathComponent() instanceof UCScenarioNode)) {
-                                break;
-                            }
-                            TreeNode root = (TreeNode) tree.getModel().getRoot();
-                            for (int a = 0; a < root.getChildCount(); a++) {
-                                if (root.getChildAt(a) instanceof UCScenarioNode) {
-                                    ((UCScenarioNode) root.getChildAt(a)).setMain(false);
-                                }
-                            }
-
-                            if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode) {
-                                ((UCScenarioNode) tree.getLastSelectedPathComponent()).setMain(true);
-                            }
-
-                            tree.repaint();
-                            //((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getSelectedToolModel().setValue(ToolChooserModel.Tool.CONTROL);
-                            break;
-                        case CONTROL:
-                            if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode || tree.getLastSelectedPathComponent() instanceof UCStepNode) {
-                                tree.setToggleClickCount(oldToggleClickCount);
-                                tree.setEditable(true);
-                            } else {
-                                tree.setToggleClickCount(0);
-                                tree.setEditable(false);
-                            }
-                            break;
-                        default:
-                            tree.setToggleClickCount(oldToggleClickCount);
-                         */
                     }
                 }
             }
@@ -238,6 +206,9 @@ public class UCUseCaseTab extends UCTabParent {
                         if (obj instanceof DefaultGraphCell) {
                             if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
                                 UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
+                                if(getUuid().equals(tmpUC.getUuid())) {
+                                    continue;
+                                }
                                 combo.addItem(tmpUC);
                                 if (node.getInclude() != null && tmpUC.getUuid().compareTo(node.getInclude()) == 0) {
                                     combo.setSelectedItem(tmpUC);
@@ -292,23 +263,8 @@ public class UCUseCaseTab extends UCTabParent {
             public void actionPerformed(ActionEvent e) {
                 if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                     final UCStepNode node = (UCStepNode) tree.getLastSelectedPathComponent();
-                    if (node.getInclude() != null) {
-                        if (node.getInclude() != null && getUseCaseByUUID(node.getInclude()) != null) {
-                            ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).openTab(node.getInclude(), getUseCaseByUUID(node.getInclude()).getName(), getUseCaseByUUID(node.getInclude()));
-                        }
-                        /*
-                        Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
-                        for (Object obj : objects) {
-                            if (obj instanceof DefaultGraphCell) {
-                                if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
-                                    UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
-                                    if (node.getInclude() != null && tmpUC.getUuid().compareTo(node.getInclude()) == 0) {
-                                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).openTab(node.getInclude(), tmpUC.getName(), tmpUC);
-                                    }
-                                }
-                            }
-                        }
-                        */
+                    if (node.getInclude() != null && getUseCaseByUUID(node.getInclude()) != null) {
+                        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).openTab(node.getInclude(), getUseCaseByUUID(node.getInclude()).getName(), getUseCaseByUUID(node.getInclude()));
                     }
                 }
             }
