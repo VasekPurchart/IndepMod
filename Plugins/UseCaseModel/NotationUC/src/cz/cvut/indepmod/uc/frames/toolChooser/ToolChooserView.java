@@ -68,23 +68,29 @@ public class ToolChooserView extends JPanel {
                 /* rows */ "pref, 3dlu, pref, 10dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
         );
 
-        builderUC = new PanelBuilder(layout);
-        builderDetail = new PanelBuilder(layout);
         final CellConstraints cellConstraints = new CellConstraints();
+        setLayout(new BorderLayout());
 
-        builderUC.add(controlButton, cellConstraints.xy(1,1));
-        builderUC.add(addActorButton, cellConstraints.xy(1,5));
-        builderUC.add(addUseCaseButton, cellConstraints.xy(1,7));
-        builderUC.add(addSystemBorderButton, cellConstraints.xy(1,9));
-        builderUC.add(new JLabel("   "), cellConstraints.xy(1,12));
-        builderUC.add(addControlFlowLineButton, cellConstraints.xy(1,13));
-        builderUC.add(addIncludeFlowLineButton, cellConstraints.xy(1,15));
+        builderUC = new PanelBuilder(layout);
 
+        builderUC.add(controlButton, new CellConstraints().xy(1,3));
+
+        builderUC.add(new JSeparator(), cellConstraints.xy(1,5));
+
+        builderUC.add(addActorButton, new CellConstraints().xy(1,7));
+        builderUC.add(addUseCaseButton, cellConstraints.xy(1,9));
+        builderUC.add(addSystemBorderButton, cellConstraints.xy(1,11));
+
+        builderUC.add(new JSeparator(), cellConstraints.xy(1,13));
+
+        builderUC.add(addControlFlowLineButton, cellConstraints.xy(1,15));
+        builderUC.add(addIncludeFlowLineButton, cellConstraints.xy(1,17));
+
+        add(builderUC.getPanel(), BorderLayout.NORTH);
+
+        builderDetail = new PanelBuilder(layout);
         builderDetail.add(addScenarioButton, cellConstraints.xy(1,1));
         builderDetail.add(addStepButton, cellConstraints.xy(1,3));
-        
-        setLayout(new BorderLayout());
-        add(builderUC.getPanel(), BorderLayout.NORTH);
     }
 
     public void ChangePanel(String panelName)
