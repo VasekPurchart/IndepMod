@@ -26,7 +26,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -34,8 +33,8 @@ import java.util.UUID;
  * UseCase plugin - SI2/3 school project
  * User: Alena Varkockova
  * User: Viktor Bohuslav Bohdal
- *
- * UCWorkspace encapsulate the UCGraph component. 
+ * <p/>
+ * UCWorkspace encapsulate the UCGraph component.
  */
 public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceComponent, ProjectDiagramListener, MouseListener {
     private static final Logger LOG = Logger.getLogger(UCWorkspace.class);
@@ -44,7 +43,9 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     private final JGraph graph;
     final Map<String, ProModAction> actions;
 
-    /** holds the actual diagram model of a UC notation diagram */
+    /**
+     * holds the actual diagram model of a UC notation diagram
+     */
     private UCDiagramModel actualUCDiagramModel = null;
 
     private ToolChooser toolChooser;
@@ -54,8 +55,8 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     private int previousTab = 0;
 
 
-    public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions){
-        
+    public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions) {
+
         this.graph = graph;
         this.actions = actions;
 
@@ -81,15 +82,12 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
                 ((UCTabParent) pane.getComponent(pane.getSelectedIndex())).update();
                 ((UCTabParent) pane.getComponent(pane.getPreviousTab())).over();
                 pane.setPreviousTab();
-                if(pane.getComponent(pane.getSelectedIndex()) instanceof UCDefaultTab)
-                {
-                      toolChooser.ChangePanel("UC");
+                if (pane.getComponent(pane.getSelectedIndex()) instanceof UCDefaultTab) {
+                    toolChooser.ChangePanel("UC");
+                } else if (pane.getComponent(pane.getSelectedIndex()) instanceof UCUseCaseTab) {
+                    toolChooser.ChangePanel("Detail");
                 }
-                else if(pane.getComponent(pane.getSelectedIndex()) instanceof UCUseCaseTab)
-                {
-                      toolChooser.ChangePanel("Detail");  
-                }
-                
+
             }
         });
     }
@@ -120,7 +118,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     }
 
     public void setTabName(UUID uuid, String name) {
-         if (UCWorkspaceData.getTabs().containsKey(uuid)) {
+        if (UCWorkspaceData.getTabs().containsKey(uuid)) {
             int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
             this.setTitleAt(index, name);
         }
@@ -157,7 +155,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
 
     /**
      * {@inheritDoc}
-     *
+     * <p/>
      * Un-install the last UC notation diagram's listeners, sets the UNDO & REDO action as disable and makes
      * the actualUCDiagramModel variable null (actual UC notation diagram is none).
      */
@@ -175,9 +173,9 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     }
 
     public void changePerformed(final ProjectDiagramChange change) {
-        if(ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
-            && change.getChangeValue() instanceof Boolean
-                && Boolean.FALSE.equals(change.getChangeValue())){
+        if (ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
+                && change.getChangeValue() instanceof Boolean
+                && Boolean.FALSE.equals(change.getChangeValue())) {
 
             actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(false);
 
@@ -190,24 +188,26 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     public void mouseClicked(MouseEvent e) {
         int tabNumber = getUI().tabForCoordinate(this, e.getX(), e.getY());
         if (tabNumber < 0) return;
+        if (SwingUtilities.isMiddleMouseButton(e)) {
+            this.closeTab(tabNumber);
+            return;
+        }
         if (!(getIconAt(tabNumber) instanceof CloseTabIcon)) {
             return;
         }
         Rectangle rect = ((CloseTabIcon) getIconAt(tabNumber)).getBounds();
         if (rect.contains(e.getX(), e.getY())) {
-            //the tab is being closed
-            this.getComponent(tabNumber);
+            this.closeTab(tabNumber);
+        }
+    }
 
-            Iterator iterator = (UCWorkspaceData.getTabs().keySet()).iterator();
-            while (iterator.hasNext()) {
-                UUID key = (UUID) iterator.next();
-                Component tab = UCWorkspaceData.getTabs().get(key);
-                if (tab.equals(this.getComponent(tabNumber))) {
-                    LOG.info("Removing tab: " + key);
-                    UCWorkspaceData.getTabs().remove(key);
-                }
+    private void closeTab(int tabNumber) {
+        if (this.getComponent(tabNumber) instanceof UCUseCaseTab) {
+            UUID key = ((UCUseCaseTab) this.getComponent(tabNumber)).getUuid();
+            if (UCWorkspaceData.getTabs().containsKey(key)) {
+                UCWorkspaceData.getTabs().remove(key);
+                this.removeTabAt(tabNumber);
             }
-            this.removeTabAt(tabNumber);
         }
     }
 

@@ -378,4 +378,8 @@ public class UCUseCaseTab extends UCTabParent {
     public JTree getTree() {
         return this.tree;
     }
+
+    public UUID getUuid() {
+        return uuid;
+    }
 }
