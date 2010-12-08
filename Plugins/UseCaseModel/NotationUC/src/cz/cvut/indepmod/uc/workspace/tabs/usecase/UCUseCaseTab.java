@@ -314,15 +314,15 @@ public class UCUseCaseTab extends UCTabParent {
     }
 
     private void initPopupMenus() {
-        popupMenuScenario.add(this.makeDeleteNodePopupItem());
         popupMenuScenario.add(this.makeSelectMSSPopupItem());
+        popupMenuScenario.add(this.makeDeleteNodePopupItem());
 
-        popupMenuStep.add(this.makeDeleteNodePopupItem());
         popupMenuStep.add(this.makeIncludeUCPopupItem());
+        popupMenuStep.add(this.makeDeleteNodePopupItem());
 
-        popupMenuStepIncluded.add(this.makeDeleteNodePopupItem());
-        popupMenuStepIncluded.add(this.makeIncludeUCPopupItem());
         popupMenuStepIncluded.add(this.makeShowIncludedUCPopupItem());
+        popupMenuStepIncluded.add(this.makeIncludeUCPopupItem());
+        popupMenuStepIncluded.add(this.makeDeleteNodePopupItem());
 
         this.tree.add(popupMenuStep);
         this.tree.add(popupMenuStepIncluded);

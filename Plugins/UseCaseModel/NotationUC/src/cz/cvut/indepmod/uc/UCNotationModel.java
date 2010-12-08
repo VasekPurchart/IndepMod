@@ -186,14 +186,14 @@ public class UCNotationModel {
     }
 
     private void initPopupMenus() {
+        final Action detailAction = getAction(DETAIL_ACTION_KEY);
+        detailAction.setEnabled(true);
+        popupMenuUC.add(detailAction);
+
         final Action deleteAction = getAction(DELETE_ACTION_KEY);
         deleteAction.setEnabled(true);
         popupMenuActor.add(deleteAction);
         popupMenuUC.add(deleteAction);
-
-        final Action detailAction = getAction(DETAIL_ACTION_KEY);
-        detailAction.setEnabled(true);
-        popupMenuUC.add(detailAction);
     }
 
     public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition, final MenuService.MenuSeparator menuSeparator, final boolean checkable) {
