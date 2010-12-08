@@ -97,7 +97,7 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
             {
                 if(defaultCell.getUserObject() instanceof UseCaseModel)
                     popupMenuUC.show(graph, e.getX(), e.getY());
-                else if(defaultCell.getUserObject() instanceof ActorModel)
+                else
                     popupMenuActor.show(graph, e.getX(), e.getY());
             }
         }  else if(addingVertex(e)){

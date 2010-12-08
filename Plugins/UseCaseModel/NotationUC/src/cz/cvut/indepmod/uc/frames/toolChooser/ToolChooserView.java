@@ -47,16 +47,8 @@ public class ToolChooserView extends JPanel {
             ToolChooserModel.SCENARIO_TOOL_RES, null
     );
 
-    protected final JToggleButton addSelectMssButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.SELECT_MSS_TOOL_RES, null
-    );
-
     protected final JToggleButton addStepButton = ModelerSession.getComponentFactoryService().createToggleButton(
             ToolChooserModel.STEP_TOOL_RES, null
-    );
-
-    protected final JToggleButton addIncludeUcButton = ModelerSession.getComponentFactoryService().createToggleButton(
-            ToolChooserModel.INCLUDE_UC_TOOL_RES, null
     );
 
     public ToolChooserView(){
@@ -76,24 +68,29 @@ public class ToolChooserView extends JPanel {
                 /* rows */ "pref, 3dlu, pref, 10dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref, 5dlu, pref"
         );
 
-        builderUC = new PanelBuilder(layout);
-        builderDetail = new PanelBuilder(layout);
         final CellConstraints cellConstraints = new CellConstraints();
-
-        builderUC.add(controlButton, cellConstraints.xy(1,1));
-        builderUC.add(addActorButton, cellConstraints.xy(1,5));
-        builderUC.add(addUseCaseButton, cellConstraints.xy(1,7));
-        builderUC.add(addSystemBorderButton, cellConstraints.xy(1,9));
-        builderDetail.add(addScenarioButton, cellConstraints.xy(1,1));
-        builderDetail.add(addSelectMssButton, cellConstraints.xy(1,3));
-        builderDetail.add(addStepButton, cellConstraints.xy(1,5));
-        builderDetail.add(addIncludeUcButton, cellConstraints.xy(1,7));
-        builderUC.add(new JLabel("   "), cellConstraints.xy(1,12));
-        builderUC.add(addControlFlowLineButton, cellConstraints.xy(1,13));
-        builderUC.add(addIncludeFlowLineButton, cellConstraints.xy(1,15));
-        
         setLayout(new BorderLayout());
+
+        builderUC = new PanelBuilder(layout);
+
+        builderUC.add(controlButton, new CellConstraints().xy(1,3));
+
+        builderUC.add(new JSeparator(), cellConstraints.xy(1,5));
+
+        builderUC.add(addActorButton, new CellConstraints().xy(1,7));
+        builderUC.add(addUseCaseButton, cellConstraints.xy(1,9));
+        builderUC.add(addSystemBorderButton, cellConstraints.xy(1,11));
+
+        builderUC.add(new JSeparator(), cellConstraints.xy(1,13));
+
+        builderUC.add(addControlFlowLineButton, cellConstraints.xy(1,15));
+        builderUC.add(addIncludeFlowLineButton, cellConstraints.xy(1,17));
+
         add(builderUC.getPanel(), BorderLayout.NORTH);
+
+        builderDetail = new PanelBuilder(layout);
+        builderDetail.add(addScenarioButton, cellConstraints.xy(1,1));
+        builderDetail.add(addStepButton, cellConstraints.xy(1,3));
     }
 
     public void ChangePanel(String panelName)
@@ -133,16 +130,8 @@ public class ToolChooserView extends JPanel {
         return addScenarioButton;
     }
 
-    public JToggleButton getAddSelectMssButton() {
-        return addSelectMssButton;
-    }
-
     public JToggleButton getAddStepButton() {
         return addStepButton;
-    }
-
-    public JToggleButton getAddIncludeUcButton() {
-        return addIncludeUcButton;
     }
 
     public JToggleButton getAddSystemBorderButton() {

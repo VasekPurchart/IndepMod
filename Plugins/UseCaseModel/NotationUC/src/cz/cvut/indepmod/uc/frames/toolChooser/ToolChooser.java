@@ -65,9 +65,7 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
         buttonGroup.add(getAddActorButton());
         buttonGroup.add(getAddScenarioButton());
-        buttonGroup.add(getAddSelectMssButton());
         buttonGroup.add(getAddStepButton());
-        buttonGroup.add(getAddIncludeUcButton());
         buttonGroup.add(getAddUseCaseButton());
         buttonGroup.add(getAddSystemBorderButton());
         buttonGroup.add(getAddControlFlowLineButton());
@@ -97,24 +95,10 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
             }
         });
 
-        getAddSelectMssButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.SELECT_MSS);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.SELECT_MSS_TOOL_RES);
-            }
-        });
-
         getAddStepButton().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 selectedToolModel.setValue(ToolChooserModel.Tool.ADD_STEP);
                 updateStatusBarSelectedItemInfo(ToolChooserModel.STEP_TOOL_RES);
-            }
-        });
-
-        getAddIncludeUcButton().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                selectedToolModel.setValue(ToolChooserModel.Tool.INCLUDE_UC);
-                updateStatusBarSelectedItemInfo(ToolChooserModel.INCLUDE_UC_TOOL_RES);
             }
         });
 
@@ -160,14 +144,8 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
                     case ADD_SCENARIO:
                         getAddScenarioButton().doClick();
                         break;
-                    case SELECT_MSS:
-                        getAddSelectMssButton().doClick();
-                        break;
                     case ADD_STEP:
                         getAddStepButton().doClick();
-                        break;
-                    case INCLUDE_UC:
-                        getAddIncludeUcButton().doClick();
                         break;
                     case ADD_USE_CASE:
                         getAddUseCaseButton().doClick();
