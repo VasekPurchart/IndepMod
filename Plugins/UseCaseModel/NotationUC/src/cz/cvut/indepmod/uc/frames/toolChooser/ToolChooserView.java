@@ -60,6 +60,9 @@ public class ToolChooserView extends JPanel {
     private PanelBuilder builderUC;
     private PanelBuilder builderDetail;
 
+    /**
+     * Initializes layout
+     */
     private void initLayout() {
         setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
 
@@ -93,6 +96,10 @@ public class ToolChooserView extends JPanel {
         builderDetail.add(addStepButton, cellConstraints.xy(1,3));
     }
 
+    /**
+     * Changes the panel
+     * @param panelName name of the panel
+     */
     public void ChangePanel(String panelName)
     {
         removeAll();
@@ -110,30 +117,58 @@ public class ToolChooserView extends JPanel {
         //repaint();
     }
 
+    /**
+     * Getter - add flow line button
+     * @return returns add flow line button
+     */
     public JToggleButton getAddControlFlowLineButton() {
         return addControlFlowLineButton;
     }
 
+    /**
+     * Getter - add include flow line button
+     * @return returns add include flow line button
+     */
     public JToggleButton getAddIncludeFlowLineButton() {
         return addIncludeFlowLineButton;
     }
 
+    /**
+     * Getter - add use case button
+     * @return returns add use case button
+     */
     public JToggleButton getAddUseCaseButton() {
         return addUseCaseButton;
     }
 
+    /**
+     * Getter - add actor button
+     * @return returns add actor button
+     */
     public JToggleButton getAddActorButton() {
         return addActorButton;
     }
 
+    /**
+     * Getter - add scenario button
+     * @return returns add scenario button
+     */
     public JToggleButton getAddScenarioButton() {
         return addScenarioButton;
     }
 
+    /**
+     * Getter - add step button
+     * @return returns add step button
+     */
     public JToggleButton getAddStepButton() {
         return addStepButton;
     }
 
+    /**
+     * Getter - add system border button
+     * @return returns add system border button
+     */
     public JToggleButton getAddSystemBorderButton() {
         return addSystemBorderButton;
     }

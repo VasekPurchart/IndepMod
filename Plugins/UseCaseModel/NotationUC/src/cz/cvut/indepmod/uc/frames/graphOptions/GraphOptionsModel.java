@@ -50,44 +50,80 @@ public class GraphOptionsModel extends Model {
     public static final String PROPERTY_SCALE = "scale";
     private int scale = INIT_SCALE;
 
+    /**
+     * Returns true if it is locked
+     * @return
+     */
     public boolean isLock() {
         return lock;
     }
 
+    /**
+     * Setter - lock
+     * @param lock boolean - true if it is locked
+     */
     public void setLock(final boolean lock) {
         final boolean oldLock = this.lock;
         this.lock = lock;
         firePropertyChange(PROPERTY_LOCK, oldLock, lock);
     }
 
+    /**
+     * Returns true if it is grid
+     * @return
+     */
     public boolean isGrid() {
         return grid;
     }
 
+    /**
+     * Setter - grid
+     * @param grid boolean - true if there is a grid
+     */
     public void setGrid(final boolean grid) {
         final boolean oldGrid = this.grid;
         this.grid = grid;
         firePropertyChange(PROPERTY_GRID, oldGrid, grid);
     }
 
+    /**
+     * Returns true if view is grid
+     * @return
+     */
     public boolean isViewGrid() {
         return viewGrid;
     }
 
+    /**
+     * Getter - scale
+     * @return returns scale
+     */
     public int getScale() {
         return scale;
     }
 
+    /**
+     * Return tru if there is anti aliasing
+     * @return
+     */
     public boolean isAntiAliasing() {
         return antiAliasing;
     }
 
+    /**
+     * Setter - anti aliasing
+     * @param antiAliasing true is antialiasing is on
+     */
     public void setAntiAliasing(final boolean antiAliasing) {
         final boolean oldValue = this.antiAliasing;
         this.antiAliasing = antiAliasing;
         firePropertyChange(PROPERTY_ANTI_ALIASING, oldValue, antiAliasing);
     }
 
+    /**
+     * Setter - scale
+     * @param scale size of scale
+     */
     public void setScale(final int scale) {
         if(!isAllowedCellSize(scale, MIN_SCALE, MAX_SCALE)){
             return;            
@@ -98,16 +134,28 @@ public class GraphOptionsModel extends Model {
         firePropertyChange(PROPERTY_SCALE, oldValue, scale);
     }
 
+    /**
+     * Setter - view grid
+     * @param viewGrid true if there is a view grid
+     */
     public void setViewGrid(final boolean viewGrid) {
         final boolean oldViewGrid = this.viewGrid;
         this.viewGrid = viewGrid;
         firePropertyChange(GraphOptionsModel.PROPERTY_VIEW_GRID, oldViewGrid, viewGrid);
     }
 
+    /**
+     * Getter - cell size
+     * @return size of the cell
+     */
     public int getCellSize() {
         return cellSize;
     }
 
+    /**
+     * Setter - cell size
+     * @param cellSize size of the cell
+     */
     public void setCellSize(final int cellSize) {
         if(!isAllowedCellSize(cellSize, MIN_CELL_SIZE, MAX_CELL_SIZE)){
             return;
@@ -118,6 +166,13 @@ public class GraphOptionsModel extends Model {
         firePropertyChange(PROPERTY_CELL_SIZE, oldCellSize, cellSize);
     }
 
+    /**
+     * Checks whether the cell size is allowed
+     * @param cellSize size of the cell
+     * @param min minimum cell size
+     * @param max maximum cell size
+     * @return returns whether the cell size is valid
+     */
     private boolean isAllowedCellSize(final double cellSize, int min, int max){
         return !(cellSize < min || cellSize > max);
 

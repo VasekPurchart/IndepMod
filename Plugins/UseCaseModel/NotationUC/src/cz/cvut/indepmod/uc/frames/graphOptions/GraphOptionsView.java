@@ -58,6 +58,9 @@ public class GraphOptionsView extends JPanel {
     // this button takes statusUserTitleLabel from it's statusUserTitleLabel
     protected final JButton refreshButton = ModelerSession.getComponentFactoryService().createButton("", null);
 
+    /**
+     * Constructor - creates options view
+     */
     public GraphOptionsView(){
         initLayout();
 
@@ -67,6 +70,9 @@ public class GraphOptionsView extends JPanel {
         initScaleSlider();       
     }
 
+    /**
+     * Initialization of scale slider
+     */
     private void initScaleSlider() {
         scaleSlider.setMinimum(GraphOptionsModel.MIN_SCALE);
         scaleSlider.setMaximum(GraphOptionsModel.MAX_SCALE);
@@ -83,6 +89,9 @@ public class GraphOptionsView extends JPanel {
         scaleSlider.setLabelTable(table);
     }
 
+    /**
+     * Initializatin of layout
+     */
     private void initLayout() {
         setBorder(Borders.createEmptyBorder(ComponentFactoryService.DEFAULT_FORM_BORDER));
 
@@ -135,6 +144,11 @@ public class GraphOptionsView extends JPanel {
         add(refreshButton, BorderLayout.SOUTH);
     }
 
+    /**
+     * Getter - spinner text field
+     * @param spinner
+     * @return returns formatted text field
+     */
     public JFormattedTextField getSpinnerTextField(final JSpinner spinner) {
         final JComponent editor = spinner.getEditor();
         if (editor instanceof JSpinner.DefaultEditor) {

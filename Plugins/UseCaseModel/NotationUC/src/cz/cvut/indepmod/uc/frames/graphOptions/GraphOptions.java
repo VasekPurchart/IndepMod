@@ -44,6 +44,10 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
 
     private boolean lastViewGridValue;
 
+
+    /**
+     * Constructor creates the dockable frame
+     */
     public GraphOptions() {
         model = new GraphOptionsModel();
         final PresentationModel<GraphOptionsModel> presentation = new PresentationModel<GraphOptionsModel>(model);
@@ -72,6 +76,9 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
         movableBelowZeroModel.setValue(false);
     }
 
+    /**
+     * Event handler initialization for button
+     */
     private void initEventHandling() {
         initialSizeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
@@ -80,6 +87,10 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
         });
     }
 
+    /**
+     * Event Handler for actions
+     * @param actions  List of actions that should be performed
+     */
     public void initEventHandling(final Map<String, ProModAction> actions) {
         if(actions.containsKey(UCNotationModel.REFRESH_ACTION_KEY)){
             refreshButton.setAction(actions.get(UCNotationModel.REFRESH_ACTION_KEY));
@@ -90,6 +101,9 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
 
     }
 
+    /**
+     * Components binder
+     */
     private void initBinding() {
         Bindings.bind(gridCheckBox, gridModel);
         Bindings.bind(viewGridCheckBox, viewGridModel);
@@ -145,22 +159,42 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
         });
     }
 
+    /**
+     * Getter - dockable frame
+     * @return returns dockableFrame
+     */
     public String getDockableFrameName() {
         return "UCJGRaphOptions";
     }
 
+    /**
+     * Getter - dockable frame component
+     * @return returns dockable frame component
+     */
     public JComponent getDockableFrameComponent() {
         return this;
     }
 
+    /**
+     * Sets initial position
+     * @return returns initial position
+     */
     public NotationGuiHolder.Position getInitialPosition() {
         return NotationGuiHolder.Position.RIGHT;
     }
 
+    /**
+     * Returns true/false whether is Maxizable
+     * @return returns if it is maxizable
+     */
     public boolean isMaximizable() {
         return false;
     }
 
+    /**
+     * Getter for dockable frame positions
+     * @return returns Set of dockable positions
+     */
     public Set<NotationGuiHolder.Position> getAllowedDockableFramePositions() {
         final Set<NotationGuiHolder.Position> positions = new HashSet<NotationGuiHolder.Position>();
         positions.add(NotationGuiHolder.Position.LEFT);
@@ -169,38 +203,74 @@ public class GraphOptions extends GraphOptionsView implements DockableFrameData 
         return positions;
     }
 
+    /**
+     * Getter - initial state
+     * @return  returns initial state
+     */
     public InitialState getInitialState() {
         return InitialState.HIDDEN;
     }
 
+    /**
+     * Getter - title of the dockable frame
+     * @return returns dockable frame title String
+     */
     public String getDockableFrameTitle() {
         return Resources.getResources().getString(GraphOptionsModel.FRAME_TITLE_RES);
     }
 
+    /**
+     * Getter - button icon
+     * @return Icon for the button
+     */
     public Icon getButtonIcon() {
         return null;
     }
 
+    /**
+     * Getter - grid model
+     * @return  returns grid model
+     */
     public ValueModel getGridModel() {
         return gridModel;
     }
 
+    /**
+     * Getter - lock model
+     * @return returns ValueModel of lockModel
+     */
     public ValueModel getLockModel() {
         return lockModel;
     }
 
+    /**
+     * Getter - view grid model
+     * @return returns ValueModel of view grid model
+     */
     public ValueModel getViewGridModel() {
         return viewGridModel;
     }
 
+    /**
+     * Getter - cell size model
+     * @return returns ValueModel of cellSizeModel
+     */
     public ValueModel getCellSizeModel() {
         return cellSizeModel;
     }
 
+    /**
+     * Getter - scale model
+     * @return returns ValueModel of scale model
+     */
     public ValueModel getScaleModel() {
         return scaleModel;
     }
 
+    /**
+     * Getter - movable below zero model
+     * @return returns ValueModel of movableBelowZeroModel
+     */
     public ValueModel getMovableBelowZeroModel() {
         return movableBelowZeroModel;
     }
