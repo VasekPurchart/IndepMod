@@ -69,7 +69,7 @@ public class UCNotation implements Notation {
     }
 
     public String getFullName() {
-        return "UML UseCase Model Notation";
+        return "UseCase Diagram";
     }
 
     public String getAbbreviation() {
