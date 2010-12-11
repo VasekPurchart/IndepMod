@@ -104,7 +104,11 @@ public class UCUseCaseTab extends UCTabParent {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
                     if (e.getSource() instanceof JTree) {
-                        tree.startEditingAtPath(tree.getSelectionPath());//((DefaultMutableTreeNode) e.getSource()));
+                        if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
+                            showEditDialog((DefaultMutableTreeNode) tree.getLastSelectedPathComponent());
+                        } else {
+                            tree.startEditingAtPath(tree.getSelectionPath());//((DefaultMutableTreeNode) e.getSource()));
+                        }
                         return;
                     }
                 }
@@ -206,7 +210,7 @@ public class UCUseCaseTab extends UCTabParent {
                         if (obj instanceof DefaultGraphCell) {
                             if (((DefaultGraphCell) obj).getUserObject() instanceof UseCaseModel) {
                                 UseCaseModel tmpUC = (UseCaseModel) ((DefaultGraphCell) obj).getUserObject();
-                                if(getUuid().equals(tmpUC.getUuid())) {
+                                if (getUuid().equals(tmpUC.getUuid())) {
                                     continue;
                                 }
                                 combo.addItem(tmpUC);
@@ -337,5 +341,35 @@ public class UCUseCaseTab extends UCTabParent {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public void showEditDialog(final DefaultMutableTreeNode node) {
+        final JDialog dialog = new JDialog((JFrame) null, "Edit step");
+        dialog.setLocationRelativeTo(tree);
+        dialog.setSize(new Dimension(400, 350));
+
+        JPanel frame = new JPanel();
+        JLabel label = new JLabel("Select Use Case:");
+
+        final JEditorPane editor = new JEditorPane();
+        editor.setSize(new Dimension(360, 300));
+        editor.setText((String) node.getUserObject());
+
+        JButton save = new JButton("Save");
+        save.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                node.setUserObject(editor.getText());
+                dialog.setVisible(false);
+                dialog.dispose();
+            }
+        });
+
+        frame.add(label);
+        frame.add(editor);
+        frame.add(save);
+
+        dialog.add(frame);
+        dialog.setVisible(true);
     }
 }
