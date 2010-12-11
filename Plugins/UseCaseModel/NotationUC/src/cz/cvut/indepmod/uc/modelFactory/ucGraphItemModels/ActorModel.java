@@ -23,11 +23,20 @@ public class ActorModel extends UCEditableVertex {
 
     private final UUID uuid;
 
+    /**
+     * Constructor of Actor model
+     * @param uuid
+     */
     public ActorModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
     }
 
+    /**
+     * Constructor of Actor Model - needs model and name
+     * @param actorModel model of other actor
+     * @param name name of the actor
+     */
     public ActorModel(final ActorModel actorModel, final String name){
         setName(name);
         uuid = actorModel.getUuid();
@@ -61,7 +70,11 @@ public class ActorModel extends UCEditableVertex {
 
         return map;
     }
-    
+
+    /**
+     * Getter - UUID
+     * @return
+     */
     public UUID getUuid() {
         return this.uuid;  
     }

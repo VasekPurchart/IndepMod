@@ -18,10 +18,19 @@ public class EdgeModel extends UCEditableVertex {
 
     private final EdgeType edgeType;
 
+    /**
+     * Constructor - edge model
+     * @param edgeType
+     */
     public EdgeModel(final EdgeType edgeType){
         this.edgeType = edgeType;
     }
 
+    /**
+     * Constructor - edge model
+     * @param edgeModel
+     * @param newName
+     */
     public EdgeModel(final EdgeModel edgeModel, String newName){
         this.edgeType = edgeModel.getEdgeType();
 
@@ -29,6 +38,10 @@ public class EdgeModel extends UCEditableVertex {
         setNote(edgeModel.getNote());
     }
 
+    /**
+     * Getter - edge type
+     * @return returns edge type
+     */
     public EdgeType getEdgeType() {
         return edgeType;
     }
@@ -38,6 +51,10 @@ public class EdgeModel extends UCEditableVertex {
         return name;
     }
 
+    /**
+     * Getter - uuid
+     * @return
+     */
     public UUID getUuid() {
         return null; // edges do not have uuid
     }

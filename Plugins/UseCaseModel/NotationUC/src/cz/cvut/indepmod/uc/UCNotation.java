@@ -42,6 +42,11 @@ public class UCNotation implements Notation {
     private final UCNotationIOController ioController;
     private final String NOTATION_DESCRIPTION = Resources.getResources().getString("uc.description");
 
+    /**
+     * Constructor of UC Notation - needs properties file
+     * @param propertiesFile
+     * @throws InstantiationException
+     */
     public UCNotation(final File propertiesFile) throws InstantiationException  {
         final Properties properties = new Properties();
 
@@ -60,50 +65,98 @@ public class UCNotation implements Notation {
         ioController = new UCNotationIOController(model.getExtension(), getIdentifier());
     }
 
+    /**
+     * Getter - identifier
+     * @return
+     */
     public String getIdentifier() {
         return "12e456a8-2e30-7412-c6a1-2d5e86a521c3";
     }
 
+    /**
+     * Getter - name
+     * @return
+     */
     public String getName() {
         return "UMLUseCaseModelNotation";
     }
 
+    /**
+     * Getter - full name
+     * @return
+     */
     public String getFullName() {
         return "UML UseCase Model Notation";
     }
 
+    /**
+     * Getter abbreviation
+     * @return
+     */
     public String getAbbreviation() {
         return "UMLUseCaseModelNotation";
     }
 
+    /**
+     * Getter - description
+     * @return
+     */
     public String getDescription() {
         return "This plugin provides UseCase model notation according to the UML standard.";
     }
 
+    /**
+     * Getter - notation icon
+     * @return
+     */
     public Icon getNotationIcon() {
         return Resources.getIcon(Resources.ICONS + Resources.DIAGRAM);
     }
 
+    /**
+     * Getter - notation tooltip
+     * @return
+     */
     public String getNotationToolTip() {
         return "Plugin implementing UML UseCase model notation.";
     }
 
+    /**
+     * Getter - notation preview text
+     * @return
+     */
     public String getNotationPreviewText() {
         return "UML UseCase model notation is used for modeling various data models. It can also be used in application design phase.";
     }
 
+    /**
+     * Getter - notation preview image
+     * @return
+     */
     public ImageIcon getNotationPreviewImage() {
         return Resources.getIcon(Resources.ICONS + Resources.PREVIEW);
     }
-    
+
+    /**
+     * Getter - notation workspace data
+     * @return
+     */
     public NotationWorkspaceData getNotationWorkspaceData() {
         return model.getWorkspace();
     }
 
+    /**
+     * Getter - diagram model factory
+     * @return
+     */
     public DiagramModelFactory getDiagramModelFactory() {
         return modelFactory;
     }
 
+    /**
+     * Getter - Local IO Controller
+     * @return
+     */
     public NotationLocalIOController getLocalIOController() {
         return ioController;
     }
@@ -117,10 +170,17 @@ public class UCNotation implements Notation {
         return InsertMenuItemResult.POPUP_NOT_SUPPORTED;
     }
 
+    /**
+     * Getter - dockable framr data
+     * @return
+     */
     public Set<DockableFrameData> getDockableFrames() {
         return model.getDockableFrames();
     }
 
+    /**
+     * Initialisation - menu, actions, toolbar
+     */
     public void init() {
         initActions();
 
@@ -131,11 +191,18 @@ public class UCNotation implements Notation {
         initStatusBar();
     }
 
+    /**
+     * Initialisation of status bar
+     */
     private void initStatusBar() {
         ModelerSession.getStatusBarService().addStatusBarItem(
                 getIdentifier(), selectedToolStatusBarItem, JideBoxLayout.FIX
         );
     }
+
+    /**
+     * Initialisation of toolbar
+     */
     private void initToolBar() {
         ModelerSession.getToolBarService().addAction(
                 getIdentifier(),
@@ -157,8 +224,10 @@ public class UCNotation implements Notation {
                 model.getAction(UCNotationModel.SAVE_ALL_ACTION_KEY)
         );
     }
-          
 
+    /**
+     * Initialisation of actions
+     */
     private void initActions() {
         ModelerSession.getActionService().registerAction(
                 getIdentifier(),
@@ -199,10 +268,17 @@ public class UCNotation implements Notation {
     public void finish() {
     }
 
+    /**
+     * Getter - settings pages
+     * @return
+     */
     public List<SettingPageData> getSettingPages() {
         return null;
     }
 
+    /**
+     * Initialisation of main menu
+     */
     private void initMainMenu() {
         ModelerSession.getMenuService().insertMainMenuItem(
             model.getAction(UCNotationModel.SAVE_ACTION_KEY + "xx"),

@@ -24,11 +24,20 @@ public class SystemBorderModel extends UCEditableVertex {
 
     private UUID uuid;
 
+    /**
+     * Constructor of System Border Model - needs UUID
+     * @param uuid
+     */
     public SystemBorderModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
     }
 
+    /**
+     * Constructor of System Border Model - needs model and name
+     * @param systemBorderModel
+     * @param name
+     */
     public SystemBorderModel(final SystemBorderModel systemBorderModel, final String name){
         setName(name);
         uuid = systemBorderModel.getUuid();
@@ -67,7 +76,11 @@ public class SystemBorderModel extends UCEditableVertex {
 
         return map;
     }
-    
+
+    /**
+     * Getter - UUID
+     * @return
+     */
     public UUID getUuid() {
         return this.uuid;  
     }

@@ -63,6 +63,11 @@ public class UCNotationIOController implements NotationLocalIOController {
     }
 
 
+    /**
+     * Constructor of UC Notation IO Controller
+     * @param extension extension represented as string
+     * @param identifier string identifier
+     */
     public UCNotationIOController(final String extension, final String identifier) {
         this.extension = extension;
         this.identifier = identifier;

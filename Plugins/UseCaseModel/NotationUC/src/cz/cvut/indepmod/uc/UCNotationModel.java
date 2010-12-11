@@ -111,6 +111,9 @@ public class UCNotationModel {
         initPopupMenus();
     }
 
+    /**
+     * Initialisation of actions
+     */
     private void initActions() {
         actions.put(SAVE_ALL_ACTION_KEY,
                 new ProModAction(Resources.getResources().getString(SAVE_ALL_ACTION_KEY), null, null) {
@@ -185,6 +188,9 @@ public class UCNotationModel {
         );
     }
 
+    /**
+     * Initialisation of popup menus
+     */
     private void initPopupMenus() {
         final Action detailAction = getAction(DETAIL_ACTION_KEY);
         detailAction.setEnabled(true);
@@ -196,10 +202,22 @@ public class UCNotationModel {
         popupMenuUC.add(deleteAction);
     }
 
+    /**
+     * Initialises popup menu action
+     * @param proModAction
+     * @param menuItemPosition
+     * @param menuSeparator
+     * @param checkable
+     * @return
+     */
     public InsertMenuItemResult addPopupMenuAction(final ProModAction proModAction, final MenuItemPosition menuItemPosition, final MenuService.MenuSeparator menuSeparator, final boolean checkable) {
         return ModelerSession.getMenuService().insertAction(null, popupMenuActor, proModAction, menuSeparator, menuItemPosition, checkable);
     }
 
+    /**
+     * Checks properties if they are OK
+     * @throws InstantiationException
+     */
     private void checkProperties() throws InstantiationException {
         if (!properties.containsKey(UCNotationModel.FULL_NAME)) {
             LOG.error("Missing property " + UCNotationModel.FULL_NAME);

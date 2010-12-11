@@ -31,6 +31,10 @@ public class UCDiagramModel implements DiagramModel {
     /** Do not serialize set of listeners */
     private final transient Set<DiagramModelChangeListener> diagramModelChangeListeners;
 
+    /**
+     * Constructor of UC Diagram Model
+     * @param graphLayoutCache
+     */
     public UCDiagramModel(final GraphLayoutCache graphLayoutCache){
         this.graphLayoutCache = graphLayoutCache;
 
@@ -59,6 +63,10 @@ public class UCDiagramModel implements DiagramModel {
 
     }
 
+    /**
+     * Getter - layout cache
+     * @return returns layout cache of UC Diagram Model
+     */
     public GraphLayoutCache getGraphLayoutCache() {
         return graphLayoutCache;
     }
@@ -103,6 +111,10 @@ public class UCDiagramModel implements DiagramModel {
         return undoManager;
     }
 
+    /**
+     * Adds change listener
+     * @param listener is an instance of DiagramModelChangeListener class that will be notified when any change in
+     */
     public void addChangeListener(final DiagramModelChangeListener listener) {
         diagramModelChangeListeners.add(listener);   
     }
