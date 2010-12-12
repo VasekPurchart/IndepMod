@@ -24,6 +24,9 @@ public class UCPortView extends PortView {
     private static ImageIcon portIcon = Resources.getIcon(Resources.PORTS + Resources.PORT_BLUE);
     private boolean isSystemBorder;
 
+    /**
+     * Constructor of UC Port View
+     */
     public UCPortView(final Object cell){
         super(cell);
 
@@ -37,6 +40,10 @@ public class UCPortView extends PortView {
         RENDERER = new UCPortRenderer(portIcon);
     }
 
+    /**
+     * Getter - bounds
+     * @return returns rectangle specyfying bounds
+     */
     @Override
     public Rectangle2D getBounds() {
 		if (portIcon != null) {
@@ -68,6 +75,9 @@ public class UCPortView extends PortView {
 		return super.getBounds();
 	}
 
+    /**
+     * Getter - renderer
+     */
     @Override
     public CellViewRenderer getRenderer() {
         return RENDERER;

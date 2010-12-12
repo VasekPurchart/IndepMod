@@ -54,7 +54,11 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
     private JPopupMenu popupMenu;
     private int previousTab = 0;
 
-
+    /**
+     * Creates UC Workspace from Map of actions and graph
+     * @param graph
+     * @param actions
+     */
     public UCWorkspace(final JGraph graph, final Map<String, ProModAction> actions) {
 
         this.graph = graph;
@@ -92,6 +96,9 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         });
     }
 
+    /**
+     * Creates UC Workspace - needs graph, actions, tool model, popul menu creator a toolchoser
+     */
     public UCWorkspace(final JGraph graph,
                        final Map<String, ProModAction> actions,
                        final ValueModel selectedToolModel,
@@ -103,6 +110,12 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         this.toolChooser = toolChooser;
     }
 
+    /**
+     * Tab handling - responsible for opening tabs
+     * @param uuid uuid of tab
+     * @param name name of the tab
+     * @param object model of use case
+     */
     public void openTab(UUID uuid, String name, UseCaseModel object) {
         if (UCWorkspaceData.getTabs().containsKey(uuid)) {
             int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
@@ -117,6 +130,11 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         }
     }
 
+    /**
+     * Setter - tab name
+     * @param uuid tab uuid
+     * @param name name of the tab
+     */
     public void setTabName(UUID uuid, String name) {
         if (UCWorkspaceData.getTabs().containsKey(uuid)) {
             int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
@@ -172,6 +190,11 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         }
     }
 
+    /**
+     * Called when change happens
+     * @param change is an object holding info about the change
+     *
+     */
     public void changePerformed(final ProjectDiagramChange change) {
         if (ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
                 && change.getChangeValue() instanceof Boolean
@@ -185,6 +208,10 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
     }
 
+    /**
+     * Event handler when mouse is clicked
+     * @param e object that holds mouse event
+     */
     public void mouseClicked(MouseEvent e) {
         int tabNumber = getUI().tabForCoordinate(this, e.getX(), e.getY());
         if (tabNumber < 0) return;
@@ -201,6 +228,10 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         }
     }
 
+    /**
+     * Handling tab closure
+     * @param tabNumber number of the tab we want to be closed
+     */
     private void closeTab(int tabNumber) {
         if (this.getComponent(tabNumber) instanceof UCUseCaseTab) {
             UUID key = ((UCUseCaseTab) this.getComponent(tabNumber)).getUuid();
@@ -211,34 +242,61 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
         }
     }
 
+    /**
+     * Event handler - mouse pressed
+     */
     public void mousePressed(MouseEvent e) {
         return;
     }
 
+    /**
+     * Event handler - mouse released
+     */
     public void mouseReleased(MouseEvent e) {
         return;
     }
 
+    /**
+     * Event handler - mouse entered
+     */
     public void mouseEntered(MouseEvent e) {
         return;
     }
 
+    /**
+     * Event handler - mouse exited
+     */
     public void mouseExited(MouseEvent e) {
         return;
     }
 
+    /**
+     * Getter - previous tab
+     * @return returns index of previous tab
+     */
     public int getPreviousTab() {
         return this.previousTab;
     }
 
+    /**
+     * Setter - previous tab
+     */
     public void setPreviousTab() {
         this.previousTab = this.getSelectedIndex();
     }
 
+    /**
+     * Getter - diagram model
+     * @return returns diagram model of use case diagram
+     */
     public UCDiagramModel getDiagramModel() {
         return this.actualUCDiagramModel;
     }
 
+    /**
+     * Getter - selected tool model
+     * @return returns model of delected tool
+     */
     public ValueModel getSelectedToolModel() {
         return this.selectedToolModel;
     }

@@ -32,6 +32,9 @@ public class ApplicationSWBorder extends AbstractBorder {
         lineColor = color;
     }
 
+    /**
+     * Paints border
+     */
     @Override
     public void paintBorder(final Component c,
                             final Graphics g,
@@ -55,15 +58,26 @@ public class ApplicationSWBorder extends AbstractBorder {
         g2d.drawLine(x2, 0, x2, height);
     }
 
+    /**
+     * Getter - border insets
+     */
     @Override
     public Insets getBorderInsets(final Component component) {
         return INSETS;
     }
 
+    /**
+     * Getter - line color
+     * @return returns color of the line
+     */
     public Color getLineColor() {
         return lineColor;
     }
 
+    /**
+     * Getter - border opaque
+     * @return true if border is opaque
+     */
     public boolean isBorderOpaque() {
         return false;
     }

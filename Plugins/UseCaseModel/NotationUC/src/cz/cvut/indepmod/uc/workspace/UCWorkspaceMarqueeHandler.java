@@ -43,6 +43,9 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
     final JPopupMenu popupMenuActor;
     final JPopupMenu popupMenuUC;
 
+    /**
+     * Constructor of Workspace Marquee Handler
+     */
     public UCWorkspaceMarqueeHandler(final UCGraph graph,
                                       final ValueModel selectedToolModel,
                                       final JPopupMenu popupMenuActor,
@@ -55,6 +58,9 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         previewDrawName = NO_COMPONENT;
     }
 
+    /**
+     * Drawing
+     */
     public void paint(JGraph graph, Graphics g) {
           previewDrawName = NO_COMPONENT;
     }
@@ -167,15 +173,25 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         }
     }
 
+    /**
+     * Draws system border
+     */
     protected void drawSystemBorder(Graphics g, Point2D point)
     {
         g.drawRect((int) point.getX(), (int) point.getY(), 400, 800);
     }
+
+    /**
+     * Draws use case
+     */
     protected void drawUseCase(Graphics g, Point2D point)
     {
         g.drawArc((int) point.getX(), (int) point.getY(), UseCaseModel.USE_CASE_WIDTH, UseCaseModel.USE_CASE_HEIGHT, 0, 360);
     }
 
+    /**
+     * Draws actor
+     */
     protected void drawActor(Graphics g, Point2D point)
     {
         int actorH = 120, actorW = 40;
@@ -192,6 +208,10 @@ public class UCWorkspaceMarqueeHandler extends BasicMarqueeHandler {
         g.drawLine(x + borderW / 2, y + actorH / 3, x + borderW / 2 + actorW, y + actorH / 3);
         g.drawArc(x + borderW / 2 + actorW / 4, y + 0 , actorW / 2, actorH / 4, 0, 360);
     }
+
+    /**
+     * Draws diagram component
+     */
     protected void paintDiagramComponent(String tool, final Color foreground, final Color background, Point2D point)
     {
         final Graphics graphics = graph.getGraphics();
