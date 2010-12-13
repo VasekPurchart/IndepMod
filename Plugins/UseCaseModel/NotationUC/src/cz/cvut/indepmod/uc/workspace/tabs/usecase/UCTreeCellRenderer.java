@@ -50,44 +50,51 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             }
 
             JComponent frame = new JPanel();
+            JComponent frameIn = new JPanel();
             frame.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
             frame.setBackground(null);
-            JTextPane node = new JTextPane();
+            frameIn.setBackground(null);
+            final JEditorPane node = new JEditorPane();
             node.setContentType("text/html");
             node.setEditable(false);
-            node.setFont(font);
-            node.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 
             FontMetrics metrics = this.getFontMetrics(font);
             int w = 400;
             int h = (int) (Math.ceil((double) ((metrics.stringWidth(this.getText()) / w) + 1) * (metrics.getHeight() + 2)));
 
             if (included != null) {
+                JLabel includeLabel = new JLabel("Include:");
+                includeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+                JButton link = new JButton("<html><body><u>" + included.getName() + "</u></body></html>");
+                
+                link.setBackground(Color.WHITE);
+                link.setBorder(BorderFactory.createEmptyBorder());
+                link.setForeground(Color.BLUE);
+                link.setFont(new Font("SansSerif", Font.PLAIN, 16));
+                frameIn.add(includeLabel);
+                frameIn.add(link);
                 node.setText("<html><body><div style=\"border: 1px; padding: 5px;\"><strong>Include </strong><a href=\"http://bohdal.net/\">bohdal</a><a href=\"" + included.getUuid() + "\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
                 h += 40;
             } else {
                 node.setText("<html><body><div style=\"padding: 5px;\">" + this.getText() + "<br /></div></body></html>");
             }
+            node.addHyperlinkListener(new HyperlinkListener() {
+                public void hyperlinkUpdate(HyperlinkEvent e) {
+                    System.out.println("a");
+                }
+            });
+            node.setFont(font);
+            node.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 
             node.setPreferredSize(new Dimension(w, h));
             node.setAlignmentY(TOP_ALIGNMENT);
             node.setMargin(new Insets(100, 10, 10, 10));
 
             Border borderBlack = BorderFactory.createLineBorder(Color.BLACK, 2);
+            frameIn.setBorder(borderBlack);
 
-            node.setBorder(borderBlack);
-            node.addHyperlinkListener(new HyperlinkListener() {
-                public void hyperlinkUpdate(HyperlinkEvent e) {
-                    System.out.println(e.getEventType());
-                    if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                        System.out.println("Click registered");
-                    }
-                    System.out.println(e.getURL().toString());
-                }
-            });
-
-            //return node;
-            frame.add(node);
+            frameIn.add(node);
+            frame.add(frameIn);
             return frame;
         }
         if (value.equals(tree.getModel().getRoot())) {
