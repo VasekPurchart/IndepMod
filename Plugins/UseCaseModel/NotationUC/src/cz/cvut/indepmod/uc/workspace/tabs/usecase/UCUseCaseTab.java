@@ -361,13 +361,14 @@ public class UCUseCaseTab extends UCTabParent {
     public void showEditDialog(final DefaultMutableTreeNode node) {
         final JDialog dialog = new JDialog((JFrame) null, "Edit step");
         dialog.setLocationRelativeTo(tree);
-        dialog.setSize(new Dimension(400, 350));
+        dialog.setSize(new Dimension(520, 550));
 
         JPanel frame = new JPanel();
-        JLabel label = new JLabel("Select Use Case:");
+        JLabel label = new JLabel("Step:");
 
         final JEditorPane editor = new JEditorPane();
-        editor.setSize(new Dimension(360, 300));
+        editor.setSize(new Dimension(500, 400));
+        editor.setPreferredSize(new Dimension(500, 400));
         editor.setText((String) node.getUserObject());
 
         JButton save = new JButton("Save");
@@ -380,8 +381,10 @@ public class UCUseCaseTab extends UCTabParent {
             }
         });
 
+        JScrollPane editorScrollPane = new JScrollPane(editor, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
         frame.add(label);
-        frame.add(editor);
+        frame.add(editorScrollPane);
         frame.add(save);
 
         dialog.add(frame);
