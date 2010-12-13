@@ -28,6 +28,9 @@ public class UCVertexRenderer extends MultiLineVertexRenderer {
     public static final int SHAPE_UC_ACTOR = -1;
     public static final int SHAPE_UC_SCENARIO = -2;
 
+    /**
+     * Responsible for background painting
+     */
     @Override
     protected void paintBackground(Graphics g) {
         final Dimension d = getSize();
@@ -88,6 +91,9 @@ public class UCVertexRenderer extends MultiLineVertexRenderer {
         return new Double(Math.sqrt(b_square - ((b_square * x * x) / (a * a)))).intValue();
     }
 
+    /**
+     * Paints shape border
+     */
     @Override
     protected void paintShapeBorder(Graphics g) {
         super.paintShapeBorder(g);

@@ -13,10 +13,18 @@ public abstract class UCNoteItem {
     public static final String NOTE_PROPERTY = "note";
     private String note;
 
+    /**
+     * Getter - note
+     * @return
+     */
     public String getNote() {
         return note;
     }
 
+    /**
+     * Setter - note
+     * @param note
+     */
     public void setNote(final String note) {
         this.note = note;
     }

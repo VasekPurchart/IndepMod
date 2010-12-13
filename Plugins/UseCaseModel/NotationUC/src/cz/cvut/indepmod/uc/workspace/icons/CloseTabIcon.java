@@ -22,11 +22,21 @@ public class CloseTabIcon implements Icon{
     private int height;
     private Icon fileIcon;
 
+    /**
+     * Constructor of close tab icon
+     */
     public CloseTabIcon() {
         width = 16;
         height = 16;
     }
 
+    /**
+     * Paints icon
+     * @param c given component
+     * @param g given graphics of the icon
+     * @param x X position
+     * @param y Y position
+     */
     public void paintIcon(Component c, Graphics g, int x, int y) {
         this.x_pos = x;
         this.y_pos = y;
@@ -51,14 +61,23 @@ public class CloseTabIcon implements Icon{
         }
     }
 
+    /**
+     * Getter - icon width
+     */
     public int getIconWidth() {
         return width + (fileIcon != null ? fileIcon.getIconWidth() : 0);
     }
 
+    /**
+     * Getter - icon height
+     */
     public int getIconHeight() {
         return height;
     }
 
+    /**
+     * Getter - icon bounds
+     */
     public Rectangle getBounds() {
         return new Rectangle(x_pos, y_pos, width, height);
     }

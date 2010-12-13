@@ -27,6 +27,11 @@ public class UCDefaultTab extends UCTabParent {
     protected final GraphModelListener graphModelListener;
     final Map<String, ProModAction> actions;
 
+    /**
+     * Constructor of Default tab
+     * @param graph given graph
+     * @param actions given actions
+     */
     public UCDefaultTab(final JGraph graph, final Map<String, ProModAction> actions) {
         super(graph, actions);
         this.graph = graph;
@@ -43,6 +48,11 @@ public class UCDefaultTab extends UCTabParent {
 
     }
 
+    /**
+     * Dealing with change that has been performed
+     * @param change is an object holding info about the change
+     *
+     */
     public void changePerformed(final ProjectDiagramChange change) {
         if (ProjectDiagramChange.ChangeType.CHANGE_FLAG.equals(change.getChangeType())
                 && change.getChangeValue() instanceof Boolean
@@ -56,9 +66,13 @@ public class UCDefaultTab extends UCTabParent {
         actions.get(UCNotationModel.SAVE_ACTION_KEY).setEnabled(true);
     }
 
+    /**
+     * Getter - graph
+     */
     public JGraph getGraph() {
         return this.graph;
     }
+    
     /**
      * {@inheritDoc}
      * <p/>

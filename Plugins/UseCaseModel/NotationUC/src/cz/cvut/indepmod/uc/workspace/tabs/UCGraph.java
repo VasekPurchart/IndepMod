@@ -41,6 +41,9 @@ public class UCGraph extends JGraph {
     private final ValueModel selectedToolModel;
     private ProModAction removeAction; //never change this action once has been instantiated
 
+    /**
+     * Constructor of UC Graph
+     */
     public UCGraph(final ValueModel selectedToolModel,
                    final JPopupMenu popupMenuActor,
                    final JPopupMenu popupMenuUC,
@@ -56,6 +59,10 @@ public class UCGraph extends JGraph {
         setMarqueeHandler(new UCWorkspaceMarqueeHandler(this, selectedToolModel, popupMenuActor, popupMenuUC));
     }
 
+    /**
+     * Event handler - key has been pressed
+     * @param e event object
+     */
     protected void processKeyEvent(KeyEvent e) {
         if (127 == e.getKeyCode()) {
             if (!isSelectionEmpty()) {
@@ -66,6 +73,10 @@ public class UCGraph extends JGraph {
         }
     }
 
+    /**
+     * Initialisation of actions
+     * @param actions Map of actions we want to initialize
+     */
     private void initActions(final Map<String, ProModAction> actions) {
         final ProModAction refreshAction = new ProModAction(Resources.getResources().getString(UCNotationModel.REFRESH_ACTION_KEY), null, null) {
             public void actionPerformed(ActionEvent event) {
@@ -126,7 +137,6 @@ public class UCGraph extends JGraph {
      *
      * @param selectedCells that have been deleted
      */
-
     private void logDeleteInfo(final Object[] selectedCells) {
         for (final Object cell : selectedCells) {
             if (cell instanceof DefaultEdge) {
@@ -152,6 +162,9 @@ public class UCGraph extends JGraph {
         }
     }
 
+    /**
+     * Getter - port view at given point
+     */
     public PortView getSourcePortAt(final Point2D point) {
         setJumpToDefaultPort(false); // do not use default currentPort if no another currentPort is on the point
 
@@ -169,6 +182,9 @@ public class UCGraph extends JGraph {
         return result;
     }
 
+    /**
+     * Getter - target port view at given point
+     */
     public PortView getTargetPortAt(final Point2D point) {
 
         PortView result = getPortViewAt(point.getX(), point.getY());
@@ -238,10 +254,16 @@ public class UCGraph extends JGraph {
         return UCCellFactory.createVertex(snappedPoint, tool);
     }
 
+    /**
+     * Getter - remove action
+     */
     public ProModAction getRemoveAction() {
         return removeAction;
     }
 
+    /**
+     * Getter - selected tool model
+     */
     public ValueModel getSelectedToolModel() {
         return this.selectedToolModel;
     }

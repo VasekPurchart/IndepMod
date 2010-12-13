@@ -27,12 +27,20 @@ public class ApplicationSoftwareModel extends UCEditableVertex{
 
     private final UUID uuid;
 
-
+    /**
+     * Constructor of Application Software Model - needs UUID
+     * @param uuid
+     */
     public ApplicationSoftwareModel(final UUID uuid){
         this.uuid = uuid;
         setName(DEFAULT_LABEL);
     }
 
+    /**
+     * Constructor of Application Software Model - needs model and name
+     * @param applicationSoftwareModel
+     * @param name
+     */
     public ApplicationSoftwareModel(final ApplicationSoftwareModel applicationSoftwareModel, final String name){
         uuid = applicationSoftwareModel.getUuid();
         setName(name);

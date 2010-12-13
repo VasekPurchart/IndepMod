@@ -20,6 +20,9 @@ public class UCPortRenderer extends PortRenderer {
         this.portIcon = portIcon;
     }
 
+    /**
+     * Paints icon
+     */
     public void paint(Graphics g) {
         if(portIcon != null){
             portIcon.paintIcon(this, g, 0, 0);

@@ -52,23 +52,37 @@ public class ToolChooserModel extends Model {
 
     private Set<NotationGuiHolder.Position> allowedSides;
 
-    
+    /**
+     * Constructor of ToolChoserModel
+     */
     public ToolChooserModel(){
         allowedSides = new HashSet<NotationGuiHolder.Position>();
         allowedSides.add(NotationGuiHolder.Position.LEFT);
         allowedSides.add(NotationGuiHolder.Position.RIGHT);
     }
 
+    /**
+     * Getter - alowed sides
+     * @return returns allowed sides
+     */
     public Set<NotationGuiHolder.Position> getAllowedSides() {
         return allowedSides;
     }
 
+    /**
+     * Setter - selected tool
+     * @param selectedTool sets selected tool
+     */
     public void setSelectedTool(final Tool selectedTool) {
         final Tool oldValue = this.selectedTool;
         this.selectedTool = selectedTool;
         firePropertyChange(PROPERTY_SELECTED_TOOL, oldValue, selectedTool);
     }
 
+    /**
+     * Getter - selected tool
+     * @return gets selected tool
+     */
     public Tool getSelectedTool() {
         return selectedTool;
     }

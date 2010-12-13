@@ -39,7 +39,10 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
 
     private static final String LOG_OP_SEPARATOR = "/";
 
-
+    /**
+     * Constructor of ToolChoser - creates ToolChoser
+     * @param selectedToolStatusBarItem selected tool
+     */
     public ToolChooser(final LabelStatusBarItem selectedToolStatusBarItem){
         model = new ToolChooserModel();
         final PresentationModel<ToolChooserModel> presentation = new PresentationModel<ToolChooserModel>(model);
@@ -60,6 +63,9 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
         controlButton.doClick(); // initial tool is "control"
     }
 
+    /**
+     * Initializes buttons on ToolChoser
+     */
     private void initButtonGroup() {
         buttonGroup.add(controlButton);
 
@@ -73,6 +79,9 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
         
     }
 
+    /**
+     * Registers event handlers - action listener and so on
+     */
     private void initEventHandling() {
         controlButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent actionEvent) {
@@ -176,38 +185,74 @@ public class ToolChooser extends ToolChooserView implements DockableFrameData{
     }
 
 
+    /**
+     * Getter - frame name
+     * @return returns title of frame
+     */
     public String getDockableFrameName() {
         return "UCToolChooser";
     }
 
+    /**
+     * Getter - dockable frame component
+     * @return returns dockable frame component
+     */
     public JComponent getDockableFrameComponent() {
         return this;
     }
 
+    /**
+     * Getter - initial position
+     * @return returns initial position
+     */
     public NotationGuiHolder.Position getInitialPosition() {
         return NotationGuiHolder.Position.RIGHT;
     }
 
+    /**
+     * Returns true if it is maximizable
+     * @return
+     */
     public boolean isMaximizable() {
         return false;
     }
 
+    /**
+     * Getter - alowed dockable frame position
+     * @return returns set of allowed dockable positions
+     */
     public Set<NotationGuiHolder.Position> getAllowedDockableFramePositions() {
         return model.getAllowedSides();
     }
 
+    /**
+     * Getter - initial state
+     * @return returns initial state
+     */
     public InitialState getInitialState() {
         return InitialState.OPENED;
     }
 
+    /**
+     * Getter - dockable frame title
+     * @return returns dockable frame title
+     */
     public String getDockableFrameTitle() {
         return Resources.getResources().getString(ToolChooserModel.FRAME_TITLE_RES);
     }
 
+    /**
+     * Getter - button icon
+     * @return returns button icon
+     */
     public Icon getButtonIcon() {
         return null;
     }
 
+    /**
+     * Getter - selected tool model
+     * @return returns model of selected tool
+     */
     public ValueModel getSelectedToolModel() {
         return selectedToolModel;
     }

@@ -36,6 +36,11 @@ public class UseCaseModel extends UCEditableVertex {
         setName(DEFAULT_LABEL);
     }
 
+    /**
+     * Constructor of Use Case Model - needs model and name
+     * @param useCaseModel
+     * @param name
+     */
     public UseCaseModel(final UseCaseModel useCaseModel, final String name) {
         setName(name);
         uuid = useCaseModel.getUuid();
@@ -69,10 +74,18 @@ public class UseCaseModel extends UCEditableVertex {
         return map;
     }
 
+    /**
+     * Getter - UUID
+     * @return
+     */
     public UUID getUuid() {
         return this.uuid;
     }
 
+    /**
+     * Setter - name
+     * @param name
+     */
     public void setName(final String name) {
         if (this.model.getRoot() != null) {
             ((DefaultMutableTreeNode )this.model.getRoot()).setUserObject(name);
@@ -81,10 +94,18 @@ public class UseCaseModel extends UCEditableVertex {
         this.name = name;
     }
 
+    /**
+     * Getter - model
+     * @return
+     */
     public DefaultTreeModel getModel() {
         return model;
     }
 
+    /**
+     * Setter - model
+     * @param model
+     */
     public void setModel(DefaultTreeModel model) {
         this.model = model;
     }

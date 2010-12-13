@@ -39,6 +39,9 @@ public class UCWorkspaceData implements NotationWorkspaceData {
 
     public static final String PROPERTY_SELECTED_CELL = "selectedCell";
 
+    /**
+     * Constructor of UC Workspace Data
+     */
     public UCWorkspaceData(final ValueModel selectedToolModel,
                            final ValueModel gridModel,
                            final ValueModel lockModel,
@@ -66,6 +69,9 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         initEventHandling();
     }
 
+    /**
+     * Initialization of event handling of tools
+     */
     private void initEventHandling() {
         lockModel.addValueChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
@@ -132,18 +138,31 @@ public class UCWorkspaceData implements NotationWorkspaceData {
         });
     }
 
+    /**
+     * Getter - workspace component singleton
+     */
     public JComponent getWorkspaceComponentSingleton() {
         return workspace;
     }
 
+    /**
+     * Getter - graph
+     */
     public JGraph getGraph() {
         return graph;
     }
 
+    /**
+     * Getter - tabs
+     * @return returns map of all tabs (uuid and parent)
+     */
     public static HashMap<UUID, UCTabParent> getTabs() {
         return tabs;
     }
 
+    /**
+     * Getter - workspace component singleton static
+     */
     public static JComponent getWorkspaceComponentSingletonStatic() {
         return workspace;
     }

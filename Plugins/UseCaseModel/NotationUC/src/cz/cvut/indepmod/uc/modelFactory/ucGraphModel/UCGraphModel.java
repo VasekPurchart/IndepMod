@@ -26,10 +26,18 @@ public class UCGraphModel extends DefaultGraphModel{
     private final static String ERROR_ONE_CONTROL_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.one_control.flow");
     private final static String ERROR_ONE_INCLUDE_FLOW_LABEL = Resources.getResources().getString("uc.conn.error.one_include.flow");
 
+    /**
+     * Constructor of UC Graph Model - without parameters
+     */
     public UCGraphModel(){
         super(null, null);
     }
 
+    /**
+     * Constructor UcGraphModel - needs list of roots and attribute map
+     * @param roots
+     * @param attributes
+     */
     public UCGraphModel(final List roots, final AttributeMap attributes){
         super(roots, attributes);        
     }

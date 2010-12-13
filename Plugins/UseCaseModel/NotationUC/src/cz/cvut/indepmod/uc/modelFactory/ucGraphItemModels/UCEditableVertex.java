@@ -10,10 +10,18 @@ public abstract class UCEditableVertex  extends UCNoteItem implements UCIdentifi
     public static final String PROPERTY_NAME = "name";
     protected String name;
 
+    /**
+     * Getter - name
+     * @return
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Setter - name
+     * @param name
+     */
     public void setName(final String name){
         this.name = name;
     }

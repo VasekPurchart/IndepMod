@@ -14,7 +14,10 @@ import org.jgraph.graph.GraphLayoutCache;
  * Time: 13:24:06
  */
 public class UCNotationModelFactory implements DiagramModelFactory {
-
+    /**
+     * Creates empty model of diagram
+     * @return returns model of diagram - empty
+     */
     public DiagramModel createEmptyDiagramModel() {
         return new UCDiagramModel(
                 new GraphLayoutCache(new UCGraphModel(), new UCCellViewFactory())
