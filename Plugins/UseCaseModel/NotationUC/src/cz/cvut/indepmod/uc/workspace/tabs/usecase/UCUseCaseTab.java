@@ -50,7 +50,6 @@ public class UCUseCaseTab extends UCTabParent {
 
 
         ((DefaultTreeModel) tree.getModel()).addTreeModelListener(new TreeModelListener() {
-
             public void treeNodesChanged(TreeModelEvent e) {
                 if (e.getSource() instanceof DefaultTreeModel) {
                     DefaultTreeModel model = (DefaultTreeModel) e.getSource();
@@ -99,7 +98,7 @@ public class UCUseCaseTab extends UCTabParent {
             }
         });
         final int oldToggleClickCount = tree.getToggleClickCount();
-        // tree.setEditable(true);
+        tree.setToggleClickCount(0);
         tree.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -107,7 +106,7 @@ public class UCUseCaseTab extends UCTabParent {
                         if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                             showEditDialog((DefaultMutableTreeNode) tree.getLastSelectedPathComponent());
                         } else {
-                            tree.startEditingAtPath(tree.getSelectionPath());//((DefaultMutableTreeNode) e.getSource()));
+                            tree.startEditingAtPath(tree.getSelectionPath());
                         }
                         return;
                     }
@@ -153,6 +152,22 @@ public class UCUseCaseTab extends UCTabParent {
                             }
                             tree.expandRow(tree.getLeadSelectionRow());
                             break;
+                        case CONTROL:
+                            if (tree.getLastSelectedPathComponent() instanceof UCScenarioNode) {
+                                tree.setToggleClickCount(oldToggleClickCount);
+                                tree.setEditable(true);
+                            } else if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
+                                tree.setEditable(false);
+                            } else if (model.getRoot().equals(tree.getLastSelectedPathComponent())) {
+                                tree.setEditable(true);
+                                tree.setToggleClickCount(0);
+                            } else {
+                                tree.setToggleClickCount(0);
+                                tree.setEditable(false);
+                            }
+                            break;
+                        default:
+
                     }
                 }
             }
