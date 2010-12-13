@@ -359,11 +359,12 @@ public class UCUseCaseTab extends UCTabParent {
     }
 
     public void showEditDialog(final DefaultMutableTreeNode node) {
+
+        JPanel frame = new JPanel();
         final JDialog dialog = new JDialog((JFrame) null, "Edit step");
         dialog.setLocationRelativeTo(tree);
         dialog.setSize(new Dimension(520, 550));
-
-        JPanel frame = new JPanel();
+        dialog.setModal(true);
         JLabel label = new JLabel("Step:");
 
         final JEditorPane editor = new JEditorPane();
