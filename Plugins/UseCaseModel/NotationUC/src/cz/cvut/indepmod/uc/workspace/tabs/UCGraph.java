@@ -12,6 +12,7 @@ import cz.cvut.indepmod.uc.workspace.UCWorkspace;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceData;
 import cz.cvut.indepmod.uc.workspace.UCWorkspaceMarqueeHandler;
 import cz.cvut.indepmod.uc.workspace.factory.UCCellFactory;
+import cz.cvut.indepmod.uc.workspace.tabs.usecase.UCUseCaseTab;
 import cz.cvut.promod.services.actionService.actionUtils.ProModAction;
 import org.apache.log4j.Logger;
 import org.jgraph.JGraph;
@@ -21,6 +22,7 @@ import org.jgraph.graph.Port;
 import org.jgraph.graph.PortView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
@@ -61,20 +63,40 @@ public class UCGraph extends JGraph {
 
     /**
      * Event handler - key has been pressed
+     *
      * @param e event object
      */
     protected void processKeyEvent(KeyEvent e) {
         if (127 == e.getKeyCode()) {
             if (!isSelectionEmpty()) {
-                Object[] selectedCells = getSelectionCells();
-                logDeleteInfo(selectedCells);
-                getGraphLayoutCache().remove(selectedCells, true, true);
+                deleteCells(getSelectionCells());
             }
         }
     }
 
+    public void deleteCells(Object[] cells) {
+        for (Object selectedCell : cells) {
+            if (!(selectedCell instanceof DefaultGraphCell)) continue;
+            if (((DefaultGraphCell) selectedCell).getUserObject() instanceof UseCaseModel) {
+                for (Component comp : UCWorkspaceData.getWorkspaceComponentSingletonStatic().getComponents()) {
+                    if (comp instanceof UCUseCaseTab) {
+                        if (((UCUseCaseTab) comp).getUuid().equals(((UseCaseModel) ((DefaultGraphCell) selectedCell).getUserObject()).getUuid())) {
+                            UCWorkspaceData.getWorkspaceComponentSingletonStatic().remove(comp);
+                        }
+                    }
+                }
+                UCWorkspaceData.getTabs().remove(((UseCaseModel) ((DefaultGraphCell) selectedCell).getUserObject()).getUuid());
+            }
+
+        }
+        logDeleteInfo(cells);
+        getGraphLayoutCache().remove(cells, true, true);
+
+    }
+
     /**
      * Initialisation of actions
+     *
      * @param actions Map of actions we want to initialize
      */
     private void initActions(final Map<String, ProModAction> actions) {
@@ -89,14 +111,13 @@ public class UCGraph extends JGraph {
         removeAction = new ProModAction(Resources.getResources().getString(UCNotationModel.DELETE_ACTION_KEY), null, null) {
             public void actionPerformed(ActionEvent event) {
                 if (!isSelectionEmpty()) {
-                    Object[] selectedCells = getSelectionCells();
-                    logDeleteInfo(selectedCells);
-                    getGraphLayoutCache().remove(selectedCells, true, true);
+                    deleteCells(getSelectionCells());
                 }
             }
         };
 
         actions.put(UCNotationModel.DELETE_ACTION_KEY, removeAction);
+
 
         final ProModAction detailAction = new ProModAction(Resources.getResources().getString(UCNotationModel.DETAIL_ACTION_KEY), null, null) {
             public void actionPerformed(ActionEvent event) {
@@ -120,7 +141,7 @@ public class UCGraph extends JGraph {
                         }
                         if (name != null && uuid != null) {
                             UCWorkspace workspace = (UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic();
-                            if(object instanceof UseCaseModel) {
+                            if (object instanceof UseCaseModel) {
                                 workspace.openTab(uuid, name, (UseCaseModel) object);
                             }
                         }
@@ -190,11 +211,10 @@ public class UCGraph extends JGraph {
         PortView result = getPortViewAt(point.getX(), point.getY());
 
         // System Border cant be connected
-        if(result != null)
-        {
+        if (result != null) {
             org.jgraph.graph.DefaultPort model = (org.jgraph.graph.DefaultPort) result.getCell();
             org.jgraph.graph.DefaultGraphCell graphCell = (org.jgraph.graph.DefaultGraphCell) model.getParent();
-            if(graphCell.getUserObject() instanceof SystemBorderModel)
+            if (graphCell.getUserObject() instanceof SystemBorderModel)
                 result = null;
 
             /*  This works but view part doesnt work - Lukas
@@ -203,7 +223,7 @@ public class UCGraph extends JGraph {
                 UCWorkspaceMarqueeHandler.getEdgeType() == EdgeModel.EdgeType.INCLUDE_FLOW))
                 result = null; */
         }
-        
+
         return result;
     }
 

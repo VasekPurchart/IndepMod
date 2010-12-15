@@ -121,7 +121,7 @@ public class UCWorkspace extends JTabbedPane implements UpdatableWorkspaceCompon
             int index = this.indexOfComponent(UCWorkspaceData.getTabs().get(uuid));
             this.setSelectedIndex(index);
         } else {
-            UCTabParent tab = (new UCUseCaseTab(actions, uuid, name, object));
+            UCTabParent tab = new UCUseCaseTab(actions, uuid, name, object);
             this.addTab(name, new CloseTabIcon(), tab);
 
             UCWorkspaceData.getTabs().put(uuid, tab);
