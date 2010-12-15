@@ -7,8 +7,6 @@ import org.jgraph.graph.DefaultGraphCell;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
@@ -22,6 +20,7 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
         super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
         this.setBorder(null);
         this.setIcon(null);
+        this.setOpenIcon(null);
         this.setClosedIcon(null);
 
         Font font = new Font("SansSerif", Font.PLAIN, 16);
@@ -35,6 +34,7 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             this.setPreferredSize(new Dimension(metrics.stringWidth(this.getText()), 34));
         }
         if (value instanceof UCStepNode) {
+
             UseCaseModel included = null;
             if (((UCStepNode) value).getInclude() != null) {
                 Object[] objects = ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).getDiagramModel().getGraphLayoutCache().getCells(false, true, false, false);
@@ -60,13 +60,13 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
 
             FontMetrics metrics = this.getFontMetrics(font);
             int w = 400;
-            int h = (int) (Math.ceil((double) ((metrics.stringWidth(this.getText()) / w) + 1) * (metrics.getHeight() + 2)));
+            int h = (int) (Math.ceil((double) ((metrics.stringWidth(this.getText()) / w) + 1) * (metrics.getHeight() + 4)));
 
             if (included != null) {
                 JLabel includeLabel = new JLabel("Include:");
                 includeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
                 JButton link = new JButton("<html><body><u>" + included.getName() + "</u></body></html>");
-                
+
                 link.setBackground(Color.WHITE);
                 link.setBorder(BorderFactory.createEmptyBorder());
                 link.setForeground(Color.BLUE);
@@ -78,11 +78,6 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             } else {
                 node.setText("<html><body><div style=\"padding: 5px;\">" + this.getText() + "<br /></div></body></html>");
             }
-            node.addHyperlinkListener(new HyperlinkListener() {
-                public void hyperlinkUpdate(HyperlinkEvent e) {
-                    System.out.println("a");
-                }
-            });
             node.setFont(font);
             node.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
 
@@ -98,7 +93,6 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             return frame;
         }
         if (value.equals(tree.getModel().getRoot())) {
-
             font = new Font("SansSerif", Font.BOLD, 30);
             FontMetrics metrics = this.getFontMetrics(font);
             this.setPreferredSize(new Dimension(metrics.stringWidth(this.getText()) + 15, 40));
