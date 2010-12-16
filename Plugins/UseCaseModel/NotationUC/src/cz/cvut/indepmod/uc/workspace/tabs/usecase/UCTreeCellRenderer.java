@@ -71,9 +71,9 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
                 link.setBorder(BorderFactory.createEmptyBorder());
                 link.setForeground(Color.BLUE);
                 link.setFont(new Font("SansSerif", Font.PLAIN, 16));
-                frameIn.add(includeLabel);
-                frameIn.add(link);
-                node.setText("<html><body><div style=\"border: 1px; padding: 5px;\"><strong>Include </strong><a href=\"http://bohdal.net/\">bohdal</a><a href=\"" + included.getUuid() + "\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
+               // frameIn.add(includeLabel);
+                //frameIn.add(link);
+                node.setText("<html><body><div style=\"border: 1px; padding: 5px;\"><strong>Include </strong><a href=\"" + included.getUuid() + "\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
                 h += 40;
             } else {
                 node.setText("<html><body><div style=\"padding: 5px;\">" + this.getText() + "<br /></div></body></html>");
@@ -83,7 +83,7 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
 
             node.setPreferredSize(new Dimension(w, h));
             node.setAlignmentY(TOP_ALIGNMENT);
-            node.setMargin(new Insets(100, 10, 10, 10));
+            node.setMargin(new Insets(5, 5, 5, 5));
 
             Border borderBlack = BorderFactory.createLineBorder(Color.BLACK, 2);
             frameIn.setBorder(borderBlack);
