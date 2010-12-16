@@ -101,13 +101,14 @@ public class UCUseCaseTab extends UCTabParent {
         tree.setToggleClickCount(0);
         tree.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
+                if (e.getClickCount() == 2 && !e.isConsumed()) {
                     if (e.getSource() instanceof JTree) {
                         if (tree.getLastSelectedPathComponent() instanceof UCStepNode) {
                             showEditDialog((DefaultMutableTreeNode) tree.getLastSelectedPathComponent());
                         } else {
                             tree.startEditingAtPath(tree.getSelectionPath());
                         }
+                        e.consume();
                         return;
                     }
                 }
