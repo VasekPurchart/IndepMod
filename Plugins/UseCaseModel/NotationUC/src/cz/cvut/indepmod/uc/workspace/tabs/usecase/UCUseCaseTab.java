@@ -1,5 +1,6 @@
 package cz.cvut.indepmod.uc.workspace.tabs.usecase;
 
+import com.sun.java.swing.plaf.windows.WindowsTreeUI;
 import cz.cvut.indepmod.uc.UCNotationModel;
 import cz.cvut.indepmod.uc.frames.toolChooser.ToolChooserModel;
 import cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels.UseCaseModel;
@@ -33,6 +34,8 @@ public class UCUseCaseTab extends UCTabParent {
         super(null, actions);
         this.uuid = uuid;
         this.actions = actions;
+        UIManager.put("Tree.expandedIcon", new WindowsTreeUI.ExpandedIcon());
+        UIManager.put("Tree.collapsedIcon", new WindowsTreeUI.CollapsedIcon());
 
         useCase = ucModel;
         if (useCase.getModel().getRoot() == null) {
