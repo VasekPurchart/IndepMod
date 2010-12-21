@@ -61,17 +61,7 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
             int h = (int) (Math.ceil((double) ((metrics.stringWidth((String) ((UCStepNode) value).getUserObject()) / w) + 1) * (metrics.getHeight() + 3))) + 15;
 
             if (included != null) {
-                JLabel includeLabel = new JLabel("Include:"); //"SansSerif"
-                includeLabel.setFont(new Font(getFont().getName(), Font.BOLD, 16));
-                JButton link = new JButton("<html><body><u>" + included.getName() + "</u></body></html>");
-
-                link.setBackground(Color.WHITE);
-                link.setBorder(BorderFactory.createEmptyBorder());
-                link.setForeground(Color.BLUE);
-                link.setFont(new Font("SansSerif", Font.PLAIN, 16));
-               // frameIn.add(includeLabel);
-                //frameIn.add(link);
-                node.setText("<html><body><div style=\"border: 1px; padding: 5px;\"><strong>Include </strong><a href=\"" + included.getUuid() + "\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
+                node.setText("<html><body><div style=\"padding: 5px;\"><strong>Include </strong><a href=\"" + included.getUuid() + "\">" + included.getName() + "</a><br />" + this.getText() + "</div></body></html>");
                 h += 40;
             } else {
                 node.setText("<html><body><div style=\"padding: 5px;\">" + this.getText() + "<br /></div></body></html>");
