@@ -20,10 +20,8 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
         super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
         this.setBorder(null);
         this.setIcon(null);
-        this.setOpenIcon(null);
-        this.setClosedIcon(null);
 
-        Font font = new Font("SansSerif", Font.PLAIN, 16);
+        Font font = new Font(getFont().getName(), Font.PLAIN, 16);
         if (value instanceof UCScenarioNode) {
             if (((UCScenarioNode) value).getMain()) {
                 font = new Font("SansSerif", Font.BOLD, 25);
@@ -31,7 +29,7 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
                 font = new Font("SansSerif", Font.PLAIN, 25);
             }
             FontMetrics metrics = this.getFontMetrics(font);
-            this.setPreferredSize(new Dimension(metrics.stringWidth(this.getText()), 34));
+            this.setPreferredSize(new Dimension(metrics.stringWidth((String) ((UCScenarioNode) value).getUserObject()), 34))   ;
         }
         if (value instanceof UCStepNode) {
 
@@ -60,11 +58,11 @@ public class UCTreeCellRenderer extends DefaultTreeCellRenderer implements TreeC
 
             FontMetrics metrics = this.getFontMetrics(font);
             int w = 400;
-            int h = (int) (Math.ceil((double) ((metrics.stringWidth(this.getText()) / w) + 1) * (metrics.getHeight() + 4)));
+            int h = (int) (Math.ceil((double) ((metrics.stringWidth((String) ((UCStepNode) value).getUserObject()) / w) + 1) * (metrics.getHeight() + 3))) + 15;
 
             if (included != null) {
-                JLabel includeLabel = new JLabel("Include:");
-                includeLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+                JLabel includeLabel = new JLabel("Include:"); //"SansSerif"
+                includeLabel.setFont(new Font(getFont().getName(), Font.BOLD, 16));
                 JButton link = new JButton("<html><body><u>" + included.getName() + "</u></body></html>");
 
                 link.setBackground(Color.WHITE);
