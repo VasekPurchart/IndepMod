@@ -59,7 +59,9 @@ public class UCUseCaseTab extends UCTabParent {
                     if (model.getRoot().equals(tree.getLastSelectedPathComponent())) {
                         if (getUseCaseByUUID(uuid) != null) {
                             if (((DefaultMutableTreeNode) model.getRoot()).getUserObject() instanceof String) {
-                                getUseCaseByUUID(uuid).setName((String) ((DefaultMutableTreeNode) model.getRoot()).getUserObject());
+                                String name = (String) ((DefaultMutableTreeNode) model.getRoot()).getUserObject();
+                                getUseCaseByUUID(uuid).setName(name);
+                                ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).setTabName(getUuid(), name);
                             }
                         }
                     }
@@ -251,7 +253,7 @@ public class UCUseCaseTab extends UCTabParent {
                             }
                             dialog.setVisible(false);
                             dialog.dispose();
-                            useCase.getModel().reload((TreeNode) tree.getLastSelectedPathComponent());    
+                            useCase.getModel().reload((TreeNode) tree.getLastSelectedPathComponent());
                         }
                     });
 
