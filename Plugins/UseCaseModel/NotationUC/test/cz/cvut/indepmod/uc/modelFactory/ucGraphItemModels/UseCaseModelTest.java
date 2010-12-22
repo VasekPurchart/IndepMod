@@ -88,8 +88,4 @@ public class UseCaseModelTest {
         Assert.assertEquals("newNote", uc.getName());
     }
 
-    @Test
-    public void testInstallAttributes() throws Exception {
-        Assert.fail("Not tested");
-    }
 }

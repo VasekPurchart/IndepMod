@@ -1,12 +1,12 @@
 package cz.cvut.indepmod.uc.modelFactory.ucGraphItemModels;
 
 import cz.cvut.indepmod.uc.resources.Resources;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.Map;
 import java.util.UUID;
-import java.awt.geom.Point2D;
-import java.awt.geom.Point2D;
 
 /**
  * Created by IntelliJ IDEA.
@@ -88,8 +88,4 @@ public class ActorModelTest {
         Assert.assertEquals("newNote", actor.getName());
     }
 
-    @Test
-    public void testInstallAttributes() throws Exception {
-        Assert.fail("Not tested");
-    }
 }

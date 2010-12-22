@@ -88,8 +88,4 @@ public class SystemBorderModelTest {
         Assert.assertEquals("newNote", border.getName());
     }
 
-    @Test
-    public void testInstallAttributes() throws Exception {
-        Assert.fail("Not tested");
-    }
 }
