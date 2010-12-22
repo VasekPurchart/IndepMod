@@ -251,6 +251,7 @@ public class UCUseCaseTab extends UCTabParent {
                             }
                             dialog.setVisible(false);
                             dialog.dispose();
+                            useCase.getModel().reload((TreeNode) tree.getLastSelectedPathComponent());    
                         }
                     });
 
