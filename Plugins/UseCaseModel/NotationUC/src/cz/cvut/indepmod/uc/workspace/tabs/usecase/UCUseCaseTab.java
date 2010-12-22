@@ -312,6 +312,7 @@ public class UCUseCaseTab extends UCTabParent {
                         ((UCScenarioNode) tree.getLastSelectedPathComponent()).setMain(true);
                     }
 
+                    useCase.getModel().reload((TreeNode) tree.getLastSelectedPathComponent());
                     tree.repaint();
                 }
             }
