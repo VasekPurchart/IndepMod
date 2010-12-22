@@ -90,7 +90,6 @@ public class UseCaseModel extends UCEditableVertex {
         if (this.model.getRoot() != null) {
             ((DefaultMutableTreeNode )this.model.getRoot()).setUserObject(name);
         }
-        ((UCWorkspace) UCWorkspaceData.getWorkspaceComponentSingletonStatic()).setTabName(this.getUuid(), name);
         this.name = name;
     }
 
